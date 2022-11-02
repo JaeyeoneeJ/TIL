@@ -1,0 +1,139 @@
+{
+  "main": {
+    "id": "39eaad770b67becd",
+    "type": "split",
+    "children": [
+      {
+        "id": "5718d0cf5cc9123d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eebc3589eea286ee",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8643d669c7801b7d",
+    "type": "split",
+    "children": [
+      {
+        "id": "968073dc8f631e98",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a113745fd2e44581",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "cf1aa250b2e2b598",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d54e27c1a1aa4c3f",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9c483e5c2869f1c7",
+    "type": "split",
+    "children": [
+      {
+        "id": "320a1945e6d25d30",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bf339c1d9dd0b4be",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e5bc15f5f3fada52",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5a07cc1f81413b26",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c7b6eda26e53a0fc",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "eebc3589eea286ee",
+  "lastOpenFiles": [
+    "쿠키, 세션, 토큰의 비교.md",
+    "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
+    "css/aspect-ratio; 이미지 비율 고정 방법.md",
+    "git/package-lock.json 파일이란?.md",
+    "성능 최적화를 위한 리액트 렌더링 이해.md"
+  ]
+}
