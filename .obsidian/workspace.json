@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "5718d0cf5cc9123d",
+        "id": "e37790d4534766bb",
         "type": "tabs",
         "children": [
           {
-            "id": "eebc3589eea286ee",
+            "id": "d254edf2c3e2ca83",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "VS Code/VS Code 단축키.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "VS Code/VS Code 단축키.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "VS Code/VS Code 단축키.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "VS Code/VS Code 단축키.md"
+              }
             }
           }
         ]
@@ -128,12 +136,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "eebc3589eea286ee",
+  "active": "d254edf2c3e2ca83",
   "lastOpenFiles": [
-    "쿠키, 세션, 토큰의 비교.md",
+    "react/React-router v6의 Nested Routes 작성 방법.md",
+    "VS Code/VS Code 단축키.md",
+    "2022-11-08.md",
+    "react/CRA에서 typescript 설치.md",
+    "react/성능 최적화를 위한 리액트 렌더링 이해.md",
+    "git/hello.md",
     "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
+    "쿠키, 세션, 토큰의 비교.md",
     "css/aspect-ratio; 이미지 비율 고정 방법.md",
-    "git/package-lock.json 파일이란?.md",
-    "성능 최적화를 위한 리액트 렌더링 이해.md"
+    "git/package-lock.json 파일이란?.md"
   ]
 }
