@@ -17,7 +17,7 @@
 
 # React-router v6 버전
 
-v6에서 nested routes를 구현하는 방법은 두 가지가 있다.
+fv6에서 nested routes를 구현하는 방법은 두 가지가 있다.
 
 ### 첫 번째
 부모 route의 path 마지막에 /*를 적어 명시적으로 이 route의 내부에서 nested route가 render 될 수 있음을 표시하고 자식 route를 부모 route의 element 내부에 작성하는 방법

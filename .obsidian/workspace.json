@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "e37790d4534766bb",
+        "id": "f85ab071499cce97",
         "type": "tabs",
         "children": [
           {
-            "id": "d254edf2c3e2ca83",
+            "id": "d52b68e95c986fb2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "VS Code/VS Code 단축키.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -69,7 +65,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "9c483e5c2869f1c7",
@@ -85,7 +82,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "VS Code/VS Code 단축키.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +98,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "VS Code/VS Code 단축키.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +119,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "VS Code/VS Code 단축키.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -136,17 +129,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d254edf2c3e2ca83",
+  "active": "d52b68e95c986fb2",
   "lastOpenFiles": [
-    "react/React-router v6의 Nested Routes 작성 방법.md",
-    "VS Code/VS Code 단축키.md",
-    "2022-11-08.md",
+    "CS/시간 복잡도와 공간 복잡도.md",
+    "2022-12-20.md",
+    "README.md.md",
+    "2022-12-13.md",
     "react/CRA에서 typescript 설치.md",
+    "State management/State mamagemete의 필요성.md",
+    "react/React-hook-form.md",
+    "react/React-router v6의 Nested Routes 작성 방법.md",
     "react/성능 최적화를 위한 리액트 렌더링 이해.md",
-    "git/hello.md",
-    "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
-    "쿠키, 세션, 토큰의 비교.md",
-    "css/aspect-ratio; 이미지 비율 고정 방법.md",
-    "git/package-lock.json 파일이란?.md"
+    "react/react 패키지.md"
   ]
 }
