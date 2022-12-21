@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "bd7f2b93a877e00f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "JavaScript/Virtual DOM, Real DOM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JavaScript/==, ===.md",
+                "file": "JavaScript/Virtual DOM, Real DOM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JavaScript/==, ===.md",
+                "file": "JavaScript/Virtual DOM, Real DOM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JavaScript/==, ===.md"
+                "file": "JavaScript/Virtual DOM, Real DOM.md"
               }
             }
           }
@@ -136,10 +149,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "849e467b95299e46",
+  "active": "bd7f2b93a877e00f",
   "lastOpenFiles": [
-    "JavaScript/Arrow function.md",
     "JavaScript/==, ===.md",
+    "JavaScript/Arrow function.md",
     "JavaScript/async와 await.md",
     "CS/시간 복잡도와 공간 복잡도.md",
     "CS/배열(Array)과 연결리스트(Linked list).md",
