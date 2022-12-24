@@ -4,47 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "49a51640ca65a8e5",
+        "id": "af82e87c45ebca03",
         "type": "tabs",
         "children": [
           {
-            "id": "849e467b95299e46",
+            "id": "1dec2c96109c68d9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JavaScript/==, ===.md",
+                "file": "CS/쿠키, 세션, 토큰의 비교.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "bd7f2b93a877e00f",
+            "id": "f5e9fde7efbff3d6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JavaScript/Virtual DOM, Real DOM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e612233f1e6f78e5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "react/React Component 라이프 사이클.md",
+                "file": "CS/시간 복잡도와 공간 복잡도.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "react/React Component 라이프 사이클.md",
+                "file": "CS/시간 복잡도와 공간 복잡도.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "react/React Component 라이프 사이클.md",
+                "file": "CS/시간 복잡도와 공간 복잡도.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "react/React Component 라이프 사이클.md"
+                "file": "CS/시간 복잡도와 공간 복잡도.md"
               }
             }
           }
@@ -161,17 +149,27 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "e612233f1e6f78e5",
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "f5e9fde7efbff3d6",
   "lastOpenFiles": [
-    "JavaScript/Virtual DOM, Real DOM.md",
-    "JavaScript/==, ===.md",
-    "JavaScript/Arrow function.md",
-    "JavaScript/async와 await.md",
-    "CS/시간 복잡도와 공간 복잡도.md",
-    "CS/배열(Array)과 연결리스트(Linked list).md",
+    "CS/HTTP, HTTPS.md",
+    "CS/TCP, UDP.md",
+    "CS/쿠키, 세션, 토큰의 비교.md",
+    "CS/웹용 스토리지.md",
+    "CS/쿠키와 세션.md",
+    "무제 파일.canvas",
+    "React/JSX.md",
     "CS/CORS.md",
-    "JavaScript/var, let, const.md",
-    "JavaScript/Promise.md",
-    "react/CRA에서 typescript 설치.md"
+    "CS/Base64.md",
+    "CS/스택(Stack)과 큐(Queue).md"
   ]
 }

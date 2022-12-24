@@ -18,6 +18,7 @@
 - 하지만 삽입/삭제 시 리스트의 위치(논리적 주소)만 바꿔주면 되기 때문에 속도가 빠르다.
 - 삽입과 삭제 연산이 잦고, 검색 빈도가 적을 때 용이하다.
 
+<hr>
 ## ref.
 https://letitkang.tistory.com/111
 https://hongcoding.tistory.com/74
