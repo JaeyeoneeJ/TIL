@@ -4,22 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "9b831508fe98c216",
+        "id": "fb894da0ebdc2d03",
         "type": "tabs",
         "children": [
           {
-            "id": "4a97294ab5fcc89e",
+            "id": "156a99ef87fd947c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS/Base64.md",
+                "file": "CS/TCP, UDP.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "141e4db340691fde",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS/TCP 3-way Handshake, 4-way Handshake.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS/Base64.md",
+                "file": "CS/TCP 3-way Handshake, 4-way Handshake.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS/Base64.md",
+                "file": "CS/TCP 3-way Handshake, 4-way Handshake.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS/Base64.md"
+                "file": "CS/TCP 3-way Handshake, 4-way Handshake.md"
               }
             }
           }
@@ -146,17 +159,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "4a97294ab5fcc89e",
+  "active": "141e4db340691fde",
   "lastOpenFiles": [
+    "CS/TCP, UDP.md",
+    "CS/TCP 3-way Handshake, 4-way Handshake.md",
+    "CS/배열(Array)과 연결리스트(Linked list).md",
+    "CS/HTTP, HTTPS.md",
+    "CS/CORS.md",
+    "CS/Base64.md",
     "CS/시간 복잡도와 공간 복잡도.md",
     "CS/쿠키, 세션, 토큰의 비교.md",
-    "React/Context API.md",
-    "React/JSX.md",
-    "React/CRA에서 typescript 설치.md",
-    "React/성능 최적화를 위한 리액트 렌더링 이해.md",
-    "CS/HTTP, HTTPS.md",
-    "CS/TCP, UDP.md",
-    "CS/웹용 스토리지.md",
-    "CS/쿠키와 세션.md"
+    "CS/스택(Stack)과 큐(Queue).md",
+    "CS/웹용 스토리지.md"
   ]
 }
