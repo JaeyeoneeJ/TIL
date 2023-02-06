@@ -12,7 +12,7 @@ React는 컴포넌트 기반의 View를 중심으로 한 라이브러리이다. 
 - props가 바뀔 때
 - state가 바뀔 때
 - 부모 컴포넌트가 리렌더링 될 때
-- this.forceUpdata로 강제로 렌더링을 트리거할 때
+- this.forceUpdate로 강제로 렌더링을 트리거할 때
 
 ## 마운트
 ### constructor
