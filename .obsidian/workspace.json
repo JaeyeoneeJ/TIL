@@ -4,22 +4,47 @@
     "type": "split",
     "children": [
       {
-        "id": "96dc74a5a1c007c4",
+        "id": "018884b05c6ad8f7",
         "type": "tabs",
         "children": [
           {
-            "id": "d26234cae4d6747e",
+            "id": "a3b91ceb3950add7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS/CORS.md",
+                "file": "NextJS/window is not defined 원인 및 해결방법.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7b0a32011748c46b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f155b891124fcd85",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "NextJS/_document.tsx 적용 (feat. Styled-components).md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -85,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS/CORS.md",
+                "file": "NextJS/_document.tsx 적용 (feat. Styled-components).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS/CORS.md",
+                "file": "NextJS/_document.tsx 적용 (feat. Styled-components).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS/CORS.md"
+                "file": "NextJS/_document.tsx 적용 (feat. Styled-components).md"
               }
             }
           }
@@ -146,17 +171,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "d26234cae4d6747e",
+  "active": "f155b891124fcd85",
   "lastOpenFiles": [
-    "State management/State mamagemete의 필요성.md",
-    "React/useRef.md",
-    "React/React-router v6의 Nested Routes 작성 방법.md",
-    "React/React-hook-form.md",
-    "React/React Component 라이프 사이클.md",
+    "NextJS/Vercel 배포.md",
+    "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
+    "NextJS/_document.tsx 적용 (feat. Styled-components).md",
+    "NextJS/window is not defined 원인 및 해결방법.md",
+    "React/성능 최적화를 위한 리액트 렌더링 이해.md",
+    "React/Context API.md",
     "React/react 패키지.md",
-    "React/Lazy Loading & Code Splitting.md",
-    "React/JSX.md",
-    "React/CRA에서 typescript 설치.md",
-    "React/Context API.md"
+    "JavaScript/==, ===.md",
+    "React/useRef.md",
+    "React/React-router v6의 Nested Routes 작성 방법.md"
   ]
 }
