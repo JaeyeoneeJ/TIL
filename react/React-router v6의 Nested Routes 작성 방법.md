@@ -2,7 +2,7 @@
 
 기존 v5 버전에서는 다음과 같이 작성한다.
 
-```javascript
+```jsx
 <Switch>
 	<Route path={`/${부모url}/one`}>
 		<One />
@@ -17,7 +17,7 @@
 
 # React-router v6 버전
 
-fv6에서 nested routes를 구현하는 방법은 두 가지가 있다.
+v6에서 nested routes를 구현하는 방법은 두 가지가 있다.
 
 ### 첫 번째
 부모 route의 path 마지막에 /*를 적어 명시적으로 이 route의 내부에서 nested route가 render 될 수 있음을 표시하고 자식 route를 부모 route의 element 내부에 작성하는 방법
@@ -25,13 +25,13 @@ fv6에서 nested routes를 구현하는 방법은 두 가지가 있다.
 
 router.tsx에서  
   
-```javascript
+```jsx
 <Route path="/${부모url}/*" element={<Url/>} />
 ```
   
 Url.tsx에서  
   
-```javascript
+```jsx
 <Routes>  
 	<Route path="one" element={<One />} />  
 	<Route path="two" element={<Two />} />  
@@ -46,7 +46,7 @@ Routes가 상대경로도 지원하기 때문에 path="one"과 같이 써도 동
 router.tsx에서  
 - one와 two 컴포넌트를 import하고
   
-```javascript
+```jsx
 <Routes> 
 	<Route path="/${부모url}" element={<Url />} >  
 	<Route path="one" element={<One />} />  

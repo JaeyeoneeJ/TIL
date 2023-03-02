@@ -29,7 +29,7 @@ yarn add react-hook-form
 # 적용
 ---
 
-```javascript
+```jsx
 import { useForm } from "react-hook-form";
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
 ---
 ### 기존 작성 방법
 
-```javascript
+```jsx
 // 기존 작성 방법
 const ToDoList = () => {
 	const [toDo, setToDo] = useState("");
@@ -95,7 +95,7 @@ export default ToDoList;
 
 ### react-hook-form 적용
 
-```javascript
+```jsx
 // react-hook-form 적용
 import { useForm } from "react-hook-form";
 
