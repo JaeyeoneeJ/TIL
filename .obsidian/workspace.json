@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "d2214f9fadb30b5a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Java/Spring Framework.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Java/Gradle이란.md",
+                "file": "Java/Spring Framework.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Java/Gradle이란.md",
+                "file": "Java/Spring Framework.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Java/Gradle이란.md"
+                "file": "Java/Spring Framework.md"
               }
             }
           }
@@ -146,12 +159,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "16aec1f57850f1c0",
+  "active": "d2214f9fadb30b5a",
   "lastOpenFiles": [
-    "Java/List란.md",
     "Java/Gradle이란.md",
-    "Java/test11.md",
+    "Java/Spring Framework.md",
     "Java/Interface란.md",
+    "Java/List란.md",
+    "Java/test11.md",
     "CS/쿠키, 세션, 토큰의 비교.md",
     "CS/배열(Array)과 연결리스트(Linked list).md",
     "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
@@ -174,7 +188,6 @@
     "NextJS/Vercel 배포.md",
     "VS Code/VS Code 단축키.md",
     "State management/State mamagemete의 필요성.md",
-    "React/useRef.md",
     "NodeJS"
   ]
 }
