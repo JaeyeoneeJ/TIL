@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "a03ec9b0a7814f05",
+        "id": "33f1c5ce33dae605",
         "type": "tabs",
         "children": [
           {
-            "id": "46df596b0125e631",
+            "id": "e02b0e03f9fcc929",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Java/DI_Container.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Java/DI_Container.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Java/DI_Container.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Java/DI_Container.md"
+              }
             }
           }
         ]
@@ -138,8 +146,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "46df596b0125e631",
+  "active": "e02b0e03f9fcc929",
   "lastOpenFiles": [
+    "Java/IntelliJ_IDEA_한글_깨짐_수정.md",
+    "Java/__Java.md",
     "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
     "git/package-lock.json.md",
     "git/__git.md",
@@ -164,8 +174,6 @@
     "React/CRA에서_typescript_설치.md",
     "NodeJS/npm_run_serve_종료법.md",
     "NodeJS/__NodeJS.md",
-    "NextJS/__NextJS.md",
-    "NextJS/window_is_not_defined_원인_및_해결방법.md",
     "Java",
     "NodeJS"
   ]

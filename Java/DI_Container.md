@@ -222,4 +222,72 @@ public class DemoApplication {
 ### 3) 규칙 1, 2, 5 구현
 - 스프링 프레임워크에 의해 생성된 인스턴스를 이용하고 싶은 곳에서 참조를 받는 필드를 선언하고 필드에 @Autowired 어노테이션을 부여함
 - 여기서는 '사용하는 객체' 클래스인 DemoApplication에 '사용되는 객체' 인터페이스인 Greet 필드를 선언하고 @Autowired 어노테이션을 부여함
-- 
+```java
+package com.example.demo;  
+  
+import com.example.demo.chapter03.used.Greet;  
+  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.boot.SpringApplication;  
+import org.springframework.boot.autoconfigure.SpringBootApplication;  
+  
+// 스프링 부트 시작 클래스  
+@SpringBootApplication  
+public class DemoApplication {  
+  
+   // main 메서드  
+   // @param args  
+   public static void main(String[] args) {  
+      SpringApplication.run(DemoApplication.class, args)  
+            .getBean(DemoApplication.class).execute();  
+   }  
+  
+   // 주입하는 곳(인터페이스)  
+   @Autowired  
+   Greet greet;  
+  
+   // 실행 메서드  
+   private void execute(){ // 메서드 명을 execute로 함  
+      greet.greeting();  
+   }  
+  
+}
+```
+
+- 실행하면 "좋은 아침입니다." 가 출력됨
+
+- '사용되는 객체' 클래스를 변경하게 되었다고 가정해보겠음
+- EveningGreet의 greeting 메서드를 호출하도록 변경하고 MorningGreet 클래스의 인스턴스 생성 어노테이션인 @Component는 삭제 또는 주석 처리함
+
+> 기존 @Component를 삭제 또는 주석처리 하지 않을 경우 아래와 같은 메세지가 뜨면서 컴파일 에러가 발생함
+> **error:**  `Field greet in com.example.demo.DemoApplication required a single bean, but 2 were found:`
+
+```java
+// 구현 클래스(MorningGreet)
+...
+// @Component // 주석 처리
+public class MorningGreet implements Greet{  
+	...
+}
+```
+
+```java
+// 구현 클래스(EveningGreet)
+...
+@Component // 어노테이션 부여
+public class EveningGreet implements Greet{  
+	...
+}
+```
+
+```console
+// 결과(console)
+-----------------
+좋은 저녁입니다.
+-----------------
+```
+
+- 스프링 프레임워크는 기동 시 컴포넌트 스캔에 의해 MorningGreet 클래스에 @Component 어노테이션이 부여되어 MorningGreet 인스턴스가 생성됨
+- @Autowired 어노테이션에 따라 MorningGreet 클래스의 인스턴스가 클래스의 greet 필드에 주입되어 실행되면 MorningGreet 클래스의 greeting 메서드가 실행됨
+
+- 설계 변경에 대응하기 위해 기존 @Component 어노테이션을 삭제 또는 주석처리하고 EveningGreet 클래스에 @Component 어노테이션을 부여하면 @Autowired 어노테이션에 따라 EveningGreet 클래스의 인스턴스가 클래스의 greet 필드에 주입되어 실행 시, EveningGreet 클래스의 greeting 메서드가 실행됨
