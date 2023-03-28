@@ -76,3 +76,4 @@ dependencies {
 - 인스턴스를 생성하기 위해 @Component 어노테이션을 부여함
 >['build.gradle'에서 추가한 의존성이 반영되지 않거나 @Aspect가 인식되지 않을 경우 해결방법](./build.gradle_오류_해결.md)
 
+- SampleAspect 클래스에
