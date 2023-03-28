@@ -1,0 +1,180 @@
+{
+  "main": {
+    "id": "39eaad770b67becd",
+    "type": "split",
+    "children": [
+      {
+        "id": "33f1c5ce33dae605",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c179872936677bb7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8643d669c7801b7d",
+    "type": "split",
+    "children": [
+      {
+        "id": "968073dc8f631e98",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a113745fd2e44581",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "cf1aa250b2e2b598",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d54e27c1a1aa4c3f",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "9c483e5c2869f1c7",
+    "type": "split",
+    "children": [
+      {
+        "id": "320a1945e6d25d30",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bf339c1d9dd0b4be",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e5bc15f5f3fada52",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5a07cc1f81413b26",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c7b6eda26e53a0fc",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Java/AOP(관점_지향_프로그래밍).md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "c179872936677bb7",
+  "lastOpenFiles": [
+    "Java/build.gradle_오류_해결.md",
+    "Java/AOP(관점_지향_프로그래밍).md",
+    "gradle 로드 위치.png",
+    "Java/Annotation.md",
+    "Java/Spring_Framework.md",
+    "Java/Interface.md",
+    "Java/DI_Container.md",
+    "Java/__Java.md",
+    "Java/List.md",
+    "Java/Gradle.md",
+    "Java/IntelliJ_IDEA_한글_깨짐_수정.md",
+    "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
+    "git/package-lock.json.md",
+    "git/__git.md",
+    "React/__React.md",
+    "Contents.md",
+    "React/React_Component_라이프_사이클.md",
+    "VSCode/__VSCode.md",
+    "VSCode/VSCode_단축키.md",
+    "JavaScript/__JavaScript.md",
+    "State management/__State_manage.md",
+    "State management/State maagemete의 필요성.md",
+    "css/__css.md",
+    "css/aspect-ratio;_이미지_비율_고정_방법.md",
+    "React/useRef.md",
+    "React/React-router_v6의_Nested_Routes_작성_방법.md",
+    "Java",
+    "NodeJS"
+  ]
+}
