@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "50a625e15f5df62f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Java/test11.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Java/test11.md",
+                "file": "Java/Gradle이란.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Java/test11.md",
+                "file": "Java/Gradle이란.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Java/test11.md"
+                "file": "Java/Gradle이란.md"
               }
             }
           }
@@ -159,11 +146,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a113745fd2e44581",
+  "active": "16aec1f57850f1c0",
   "lastOpenFiles": [
+    "Java/List란.md",
     "Java/Gradle이란.md",
     "Java/test11.md",
-    "Java/List란.md",
     "Java/Interface란.md",
     "CS/쿠키, 세션, 토큰의 비교.md",
     "CS/배열(Array)과 연결리스트(Linked list).md",
