@@ -135,8 +135,8 @@ DI 컨테이너에 인스턴스 생성을 맡기고 다음의 규칙을 지키�
 ## DI 프로그램 만들기
 '인사' 역할을 하는 인터페이스와 인터페이스를 구현한 '아침 인사'와 '저녁 인사'를 처리하는 클래스를 각각 만들고 어노테이션을 부여하는 것으로 DI의 동작 방식을 확인할 수 있는 프로그램을 작성해보자
 
-- IntelliJ IDEA Community Edition을 기준으로 하기 때문에 Spring Initializr에서 생성한 파일을 사용해서 프로젝트를 만들어 사용해보자
-- 웹 브라우저로 https://start.spring.io/ 에 접속해서 다음 설정 내용을 참조해서 설정하고 [GENERATE]를 클릭해 파일을 내려받자
+- IntelliJ IDEA Community Edition을 기준으로 하기 때문에 [Spring Initializr](./Spring_initializr_사용방법.md)에서 생성한 파일을 사용해서 프로젝트를 만들어 사용해보자
+- 웹 브라우저로 https://start.spring.io/ 에 접속해서 다음 설정 내용을 참조해서 설정하고 \[GENERATE\]를 클릭해 파일을 내려받자
 | **항목** | **값** |
 | :---: | :--- |
 | Project | Gradle - Groovy |
