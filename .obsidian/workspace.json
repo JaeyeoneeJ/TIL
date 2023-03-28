@@ -4,59 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "018884b05c6ad8f7",
+        "id": "6dccc9cc12140320",
         "type": "tabs",
         "children": [
           {
-            "id": "a3b91ceb3950add7",
+            "id": "16aec1f57850f1c0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NextJS/window is not defined 원인 및 해결방법.md",
+                "file": "Java/Gradle이란.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "7b0a32011748c46b",
+            "id": "50a625e15f5df62f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f155b891124fcd85",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS/배열(Array)과 연결리스트(Linked list).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "407a6e62a921b514",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/npm run serve 종료법.md",
+                "file": "Java/test11.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -122,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "NodeJS/npm run serve 종료법.md",
+                "file": "Java/test11.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "NodeJS/npm run serve 종료법.md",
+                "file": "Java/test11.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "NodeJS/npm run serve 종료법.md"
+                "file": "Java/test11.md"
               }
             }
           }
@@ -175,30 +151,43 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "canvas:새 캔버스 만들기": false,
-      "switcher:퀵 스위처 열기": false,
-      "graph:그래프 뷰 열기": false,
-      "daily-notes:오늘의 데일리 노트 열기": false,
-      "templates:템플릿 삽입": false,
-      "command-palette:명령어 팔레트 열기": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "407a6e62a921b514",
+  "active": "a113745fd2e44581",
   "lastOpenFiles": [
+    "Java/Gradle이란.md",
+    "Java/test11.md",
+    "Java/List란.md",
+    "Java/Interface란.md",
+    "CS/쿠키, 세션, 토큰의 비교.md",
     "CS/배열(Array)과 연결리스트(Linked list).md",
-    "NodeJS/npm run serve 종료법.md",
-    "NodeJS",
-    "JavaScript/async와 await.md",
-    "JavaScript/var, let, const.md",
-    "NextJS/_document.tsx 적용 (feat. Styled-components).md",
-    "NextJS/Vercel 배포.md",
     "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
     "NextJS/window is not defined 원인 및 해결방법.md",
+    "CS/TCP 3-way Handshake, 4-way Handshake.md",
+    "CS/웹용 스토리지.md",
+    "Java",
+    "CS/Base64.md",
+    "CS/REST API란.md",
+    "CS/HTTP, HTTPS.md",
+    "CS/CORS.md",
+    "JavaScript/Promise.md",
+    "JavaScript/async와 await.md",
+    "JavaScript/Virtual DOM, Real DOM.md",
     "React/성능 최적화를 위한 리액트 렌더링 이해.md",
-    "React/Context API.md",
+    "React/React Component 라이프 사이클.md",
+    "React/Lazy Loading & Code Splitting.md",
     "React/react 패키지.md",
-    "JavaScript/==, ===.md",
+    "React/Context API.md",
+    "NextJS/Vercel 배포.md",
+    "VS Code/VS Code 단축키.md",
+    "State management/State mamagemete의 필요성.md",
     "React/useRef.md",
-    "React/React-router v6의 Nested Routes 작성 방법.md"
+    "NodeJS"
   ]
 }
