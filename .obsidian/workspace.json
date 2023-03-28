@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "6dccc9cc12140320",
+        "id": "a03ec9b0a7814f05",
         "type": "tabs",
         "children": [
           {
-            "id": "16aec1f57850f1c0",
+            "id": "46df596b0125e631",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Java/Gradle이란.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d2214f9fadb30b5a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Java/Spring Framework.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Java/Spring Framework.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Java/Spring Framework.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Java/Spring Framework.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -159,35 +138,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d2214f9fadb30b5a",
+  "active": "46df596b0125e631",
   "lastOpenFiles": [
-    "Java/Gradle이란.md",
-    "Java/Spring Framework.md",
-    "Java/Interface란.md",
-    "Java/List란.md",
-    "Java/test11.md",
-    "CS/쿠키, 세션, 토큰의 비교.md",
-    "CS/배열(Array)과 연결리스트(Linked list).md",
-    "NextJS/Next.js에서 Prop 'className' did not match 해결.md",
-    "NextJS/window is not defined 원인 및 해결방법.md",
-    "CS/TCP 3-way Handshake, 4-way Handshake.md",
-    "CS/웹용 스토리지.md",
+    "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
+    "git/package-lock.json.md",
+    "git/__git.md",
+    "React/__React.md",
+    "Contents.md",
+    "React/React_Component_라이프_사이클.md",
+    "VSCode/__VSCode.md",
+    "VSCode/VSCode_단축키.md",
+    "JavaScript/__JavaScript.md",
+    "State management/__State_manage.md",
+    "State management/State maagemete의 필요성.md",
+    "css/__css.md",
+    "css/aspect-ratio;_이미지_비율_고정_방법.md",
+    "React/useRef.md",
+    "React/React-router_v6의_Nested_Routes_작성_방법.md",
+    "React/react_패키지.md",
+    "React/React-hook-form.md",
+    "React/성능_최적화를_위한_리액트_렌더링_이해.md",
+    "React/Lazy_Loading_&_Code_Splitting.md",
+    "React/JSX.md",
+    "React/Context_API.md",
+    "React/CRA에서_typescript_설치.md",
+    "NodeJS/npm_run_serve_종료법.md",
+    "NodeJS/__NodeJS.md",
+    "NextJS/__NextJS.md",
+    "NextJS/window_is_not_defined_원인_및_해결방법.md",
     "Java",
-    "CS/Base64.md",
-    "CS/REST API란.md",
-    "CS/HTTP, HTTPS.md",
-    "CS/CORS.md",
-    "JavaScript/Promise.md",
-    "JavaScript/async와 await.md",
-    "JavaScript/Virtual DOM, Real DOM.md",
-    "React/성능 최적화를 위한 리액트 렌더링 이해.md",
-    "React/React Component 라이프 사이클.md",
-    "React/Lazy Loading & Code Splitting.md",
-    "React/react 패키지.md",
-    "React/Context API.md",
-    "NextJS/Vercel 배포.md",
-    "VS Code/VS Code 단축키.md",
-    "State management/State mamagemete의 필요성.md",
     "NodeJS"
   ]
 }
