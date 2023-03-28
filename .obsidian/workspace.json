@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e02b0e03f9fcc929",
+            "id": "c179872936677bb7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Java/DI_Container.md",
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Java/DI_Container.md",
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Java/DI_Container.md",
+                "file": "Java/AOP(관점_지향_프로그래밍).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Java/DI_Container.md"
+                "file": "Java/AOP(관점_지향_프로그래밍).md"
               }
             }
           }
@@ -146,10 +146,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e02b0e03f9fcc929",
+  "active": "c179872936677bb7",
   "lastOpenFiles": [
-    "Java/IntelliJ_IDEA_한글_깨짐_수정.md",
+    "Java/build.gradle_오류_해결.md",
+    "Java/AOP(관점_지향_프로그래밍).md",
+    "gradle 로드 위치.png",
+    "Java/Annotation.md",
+    "Java/Spring_Framework.md",
+    "Java/Interface.md",
+    "Java/DI_Container.md",
     "Java/__Java.md",
+    "Java/List.md",
+    "Java/Gradle.md",
+    "Java/IntelliJ_IDEA_한글_깨짐_수정.md",
     "좋은 개발자란? <팀스파르타 남병관 CTO님 세션>.md",
     "git/package-lock.json.md",
     "git/__git.md",
@@ -165,15 +174,6 @@
     "css/aspect-ratio;_이미지_비율_고정_방법.md",
     "React/useRef.md",
     "React/React-router_v6의_Nested_Routes_작성_방법.md",
-    "React/react_패키지.md",
-    "React/React-hook-form.md",
-    "React/성능_최적화를_위한_리액트_렌더링_이해.md",
-    "React/Lazy_Loading_&_Code_Splitting.md",
-    "React/JSX.md",
-    "React/Context_API.md",
-    "React/CRA에서_typescript_설치.md",
-    "NodeJS/npm_run_serve_종료법.md",
-    "NodeJS/__NodeJS.md",
     "Java",
     "NodeJS"
   ]

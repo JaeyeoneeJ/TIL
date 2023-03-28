@@ -34,5 +34,5 @@ public class MorningGreet implements Greet {
 }
 ```
 
-- @Override 어노테이션은 슈퍼 클래스나 인터페이스의 메서드를 상속 혹은 구현하는 클래스에서 재정의하는 것을 말함
+- @Override [어노테이션](./Annotation.md)은 슈퍼 클래스나 인터페이스의 메서드를 상속 혹은 구현하는 클래스에서 재정의하는 것을 말함
 - 즉, @Override를 메서드에 부여하는 것으로 "이것은 재정의(Override)된 메서드입니다. 만약 재정의되어 있지 않으면 에러가 발생합니다." 라는 것을 알려줌

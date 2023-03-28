@@ -1,8 +1,8 @@
-## 1. 의존성 주입(Dependency Injection)
+## 1. [의존성 주입(Dependency Injection)](./DI_Container.md)
 - 의존성 주입은 '의존하는 부분을 외부에서 주입하는 것'을 말함
 - 우선은 DI는 '프로그램에서 의존 부분을 외부에서 주입한다' 정도로 이해하면 됨
 
-## 2. 관점 지향 프로그래밍(Aspect Oriented Programming)
+## 2. [관점 지향 프로그래밍(Aspect Oriented Programming)](./AOP(관점_지향_프로그래밍).md)
 - AOP에서는 프로그램이 다음 두 가지 요소로 구성됨
 	- 중심적 관심사(Primary Concern): 실행해야 할 기능을 나타내는 프로그램
 	- 횡단적 관심사(Crosscutting-Concerns): 본질적 기능은 아니지만 품질이나 유지보수 등의 관점에서 반드시 필요한 기능을 나타내는 프로그램
