@@ -155,5 +155,27 @@ public class HelloViewController {
 	- 폴더를 나눈 경우는 templates 폴더 이하의 폴더명을 요청 핸들러 메서드의 반환값에 지정해야 함
 	- CSS나 자바스크립트 등은 resources/static 폴더에 배치함
 
-- hello.html을 생성해서 resources/templates 폴더에 배치해보자
-- 
+- hello.html을 생성
+	- 'src/main/resources/templates' 폴더에서 마우스 오른쪽 버튼을 클릭해 '새로 만들기 => HTML 파일'를 선택하여 'hello.html' 파일 생성
+	- 아래와 같이 입력
+```html
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>View Sample</title>  
+</head>  
+<body>  
+    <!--추가-->  
+    <h1>Hello View?!</h1>  
+</body>  
+</html>
+```
+
+- 실행과 확인
+	- com.example.demo 폴더에 있는 SpringMvcViewSampleApplication을 선택하고 실행
+	- 정상적으로 실행되면 스프링 부트에서 톰캣 서버를 정상적으로 가동했다는 메세지를 확인할 수 있음
+	- 브라우저에서 'http://localhost:8080/hello/view' 를 입력하고 뷰가 표시되는 것을 확인
+<img src="https://user-images.githubusercontent.com/77138259/228454496-642f3f74-41ac-44be-9c20-a6888efc0779.png" alt="웹 서버 기동 확인" />
+
+<img src="https://user-images.githubusercontent.com/77138259/228455302-ff422b28-ef74-4dc7-99db-05b44177a68b.png" alt="브라우저 뷰 확인" />
