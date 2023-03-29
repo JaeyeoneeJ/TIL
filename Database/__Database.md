@@ -1,5 +1,5 @@
 - [Database](./Database.md)
 - [PostgreSQL](./PostgreSQL.md)
 - [Table](./Table.md)
-- [PostgreSQL](./PostgreSQL.md)
+- [SQL](./SQL.md)
 - [Entity와_Repository](Entity와_Repository.md)
