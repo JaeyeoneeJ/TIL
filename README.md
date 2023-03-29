@@ -1,15 +1,15 @@
 파일을 직접 연결해서 임베드 할 수 있는 방법을 찾는 중!!
 # CS
-![[__CS]]
+![[CS/__CS]]
 
 # git
-![[__git]]
+![[git/__git.md]]
 
 # JavaScript
-![[__JavaScript]]
+![[/javaScript/__JavaScript]]
 
 # React
-![[__React]]
+![[/React/__React.md]]
 
 # NextJS
 ![[__NextJS]]
