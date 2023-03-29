@@ -7,3 +7,4 @@
 - [Annotation](./Annotation.md)
 - [AOP(관점_지향_프로그래밍)](./AOP(관점_지향_프로그래밍).md)
 - [Spring initializr 사용방법](./Spring_initializr_사용방법.md)
+- [스프링 데이터 JDBC 사용해보기](./스프링_데이터_JDBC_사용해보기.md)

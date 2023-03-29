@@ -2,4 +2,4 @@
 - [PostgreSQL](./PostgreSQL.md)
 - [Table](./Table.md)
 - [PostgreSQL](./PostgreSQL.md)
-- [Entity](./Entity.md)
+- [Entity와_Repository](Entity와_Repository.md)
