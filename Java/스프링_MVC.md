@@ -178,5 +178,3 @@ public class HelloViewController {
 	- 정상적으로 실행되면 스프링 부트에서 톰캣 서버를 정상적으로 가동했다는 메세지를 확인할 수 있음
 	- 브라우저에서 'http://localhost:8080/hello/view' 를 입력하고 뷰가 표시되는 것을 확인
 <img src="https://user-images.githubusercontent.com/77138259/228454496-642f3f74-41ac-44be-9c20-a6888efc0779.png" alt="웹 서버 기동 확인" />
-
-<img src="https://user-images.githubusercontent.com/77138259/228455302-ff422b28-ef74-4dc7-99db-05b44177a68b.png" alt="브라우저 뷰 확인" />
