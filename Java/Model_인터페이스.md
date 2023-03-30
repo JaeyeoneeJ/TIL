@@ -17,6 +17,7 @@ Model addAttribute(String name, Object value)
 
 ### 1) 프로젝트 생성
 - [Spring Initializr](./Spring_initializr_사용방법.md)에서 다음 설정 내용을 참조해서 다운로드 후 압축을 해제함
+
 | **항목** | **값** |
 | :--- | :--- |
 | Project | Gradle - Groovy |
@@ -82,7 +83,8 @@ public class HelloModelController {
 ```
 - 타임리프의 기능은 'th:xxx속성명' 형식으로 입력함
 
-- th:texst의 설명
+- th:text의 설명
+
 | **속성** | **기능 개요** |
 | :--- | :--- |
 | th:text | 속성 값에 지정된 값을 새니타이즈(Sanitize)하여 출력 |

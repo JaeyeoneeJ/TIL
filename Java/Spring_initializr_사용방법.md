@@ -9,6 +9,7 @@ https://start.spring.io/
 <img src="https://user-images.githubusercontent.com/77138259/228220191-522b6eda-3c24-4cff-9ef2-ae519ec4cb53.png" alt="spring initializr 화면 구성" />
 
 - 항목 설명
+
 | **입력/선택 항목** | **개요** |
 | :--- | :--- |
 | Project | 빌드 도구 선택. 예제에서는 Gradle-Groovy 선택 |

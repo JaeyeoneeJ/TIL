@@ -14,6 +14,7 @@
 
 ### 1) 프로젝트 생성
 - [Spring Initializr](./Spring_initializr_사용방법.md)에서 다음 설정 내용을 참조해서 다운로드 후 압축을 해제함
+
 | **항목** | **값** |
 | :--- | :--- |
 | Project | Gradle - Groovy |
@@ -41,6 +42,7 @@ spring.datasource.password=0000 // PostgreSQL을 설치할 때 설정한 비밀�
 ```
 
 - application.properties 설정 항목
+
 | **항목** | **설명** |
 | :--- | :--- |
 | spring.datasource.driver-class-name | JDBC 드라이버의 클래스명을 지정함. 여기서는 PostgreSQL의 드라이버를 설정함 |
@@ -78,6 +80,7 @@ public class Member {
 ```
 
 - Lombok에서 제공하는 어노테이션을 사용
+
 | **항목** | **설명** |
 | :--- | :--- |
 | @Data | 클래스에 부여하는 것으로, 전 필드에 대해 getter/setter로 액세스할 수 있음. hashCode(), equals(), toString()도 자동 생성됨 |
@@ -127,6 +130,7 @@ public interface MemberCrudRepository extends CrudRepository<Member, Integer> {
 >메서드에서 사용되는 반환 값이나 인수의 엔티티나 ID는 <Member, Integer>로 지정한 타입이 됨
 
 - CurdRepository의 CRUD 메서드
+
 | **반환형** | **메서드** | **개요** |
 | :--- | :--- | :--- |
 | long | count() | 취득한 엔티티의 수를 돌려줌 |
