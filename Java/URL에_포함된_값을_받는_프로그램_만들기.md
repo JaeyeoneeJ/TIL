@@ -135,7 +135,7 @@ public class PathVariableController {
 - 같은 방법으로 `function2.html`과 `function3.html`를 생성함(숫자도 변경!)
 
 ### 6) 확인(링크)
-- `PathVariableController` 자바 파일에서 마우스 오른쪽 버튼을 클릭해서 ==실행==을 선택
+- `PathVariableSampleApplication` 자바 파일에서 마우스 오른쪽 버튼을 클릭해서 ==실행==을 선택
 - 'http://localhost:8080/show' 에서 각 링크를 클릭하여 대응되는 뷰가 표시되는 것을 확인
 <div style="display:flex; width:100%; box-sizing:border-box">
 <img style="width:50%" src="https://user-images.githubusercontent.com/77138259/228776705-0eff5829-e8c6-42b8-8b25-5bd0a75f9f05.png" alt="웹 브라우저 링크 클릭 전" />
@@ -198,7 +198,7 @@ public class PathVariableController {
 - 같은 방법으로 `b.html`과 `c.html`를 생성함(h1 태그의 알파벳 변경!)
 
 ### 9) 확인(버튼 판별)
-- `PathVariableController` 자바 파일에서 마우스 오른쪽 버튼을 클릭해서 ==실행==을 선택
+- `PathVariableSampleApplication` 자바 파일에서 마우스 오른쪽 버튼을 클릭해서 ==실행==을 선택
 - 'http://localhost:8080/show' 에서 각 버튼을 클릭하여 대응되는 뷰가 표시되는 것을 확인
 <img src="https://user-images.githubusercontent.com/77138259/228779879-080ae7af-0368-43ac-9f8d-28461ede9d7f.png" alt="웹 브라우저 결과 화면" />
 - 각 버튼을 클릭하면 `/send`에서 값만 달라지는 것을 확인할 수 있음
