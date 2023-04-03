@@ -79,4 +79,51 @@
 ### 1) 데이터베이스 생성
 - pgAdmin 4를 실행
 - 왼쪽 창에서 `Server => PostgreSQL xx => Databases` 선택 후, 마우스 오른쪽 버튼을 클릭해서 `Create → Database`를 선택
-- 
+<img src="https://user-images.githubusercontent.com/77138259/229427762-31ef3e83-2491-4b80-a02f-1d23265885ff.png" alt="create database" />
+
+### 2) 테이블 생성
+- 해당 예제에서는 알기 쉽도록 테이블 하나만 사용함
+- 정규화(Normalization; 관계형 데이터베이스의 설계에서 중복을 최소화하도록 데이터를 구조화하는 과정)는 하지 않음
+- 테이블 목록
+
+|**No**|**테이블명**|**설명**|
+|---|---|---|
+|1|quiz|퀴즈 정보를 저장함|
+
+- 테이블 정의
+
+|**No**|**칼럼**|**타입**|**제약**|**설명**|
+|---|---|---|---|---|
+|1|id|serial|PK|퀴즈 정보 식별 ID|
+|2|question|text|NOT NULL|퀴즈 내용|
+|3|answer|boolean|NOT NULL|퀴즈 답|
+|4|author|character varying(20)|NOT NULL|작성자|
+
+
+<img src="https://user-images.githubusercontent.com/77138259/229429109-0540e5ca-d028-49be-9257-8a6ef3655b03.png" alt="테이블 생성" />
+
+### 3) 프로젝트 생성
+- [Spring Initializr](./Spring_initializr_사용방법.md)에서 다음 설정 내용을 참조해서 다운로드 후 압축을 해제함
+
+| **항목** | **값** |
+| :--- | :--- |
+| Project | Gradle - Groovy |
+| Language | Java |
+| Spring Boot | 3.0.5 |
+| Artifact | quiz |
+| Packaging | jar |
+| Package name | com.example.quiz |
+| Java | 17 |
+| Dependencies | Spring Boot DevTools(개발 툴)<br>Lombok(개발 툴)<br>Spring Data JDBC<br>PostgreSQL Driver<br>Validation(I/O)<br>Thymeleaf(템플릿 엔진)<br>Spring Web(웹) |
+
+- Spring Boot DevTools:  스프링 부트 개발 툴. 자동 재실행 등 개발에 편리한 기능이 포함되어 있음
+- Lombox(개발 툴): 어노테이션을 부여하는 것으로 getter와 setter 등을 코드로 작성하지 않아도 자동으로 구현해 줌
+- Spring Data JDBC: 스프링 데이터에서 제공하는 OR Mapper임
+- PostgreSQL Driver: PostgreSQL 데이터베이스에 접속하는 데 필요한 드라이버임
+- Validation: 유효성 검사 기능인 'Bean Validation'과 'Hibernate Validator'를 사용할 수 있게 함
+- Thymeleaf: 스프링 부트에서 추천하는 템플릿 엔진
+- Spring Web: 스프링 MVC임
+
+<img src="https://user-images.githubusercontent.com/77138259/229441557-123c78d8-0308-4ea1-8441-568bb9a40d8f.png" alt="spring initializr 화면 구성" />
+
+- IntelliJ IDEA에서 열기로 폴더를 선택함
