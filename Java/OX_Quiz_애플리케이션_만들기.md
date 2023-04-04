@@ -633,3 +633,21 @@ public interface QuizRepository extends CrudRepository<Quiz, Integer> {
 }
 ```
 - `@Query` 어노테이션의 인수에 quiz 테이블의 id 칼ㄹ럼을 랜덤으로 1건 가져오는 SQL을 작성함
+
+3. ServiceImpl 추가
+- `QuizServiceImpl` 클래스에 `@Transactional` 어노테이션을 부여하면 그 클래스의 모든 메서드에 트랜잭션 제어를 할 수 있음
+- `QuizServiceImpl` 클래스에 `@Transactional` 어노테이션을 부여해서 아래와 같이 수정함
+
+>[트랜잭션에 대해 알아보기](./트랜잭션_관리.md)
+
+```java
+// QuizServiceImpl 클래스
+
+... 
+
+@Service  
+@Transactional   // <- 추가
+public class QuizServiceImpl implements QuizService {
+	...
+}
+```
