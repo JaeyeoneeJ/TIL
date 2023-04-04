@@ -870,3 +870,540 @@ public class QuizApplication {
 }
 ```
 
+# 5. 애플리케이션 레이어 만들기
+- 3개의 HTML 파일을 생성할 것임
+	- crud.html: 등록/변경/삭제/참조 화면
+	- play.html: 퀴즈를 랜덤으로 표시하는 화면
+	- answer.html: 해답 화면
+
+## 목록 표시
+### 1) Form 생성
+- Form은 화면에 표시되는 내용과 대응되는 폼을 말함
+>[Form 클래스 확인하러 가기](./입력값을_받는_프로그램_만들기.md)
+
+- '`src/main/java → com.example.quiz`'에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 → 패키지`'를 선택하여 `com.example.quiz.form` 패키지를 생성
+- `com.example.quiz.form` 패키지에서 '`새로 만들기 → Java 클래스`' 선택 및 클래스명을 `QuizForm`으로 지정
+- 클래스 내용을 다음과 같이 입력
+
+```java
+// QuizForm 클래스
+
+package com.example.quiz.form;  
+  
+import jakarta.validation.constraints.NotBlank;  
+import lombok.AllArgsConstructor;  
+import lombok.Data;  
+import lombok.NoArgsConstructor;  
+  
+@Data  
+@NoArgsConstructor  
+@AllArgsConstructor  
+public class QuizForm {  
+    // 식별 ID    private Integer id;  
+    // 퀴즈 내용  
+    @NotBlank  
+    private String question;  
+    // 퀴즈 해답  
+    private Boolean answer;  
+    // 작성자  
+    @NotBlank  
+    private String author;  
+    // 등록 또는 변경 판단용  
+    private Boolean newQuiz;  
+}
+```
+- `@NotBlank`는 단일 항목 검사로 빈(null) 객체를 허용하지 않는 어노테이션임
+>[유효성 검사 확인하러 가기](./유효성_검사.md)
+
+- `crud.html`은 등록과 변경을 표시할 때 내용을 바꿔야 하므로 '등록 또는 변경' 판단용으로 `Boolean` 필드(`newQuiz`)를 만들었음
+- `true`일 때는 등록, `false`일 때는 변경의 뜻으로 사용함
+
+### 2) Controller 생성
+- Controller에서 요청 핸들러 메서드를 생성함
+>[요청 핸들러 메서드 알아보기](./스프링_MVC.md)
+
+- '`src/main/java → com.example.quiz`'에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 → 패키지`'를 선택하여 `com.example.quiz.controller` 패키지를 생성
+- `com.example.quiz.controller` 패키지에서 '`새로 만들기 → Java 클래스`' 선택 및 클래스명을 `QuizController`으로 지정
+- 클래스 내용을 다음과 같이 입력
+```java
+// QuizController 클래스
+
+package com.example.quiz.controller;  
+  
+import com.example.quiz.entity.Quiz;  
+import com.example.quiz.form.QuizForm;  
+import com.example.quiz.service.QuizService;  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.stereotype.Controller;  
+import org.springframework.ui.Model;  
+import org.springframework.web.bind.annotation.GetMapping;  
+import org.springframework.web.bind.annotation.ModelAttribute;  
+import org.springframework.web.bind.annotation.RequestMapping;  
+  
+@Controller  
+@RequestMapping("/quiz")  
+public class QuizController {  
+    // DI 대상  
+    @Autowired  
+    QuizService service;  
+  
+    // form-backing bean의 초기화  
+    @ModelAttribute  
+    public QuizForm setUpForm() {  
+        QuizForm form = new QuizForm();  
+        // 라디오 버튼의 초깃값 설정  
+        form.setAnswer(true);  
+        return form;  
+    }  
+  
+    // Quiz 목록 표시  
+    @GetMapping  
+    public String showList(QuizForm quizForm, Model model) {  
+        // 신규 등록 설정  
+        quizForm.setNewQuiz(true);  
+  
+        // 퀴즈 목록 취득  
+        Iterable<Quiz> list = service.selectAll();  
+  
+        // 표시용 모델에 저장  
+        model.addAttribute("list", list);  
+        model.addAttribute("title", "등록 폼");  
+  
+        return "crud";  
+    }  
+}
+```
+- `@Controller` 어노테이션으로 인스턴스를 생성함
+- `@RequestMapping("/quiz")`를 지정한 클래스의 요청 핸들러 메서드를 호출하는 경우에는 URL에 '/quiz'를 붙임
+- `@Autowired` 어노테이션으로 `QuizService`를 주입하고, 입력 체크를 하기 위해서 `@ModelAttribute` 어노테이션으로 `QuizForm을 form-backing bean`으로 만들 때 라디오 버튼에 초깃값을 설정함
+- `quizForm.setNewQuiz(true)`를 설정해서 등록 화면을 표시함
+- 마지막으로 반환값으로 "crud"를 넘겨주는 것으로 `crud.html`을 표시함
+
+### 3) crud.html 생성
+- `src/main/resources/templates` 폴더에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 => HTML 파일`'를 선택하여 '`crud.html`' 파일 생성
+- 아래와 같이 입력
+```html
+<!-- crud.html -->
+
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.thymeleaf.org">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>OX 퀴즈 애플리케이션: CRUD</title>  
+</head>  
+<body>  
+	<h1>OX 퀴즈 애플리케이션: CRUD</h1>  
+	<h3 th:text="${title}">제목</h3>  
+	<!--등록/변경 완료 메세지-->  
+	<p th:if="${complete}" th:text="${complete}" style="color:blue"></p>  
+	<!--⬇⬇⬇ Form ⬇⬇⬇-->  
+	<form method="POST"  
+	    th:action="${quizForm.newQuiz}? @{/quiz/insert} : @{/quiz/update}" th:object="${quizForm}">  
+	    <label>퀴즈 내용: </label><br>  
+	    <textarea rows="5" cols="50" th:field="*{question}"></textarea>  
+	    <br>    <div th:if="${#fields.hasErrors('question')}" th:errors="*{question}" style="color:red">  
+	    </div>    <label>퀴즈 정답: </label><br>  
+	    <input type="radio" value="true" th:field="*{answer}"> O  
+	    <input type="radio" value="false" th:field="*{answer}"> X  
+	    <br>  
+	    <div th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}" style="color:red"></div>  
+	    <label>작성자: </label><br>  
+	    <input type="text" th:field="*{author}" />  
+	    <br>    <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" style="color:red"></div>  
+	    <input th:if="${id}" type="hidden" th:field="*{id}">  
+	    <input type="submit" value="송신">  
+	</form>  
+	<!--⬆⬆⬆ Form ⬆⬆⬆-->  
+	<br>  
+	<!--===== 여기까지가 상부 영역 =====--><hr>  
+	<!--===== 여기서부터 하부 영역 =====--><!--⬇⬇⬇ 신규 등록할 때만 표시 ⬇⬇⬇-->  
+	<div th:if="${quizForm.newQuiz}" style="margin: 10px">  
+	    <h3>등록된 퀴즈 목록  
+	        <a th:href="@{/quiz/play}">플레이</a><br>  
+	    </h3>    <!--삭제 완료 메세지-->  
+	    <p th:if="${delcomplete}" th:text="${delcomplete}" style="color:blue"></p>  
+	    <p th:if="${msg}" th:text="${msg}" style="color:red"></p>  
+	    <!--⬇⬇⬇ 퀴즈 정보가 있으면 표시 ⬇⬇⬇-->  
+	    <table border="1" th:unless="${#lists.isEmpty(list)}" style="table-layout: fixed;">  
+	        <tr>            <th>ID</th>  
+	            <th>내용</th>  
+	            <th>해답</th>  
+	            <th>작성자</th>  
+	            <th>변경</th>  
+	            <th>삭제</th>  
+	        </tr>        <tr th:each="obj : ${list}" align="center">  
+	            <td th:text="${obj.id}"></td>  
+	            <td th:text="${obj.question}" align="center"></td>  
+	            <td th:text="${obj.answer} == true ? 'O' : 'X'"></td>  
+	            <td th:text="${obj.author}"></td>  
+	            <!--변경 버튼-->  
+	            <td>  
+	                <form method="GET" th:action="@{/quiz/{id}(id=${obj.id})}">  
+	                    <input type="submit" value="변경">  
+	                </form>            </td>            <!--삭제 버튼-->  
+	            <td>  
+	                <form method="POST" th:action="@{/quiz/delete}">  
+	                    <input type="hidden" name="id" th:value="${obj.id}">  
+	                    <input type="submit" value="삭제">  
+	                </form>            </td>        </tr>    </table>    <!--⬆⬆⬆ 퀴즈 정보가 있으면 표시 ⬆⬆⬆-->  
+	    <!--⬇⬇⬇ 퀴즈 정보가 없으면 표시 ⬇⬇⬇-->  
+	    <p th:if="${#lists.isEmpty(list)}">등록된 퀴즈가 없습니다.</p>  
+	    <!--⬆⬆⬆ 퀴즈 정보가 없으면 표시 ⬆⬆⬆-->  
+	</div>  
+	<!--⬆⬆⬆ 신규 등록할 때만 표시 ⬆⬆⬆-->  
+	<!--⬇⬇⬇ 신규 등록이 아닐 때 표시 ⬇⬇⬇-->  
+	<p th:unless="${quizForm.newQuiz}">  
+	    <a href="#" th:href="@{/quiz}">CRUD 화면에 돌아가기</a>  
+	</p>  
+	<!--⬆⬆⬆ 신규 등록이 아닐 때 표시 ⬆⬆⬆-->  
+</body>  
+</html>
+```
+- `<form>` 태그에서 "`${quizForm.newQuiz} ? @{/quiz/insert} : @{/quiz/update}`"로 등록과 변경 처리를 분리하고 있음
+- 같은 `<form>` 태그에서 `th:object="${quizForm}"`을 설정해서 모델에 저장된 Form 클래스의 소문자 카멜케이스를 지정해서 사용함
+- `Form` 클래스의 필드와 관련 짓기 위해 th:field 속성에 "`*{필드명}`"을 지정함
+- `th:if="${quizForm.newQuiz}"`를 사용해서 등록할 때만 표시하는 하부 영역을 작성함. 등록할 때 하부 영역에는 퀴즈 목록 이 표시됨
+- `th:unless="${#lists.isEmpth(list)}"`를 이용해 퀴즈 정보가 있을 경우 퀴즈 목록을 표시함
+- `th:if="${#lists.isEmpty(list)}"`를 사용해서 등록된 퀴즈가 없는 경우 '==등록된 퀴즈가 없습니다=='를 표시
+- `th:action="@{./quiz/{id}(id=${obj.id})}"`에서 URL 경로 안에 { }로 감싼 변수 끝에 ( )를 사용해서 값을 대입함
+
+### 4) quiz 테이블을 초기화함
+- `pgAdmin 4`를 실행해서 `Servers → PostgreSQL XX → Database → quizdb → Schemas → Tables`를 선택함
+- `Tables → quiz`를 선택하고 메뉴바에서 `Tools → Query Tool`을 선택함
+- `Query Editor` 화면에 다음 SQL을 입력함
+```sql
+DELETE FROM quiz;
+SELECT setval('quiz_id_seq', 1, false);
+```
+- quiz 테이블의 데이터를 모두 삭제하고, setval로 quiz 테이블의 id 칼럼의 serial 타입 일련번호를 '1'로 초기화함
+- 실행 버튼을 누르고 `View Data`를 눌러보면 초기화 된 것을 확인할 수 있음
+
+### 5) quiz URL 확인
+- `QuizApplication` 파일을 선택하고 마우스 오른쪽 버튼을 클릭해서 `실행`을 선택함
+- 애플리케이션이 시작된 것을 확인한 후에 브라우저를 열어서 주소 표시줄에 'http://localhost:8080/quiz'를 입력하면 CRUD 화면이 표시됨
+- 상부 영역에는 등록 화면이, 하부 영역에는 목록 화면이 표시됨
+- quiz 테이블을 초기화해서 등록된 퀴즈가 없기 때문에 등록된 퀴즈가 없다는 메세지가 표시됨
+
+<img src="https://user-images.githubusercontent.com/77138259/229710952-78ffa2a7-f997-488b-b261-95222d3186e4.png" alt="실행 결과(CRUD 화면)" />
+## 등록/변경/삭제 기능
+### 1) 등록 기능 만들기
+- Controller에 등록 기능을 작성함
+- 앞의 Form 생성에서 Form의 단일 항목 검사를 설정했으므로 @Validated 어노테이션과 BindingResult 인터페이스를 사용해서 유효성 검사를 완성하겠음
+- QuizController 클래스에 insert 메서드를 추가함
+```java
+// QuizController 클래스
+
+...
+
+@Controller  
+@RequestMapping("/quiz")  
+public class QuizController {
+	...
+	
+	// Quiz 데이터를 1건 등록  
+	@PostMapping("/insert")  
+	public String insert(@Validated QuizForm quizForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {  
+	    // Form에서 Entity로 넣기  
+	    Quiz quiz = new Quiz();  
+	    quiz.setQuestion(quizForm.getQuestion());  
+	    quiz.setAnswer(quizForm.getAnswer());  
+	    quiz.setAuthor(quizForm.getAuthor());  
+	    // 입력 체크  
+	    if (!bindingResult.hasErrors()) {  
+	        service.insertQuiz(quiz);  
+	        redirectAttributes.addFlashAttribute("complete", "등록이 완료되었습니다.");  
+	        return "redirect:/quiz";  
+	    } else {  
+	        // 에러가 발생한 경우에는 목록 표시로 변경  
+	        return showList(quizForm, model);  
+	    }  
+	}
+}
+```
+- `@Validated` 어노테이션을 단일 항목 검사 어노테이션을 설정하는 `Form` 클래스에 부여하면 유효성 검사가 실행되고 실행한 결과(에러 정보)는 `BindingResult` 인터페이스에 저장됨
+- `BindingResult` 인터페이스의 `hasErrors` 메서드의 반환값(true: 에러 있음, false: 에러 없음)으로 결과 확인이 가능함. 에러가 발생한 경우에는 목록 표시 처리를 함
+- 메서드에서 `RedirectAttributes`를 인수로 설정하고 '`redirectAttributes.addFlashAttribute("complete", "등록이 완료되었습니다.")`'로 작성하여 리다이렉트할 화면에 전달할 값을 설정할 수 있음
+- 이것이 `Flash Scope`라는 범위로서 한 번의 리다이렉트에서만 유효한 스코프임
+
+>'quiz/insert' URL 확인
+- CRUD 화면에서 퀴즈 정보 입력을 해보겠음
+- 우선 아무것도 입력하지 않은 상태에서 `송신` 버튼을 클릭해서 입력 체크가 정상적으로 작동하고 에러 메세지가 표시되는 것을 확인함
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229714182-3a976741-0944-4622-a1f9-739975ad93ab.png" alt="확인: 초기 화면" />
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229714207-043541c5-1abb-4462-9585-f4cd7e3b35d7.png" alt="확인: 등록 처리(실패)" />
+</div>
+
+- 이번에는 퀴즈 정보를 입력한 후 `송신` 버튼을 클릭해서 등록이 성공했다는 메세지와 등록한 퀴즈가 목록에 표시되는 것을 확인함
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229714638-4eb05b12-9914-4f7f-ac91-65837cec60ed.png" alt="확인: 초기 화면/입력 중" />
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229714723-e09f1ebb-2e84-4bcf-9efe-d9792cfd85b5.png" alt="확인: 등록 처리(성공)" />
+</div>
+
+### 2) 변경 기능 만들기
+- Controller에 변경 기능을 작성함
+- 우선 지정한 퀴즈 id를 가진 엔티티를 취득해서 변경 화면을 표시하고 변경 처리를 함
+- QuizController 클래스에 변경 기능을 수행하는 메서드를 추가함
+```java
+// QuizController 클래스
+
+...
+
+@Controller  
+@RequestMapping("/quiz")  
+public class QuizController {
+	...
+
+	// Quiz 데이터를 1건 취득해서 폼 안에 표시  
+	@GetMapping("/{id}")  
+	public String showUpdate(QuizForm quizForm, @PathVariable Integer id, Model model) {  
+	    // Quiz를 취득(Optional로 래핑)  
+	    Optional<Quiz> quizOpt = service.selectOneById(id);  
+	    // QuizForm에 채워넣기  
+	    Optional<QuizForm> quizFormOpt = quizOpt.map(t -> makeQuizForm(t));  
+	    // QuizForm이 null이 아니라면 값을 취득  
+	    if (quizFormOpt.isPresent()) {  
+	        quizForm = quizFormOpt.get();  
+	    }  
+	      
+	    // 변경용 모델 생성  
+	    makeUpdateModel(quizForm, model);  
+	    return "crud";  
+	}  
+	  
+	// 변경용 모델 생성  
+	private void makeUpdateModel(QuizForm quizForm, Model model) {  
+	    model.addAttribute("id", quizForm.getId());  
+	    quizForm.setNewQuiz(false);  
+	    model.addAttribute("quizForm", quizForm);  
+	    model.addAttribute("title", "변경 폼");  
+	}  
+	  
+	// id를 키로 사용해 데이터를 변경  
+	@PostMapping("/update")  
+	public String update(  
+	        @Validated QuizForm quizForm,  
+	        BindingResult result,  
+	        Model model,  
+	        RedirectAttributes redirectAttributes) {  
+	    // QuizForm에서 Quiz로 채우기  
+	    Quiz quiz = makeQuiz(quizForm);  
+	    // 입력 체크  
+	    if (!result.hasErrors()) {  
+	        // 변경 처리, Flash scope를 사용해서 리다이렉트 설정  
+	        service.updateQuiz(quiz);  
+	        redirectAttributes.addFlashAttribute("complete", "변경이 완료되었습니다.");  
+	        // 변경 화면을 표시  
+	        return "redirect:/quiz/" + quiz.getId();  
+	    } else {  
+	        // 변경용 모델을 생성  
+	        makeUpdateModel(quizForm, model);  
+	        return "crud";  
+	    }  
+	}  
+	  
+	// --------- 아래는 Form과 도메인 객체를 다시 채우기 ---------
+	// QuizForm에서 Quiz로 다시 채우기, 반환값으로 돌려줌  
+	private Quiz makeQuiz(QuizForm quizForm) {  
+	    Quiz quiz = new Quiz();  
+	    quiz.setId(quizForm.getId());  
+	    quiz.setQuestion(quizForm.getQuestion());  
+	    quiz.setAnswer(quizForm.getAnswer());  
+	    quiz.setAuthor(quizForm.getAuthor());  
+	    return quiz;  
+	}  
+	  
+	// Quiz에서 QuizForm으로 다시 채우기, 반환값으로 돌려줌  
+	private QuizForm makeQuizForm(Quiz quiz) {  
+	    QuizForm form = new QuizForm();  
+	    form.setId(quiz.getId());  
+	    form.setQuestion(quiz.getQuestion());  
+	    form.setAnswer(quiz.getAnswer());  
+	    form.setAuthor(quiz.getAuthor());  
+	    form.setNewQuiz(false);  
+	    return form;  
+	}
+}
+```
+- `showUpdate` 메서드에서 퀴즈 `id`에 대응하는 엔티티를 취득함
+- `map` 메서드는 `Optional` 메서드로 값이 있을 때만 그 값으로 채움
+- `map(t -> makeQuizForm(t))`로 람다식 표기를 함
+- `makeQuizForm` 메서드를 사용해서 `Quiz`에서 `QuizForm`으로 값을 채워 넣음
+- `makeUpdateModel`은 변경 화면을 만들기 위한 메서드임
+- `update` 메서드는 등록 기능의 `insert` 메서드와 같은 역할을 함
+
+>'quiz/{id} URL 확인'
+- CRUD 화면 하부 영역의 목록에서 변경하고 싶은 퀴즈 정보 레코드의 `변경` 버튼을 클릭하면 변경 화면이 표시됨
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229719692-8c332c05-e754-4ef4-8e5a-1cf561088b5f.png" alt="확인: 초기 화면" />
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229719796-5b1b4225-d920-4bf1-871c-d1b643270c75.png" alt="확인: 변경 화면 표시" />
+</div>
+
+>'quiz/update' URL ghkrdls
+- 변경 화면에서 퀴즈 정보를 다 지우고 `송신` 버튼을 클릭하면 입력 체크에서 걸려서 에러 메세지가 표시됨
+<img src="https://user-images.githubusercontent.com/77138259/229720178-a1040c7e-f1f7-4c9d-b759-6b728984e0b1.png" alt="변경 처리(실패)" />
+
+- 다시 변경 내용을 입력하고 `송신` 버튼을 클릭하면 변경이 성공하고 메세지가 표시됨
+- CRUD 화면으로 돌아오면 목록에 변경된 내용이 반영되어 있음
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229720679-09640961-fe5e-4e60-87a6-45a32db1dfec.png" alt="변경 처리(진행 중)" />
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229720766-54acf19e-075a-43f2-8614-5247b8bac380.png" alt="변경 처리(성공)" />
+</div>
+<img src="https://user-images.githubusercontent.com/77138259/229721072-fdc7df8b-21cd-43bf-abcd-5bc4ee42f6de.png" alt="CRUD 화면" />
+
+### 3) 삭제 기능 만들기
+- `Controller`에 삭제 기능을 추가함
+- 지정한 퀴즈 id의 퀴즈 정보를 삭제함. 삭제하면 목록에서 레코드가 사라짐
+- `QuizController` 클래스에 `delete` 메서드를 추가함
+```java
+// QuizController 클래스
+
+...
+
+@Controller  
+@RequestMapping("/quiz")  
+public class QuizController {
+	...
+	// id를 키로 사용해 데이터를 삭제  
+	@PostMapping("/delete")  
+	public String delete(  
+	        @RequestParam("id") String id,  
+	        Model model,  
+	        RedirectAttributes redirectAttributes) {  
+	    // 퀴즈 정보를 1건 삭제하고 리다이렉트  
+	    service.deleteQuizById(Integer.parseInt(id));  
+	    redirectAttributes.addFlashAttribute("delcomplete", "삭제 완료했습니다.");  
+	    return "redirect:/quiz";  
+	}
+}
+```
+- 마지막 줄의 'redirect:' 의 반환값으로 리다이렉트됨
+
+>'quiz/delete URL 확인'
+- 테스트를 위해 2개 값을 추가로 넣음
+- CRUD 화면 하부 영역의 목록에서 삭제하고 싶은 퀴즈 정보 레코드에서 `삭제` 버튼을 클릭하면 퀴즈 정보가 삭제되고 목록에서 사라짐
+- 삭제가 성공하면 성공 메세지가 표시됨
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229723051-bd5639e8-5173-4a29-8b31-8766c09c69c7.png" alt="확인: 초기 화면" />
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229723395-e7fa8885-51bc-4352-a8a7-354f048b9585.png" alt="확인: 삭제 처리(성공)" />
+</div>
+
+
+## 게임 기능
+### 1) play.html 생성
+- `src/main/resources/templates` 폴더에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 => HTML 파일`'를 선택하여 '`play.html`' 파일 생성
+- 아래와 같이 입력
+```html
+<!-- play.html -->
+
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.thymeleaf.org">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>OX 퀴즈 애플리케이션: PLAY</title>  
+</head>  
+<body>  
+	<h1>OX 퀴즈 애플리케이션: PLAY</h1>  
+	<h3>퀴즈</h3>  
+	<th:block th:if="${msg}">  
+	    <p th:text="${msg}" style="color: red"></p>  
+	    <a href="@{/quiz/}">CRUD 화면에 돌아가기</a>  
+	</th:block>  
+	<th:block th:unless="${msg}">  
+	    <p th:text="${quizForm.question}">퀴즈 내용</p>  
+	    <form th:action="@{/quiz/check}" th:object="${quizForm}" method="POST">  
+	        <input type="hidden" th:field="*{id}">  
+	        <button name="answer" value="true">O</button>  
+	        <button name="answer" value="false">X</button>  
+	    </form>
+	</th:block>  
+</body>  
+</html>
+```
+- `${msg}` 값의 유무로 처리가 나뉨
+- `${msg}`에 값이 있으면 '`등록된 문제가 없습니다.`'가 표시되고, `${msg}`에 값이 없으### 2) 면 랜덤으로 가져온 퀴즈가 표시됨
+
+### 2) answer.html 생성
+- `src/main/resources/templates` 폴더에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 => HTML 파일`'를 선택하여 '`answer.html`' 파일 생성
+- 아래와 같이 입력
+```html
+<!-- answer.html -->
+
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.thymeleaf.org">  
+<head>  
+  <meta charset="UTF-8">  
+  <title>OX 퀴즈 애플리케이션: 해답</title>  
+</head>  
+<body>  
+	<h1>OX 퀴즈 애플리케이션: 해답</h1>  
+	<h2 th:text="${msg}" style="color:red">메세지 표시 영역</h2>  
+	<a th:href="@{/quiz/play}">리플레이</a><br>  
+	<a th:href="@{/quiz}">CRUD 화면에 돌아가기</a>  
+</body>  
+</html>
+```
+- `${msg}`에서 퀴즈 정답/오답을 표시함
+
+### 3) 게임 기능 작성
+- `QuizController` 클래스에 게임 기능을 수행하는 메서드를 추가함
+```java
+// QuizController 클래스
+
+...
+
+@Controller  
+@RequestMapping("/quiz")  
+public class QuizController {
+	...
+	
+	// Quiz 데이터를 랜덤으로 한 건 가져와 화면에 표시  
+	@GetMapping("/play")  
+	public String showQuiz(QuizForm quizForm, Model model) {  
+	    // Quiz 정보 취득(Optional으로 래핑)  
+	    Optional<Quiz> quizOpt = service.selectOneRandomQuiz();  
+	  
+	    // 값이 있는지 확인  
+	    if (quizOpt.isPresent()) {  
+	        // QuizForm으로 채우기  
+	        Optional<QuizForm> quizFormOpt = quizOpt.map(t -> makeQuizForm(t));  
+	        quizForm = quizFormOpt.get();  
+	    } else {  
+	        model.addAttribute("msg", "등록된 문제가 없습니다.");  
+	        return "play";  
+	    }  
+	  
+	    // 표시용 모델에 저장  
+	    model.addAttribute("quizForm", quizForm);  
+	  
+	    return "play";  
+	}  
+	  
+	// 퀴즈의 정답/오답 판단  
+	@PostMapping("/check")  
+	public String checkQuiz(QuizForm quizForm, @RequestParam Boolean answer, Model model) {  
+	    if (service.checkQuiz(quizForm.getId(), answer)) {  
+	        model.addAttribute("msg", "정답입니다!");  
+	    } else {  
+	        model.addAttribute("msg", "오답입니다..");  
+	    }  
+	    return "answer";  
+	}
+}
+```
+- `showQuiz` 메서드에서 랜덤으로 퀴즈를 가져와 표시함
+- 등록된 퀴즈가 없는 경우에는 '`등록된 문제가 없습니다`' 라는 메세지를 설정함
+- `checkQuiz` 메서드에서 퀴즈의 정답/오답을 판정함
+- 대부분의 처리는 앞에서 주입(인젝션)한 `QuizService`에 위임함
+
+>'quiz/play' URL 확인
+- CRUD 화면 하부 영역의 '플레이' 링크를 클릭하면 퀴즈 화면이 표시됨
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229728710-f0f57c5c-9f30-45cc-bd01-32f6af05e275.png" alt="초기 화면 플레이 버튼 위치" />
+<img style="width:50%; height:auto" src="https://user-images.githubusercontent.com/77138259/229728843-d3defdf3-f8fb-4d71-b390-9d3376ff394c.png" alt="퀴즈 화면 표시" />
+</div>
+
+<div style="display:flex; width:100%; box-sizing:border-box">
+<img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229729487-3b454d99-19ea-49dd-9ada-fb46fcba3b54.png" alt="해답 화면 표시(정답)" />
+<img style="width:50%; height:auto" src="https://user-images.githubusercontent.com/77138259/229729755-3164c7a9-2884-448b-ad90-84fb1528bf26.png" alt="해답 화면 표시(오답)" />
+</div>
+
