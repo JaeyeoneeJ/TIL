@@ -493,3 +493,143 @@ private void execute() {
 - 동시에 데이터베이스에서 데이터가 삭제된 것을 확인할 수 있음
 <img src="https://user-images.githubusercontent.com/77138259/229657462-33cb7ec8-1d24-42aa-84e2-82c2fe534399.png" alt="실행 결과(quiz 테이블)" />
 
+# 4. 비즈니스 로직 처리
+- 현재 등록한 퀴즈 중 1건을 받아오는 기능은 위에서 만들었기 때문에 1건을 받아올 때 인수로 전달되는 값을 랜덤으로 생성하는 방법을 구현해야 함
+
+### 1) 비즈니스 로직 처리 만들기
+1. Service 생성
+- Service는 인터페이스임
+- 인터페이스에서는 메서드의 구체적인 처리 내용을 작성하지 않는 '추상 메서드'를 작성함
+- '`src/main/java → com.example.quiz`'에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 → 패키지`'를 선택하여 `com.example.quiz.service` 패키지를 생성
+- `com.example.quiz.service` 패키지에서 '`새로 만들기 → Java 클래스`' 선택 및 인터페이스명을 `QuizService`로 지정
+- 인터페이스 내용을 다음과 같이 입력
+
+```java
+// QuizService 인터페이스
+
+package com.example.quiz.service;  
+  
+import com.example.quiz.entity.Quiz;  
+  
+import java.util.Optional;  
+  
+// Quiz 서비스: service  
+public interface QuizService {  
+    // 등록된 모든 퀴즈 정보를 가져옴  
+    Iterable<Quiz> selectAll();  
+    // id를 키로 사용해 퀴즈 정보를 한 건 가져옴  
+    Optional<Quiz> selectOneById(Integer id);  
+    // 퀴즈 정보를 랜덤으로 한 건 가져옴  
+    Optional<Quiz> selectOneRandomQuiz();  
+    // 퀴즈의 정답/오답 여부를 판단함  
+    Boolean checkQuiz(Integer id, Boolean myAnswer);  
+    // 퀴즈를 등록함  
+    void insertQuiz(Quiz quiz);  
+    // 퀴즈를 변경함  
+    void updateQuiz(Quiz quiz);  
+    // 퀴즈를 삭제함  
+    void deleteQuizById(Integer id);  
+}
+```
+- `QuizService` 인터페이스에서는 추상 메서드를 작성함
+- 위의 `작성할 기능 목록` 중 `게임 기능`에서 사용할 메서드로서, 퀴즈 정보를 랜덤으로 한 건 가져오는 `selectOneRandomQuiz` 메서드, 퀴즈의 정답/오답을 판단하는 `checkQuiz` 메서드와 CRUD를 처리하는 메서드임
+
+2. ServiceImpl 생성
+- 앞에서 작성한 인터페이스를 구현할 `ServiceImpl`을 생성하겠음
+- '`src/main/java → com.example.quiz.service`'에서 마우스 오른쪽 버튼을 클릭해 '`새로 만들기 → Java 클래스`' 선택 및 클래스명을 `QuizServiceImpl`로 지정
+- `QuizServiceImpl` 클래스의 내용을 다음과 같이 입력
+```java
+// QuizServiceImpl 클래스
+
+package com.example.quiz.service;  
+  
+import com.example.quiz.entity.Quiz;  
+import com.example.quiz.repository.QuizRepository;  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.stereotype.Service;  
+  
+import java.util.Optional;  
+  
+@Service  
+public class QuizServiceImpl implements QuizService {  
+    // Repository: 인젝션  
+    @Autowired  
+    QuizRepository repository;  
+  
+    @Override  
+    public Iterable<Quiz> selectAll() {  
+        return repository.findAll();  
+    }  
+  
+    @Override  
+    public Optional<Quiz> selectOneById(Integer id) {  
+        return repository.findById(id);  
+    }  
+  
+    @Override  
+    public Optional<Quiz> selectOneRandomQuiz() {  
+        // 랜덤으로 id 값을 가져오기  
+        Integer randId = repository.getRandomId(); // <- 현재 오류  
+  
+        // 퀴즈가 없는 경우  
+        if (randId == null) {  
+            // 빈 Optional 인스턴스를 반환  
+            return Optional.empty();  
+        }  
+        return repository.findById(randId);  
+    }  
+      
+    @Override  
+    public Boolean checkQuiz(Integer id, Boolean myAnswer) {  
+        // 퀴즈 정답/오답 판단용 변수  
+        Boolean check = false;  
+        // 대상 퀴즈를 가져오기  
+        Optional<Quiz> optQuiz = repository.findById(id);  
+        // 퀴즈를 가져왔는지 확인  
+        if (optQuiz.isPresent()) {  
+            Quiz quiz = optQuiz.get();  
+            // 퀴즈 정답 확인  
+            if (quiz.getAnswer().equals(myAnswer)) {  
+                check = true;  
+            }  
+        }  
+        return check;  
+    }  
+      
+    @Override  
+    public void insertQuiz(Quiz quiz) {  
+        repository.save(quiz);  
+    }  
+      
+    @Override  
+    public void updateQuiz(Quiz quiz) {  
+        repository.save(quiz);  
+    }  
+      
+    @Override  
+    public void deleteQuizById(Integer id) {  
+        repository.deleteById(id);  
+    }  
+}
+```
+- `@Service` 어노테이션을 클래스에 부여해서 인스턴스 생성 대상으로 지정함
+- `@Autowired`로 `QuizRepository`를 주입(인젝션)함
+- `selectOneRandomQuiz` 메서드에서 퀴즈 정보를 랜덤으로 한 건 가져오는 내요응ㄹ 작성함
+- `getRandomId` 메서드는 `CrudRepository`를 상속해서 사용하는 메서드가 아니라 별도로 작성해야 하는 메서드임(==현재는 작성하지 않았기 때문에 에러가 표시될 것임==)
+- `checkQuiz` 메서드에서 퀴즈의 정답/오답을 판단하는 내용을 작성함
+- 그 밖의 메서드는 `QuizRepository`에 처리를 위임함
+
+3. RepositoryImpl에 추가
+- `CrudRepository`에 없는 메서드는 해당 메서드에 `@Query` 어노테이션을 부여해서 어노테이션의 인수에 SQL을 추가하는 것으로 정의할 수 있음
+- `QuizRepository` 인터페이스에 아래 메서드를 추가함
+```java
+// QuizRepository 인터페이스
+
+...
+
+public interface QuizRepository extends CrudRepository<Quiz, Integer> {  
+    @Query("SELECT id FROM quiz ORDER BY RANDOM() limit 1")  
+    Integer getRandomId();  
+}
+```
+- `@Query` 어노테이션의 인수에 quiz 테이블의 id 칼ㄹ럼을 랜덤으로 1건 가져오는 SQL을 작성함
