@@ -3,3 +3,6 @@
 - [Table](./Table.md)
 - [SQL](./SQL.md)
 - [Entity와_Repository](Entity와_Repository.md)
+- [MySQL 설치 및 초기 설정 for Mac](./MySQL_설치_및_초기_설정_for_Mac.md)
+- [MySQL 기본 명령어](./MySQL_기본_명령어.md)
+- [DBeaver 설치 및 사용법](DBeaver_설치_및_사용법.md)
