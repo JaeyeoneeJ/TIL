@@ -166,7 +166,8 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor  
 @AllArgsConstructor  
 public class Quiz {  
-    // 식별 ID    @Id  
+    // 식별 ID
+    @Id  
     private Integer id;  
     // 퀴즈 내용  
     private String question;  
@@ -255,7 +256,8 @@ public class QuizApplication {
       setup();  
    }  
      
-   // == 퀴즈 2건을 등록함 ==   private void setup() {  
+   // == 퀴즈 2건을 등록함 ==
+   private void setup() {  
       // 엔티티 생성  
       Quiz quiz1 = new Quiz(null, "Spring은 프레임워크입니까?", true, "홍길동");  
       // 등록 실행  
@@ -344,7 +346,8 @@ public class QuizApplication {
 	// == 한 건 데이터 취득 ==
 	private void showOne() {  
 	   System.out.println("--- 1건 취득 개시 ---");  
-	   // 리포지토리를 사용해서 1건의 데이터를 취득해서 결과를 반환(반환값은 Optional)   Optional<Quiz> quizOpt = repository.findById(1);  
+	   // 리포지토리를 사용해서 1건의 데이터를 취득해서 결과를 반환(반환값은 Optional)   
+	   Optional<Quiz> quizOpt = repository.findById(1);  
 	   // 반환값이 있는지 확인  
 	   if (quizOpt.isPresent()) {  
 	      System.out.println(quizOpt.get());  
@@ -632,7 +635,7 @@ public interface QuizRepository extends CrudRepository<Quiz, Integer> {
     Integer getRandomId();  
 }
 ```
-- `@Query` 어노테이션의 인수에 quiz 테이블의 id 칼ㄹ럼을 랜덤으로 1건 가져오는 SQL을 작성함
+- `@Query` 어노테이션의 인수에 quiz 테이블의 id 칼럼을 랜덤으로 1건 가져오는 SQL을 작성함
 
 3. ServiceImpl 추가
 - `QuizServiceImpl` 클래스에 `@Transactional` 어노테이션을 부여하면 그 클래스의 모든 메서드에 트랜잭션 제어를 할 수 있음
