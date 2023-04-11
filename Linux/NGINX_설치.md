@@ -131,3 +131,8 @@ proxy_intercept_errors on;
 ### 2) 서버 블록 생성
 - 현재 가지고 있는 도메인과 jar 파일을 이용하기 위해서 기본 구성 파일을 수정해 서버 블록을 생성해주겠음
 - 
+
+<hr>
+### ref
+- https://libertegrace.tistory.com/entry/NGINX-1
+- https://velog.io/@u-nij/Spring-Boot-Nginx-%EC%97%B0%EB%8F%99%ED%95%B4%EC%84%9C-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0
