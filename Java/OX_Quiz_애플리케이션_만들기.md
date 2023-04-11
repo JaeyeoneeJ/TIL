@@ -902,7 +902,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor  
 @AllArgsConstructor  
 public class QuizForm {  
-    // 식별 ID    private Integer id;  
+    // 식별 ID
+    private Integer id;  
     // 퀴즈 내용  
     @NotBlank  
     private String question;  
@@ -1241,7 +1242,7 @@ public class QuizController {
 <img style="width:50%" src="https://user-images.githubusercontent.com/77138259/229719796-5b1b4225-d920-4bf1-871c-d1b643270c75.png" alt="확인: 변경 화면 표시" />
 </div>
 
->'quiz/update' URL ghkrdls
+>'quiz/update' URL 확인
 - 변경 화면에서 퀴즈 정보를 다 지우고 `송신` 버튼을 클릭하면 입력 체크에서 걸려서 에러 메세지가 표시됨
 <img src="https://user-images.githubusercontent.com/77138259/229720178-a1040c7e-f1f7-4c9d-b759-6b728984e0b1.png" alt="변경 처리(실패)" />
 
