@@ -6,3 +6,5 @@
 - [AWS EC2 RAM 늘리기(스왑)](./AWS_EC2_RAM_늘리기(스왑).md)
 - [NGINX_설치](./NGINX_설치.md)
 - [EC2_도메인_연결](./EC2_도메인_연결.md)
+- [네이버 클라우드 플랫폼 도메인 연결](./네이버_클라우드_플랫폼_도메인_연결.md)
+- [Nginx에 SSL(HTTPS) 적용하기](./Nginx에_SSL(HTTPS)_적용하기.md)
