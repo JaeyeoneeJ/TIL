@@ -118,3 +118,33 @@ show databases;
 5 rows in set (0.00 sec)
 ```
 
+### Database 삭제
+```mysql
+DROP DATABASE database_name;
+```
+
+### Table 생성
+```mysql
+create table table_name (
+    id bigint auto_increment primary key not null,
+    account_id varchar(255) not null,
+    name varchar(255) not null,
+    age int not null
+    );
+```
+- id에 큰 정수, auto_increment로 자동 증가, primary key로 고유 키값임
+- account_id와 name은 문자열이며, age는 일반 정수임
+- 모든 컬럼에 not null을 줌
+
+- 생성한 테이블의 컬럼을 보려면 아래 명령어 사용
+```mysql
+USE database_name;
+DESC table_name;
+```
+
+### Table 이름 변경
+```mysql
+RENAME TABLE old_table TO new_table;
+```
+
+

@@ -59,7 +59,7 @@ By default, a MySQL installation has an anonymous user, allowing anyone to log i
 You should remove them before moving into a production environment.
 ```
 - 기본적으로 MySQL 설치에는 익명의 사용자가 있어 로그인 없이 누구나 MySQL에 접근할 수 있는 익명 계정이 있음
-- 익명 사용자를 제거하기 위해 n 입력
+- 익명 사용자를 제거하기 위해 y 입력
 
 ### 4) 원격 접속 허용 여부
 ```

@@ -130,7 +130,148 @@ proxy_intercept_errors on;
 
 ### 2) 서버 블록 생성
 - 현재 가지고 있는 도메인과 jar 파일을 이용하기 위해서 기본 구성 파일을 수정해 서버 블록을 생성해주겠음
-- 
+- 명령어 `sudo vi /etc/nginx/sites-available/{domain}` 입력 후, 아래 코드를 복사해 붙여넣어 줌
+	- `{domain}` : '.com', '.co.kr' 등이 포함되어 있어야 함
+	- http:// 빼주자. 이것때문에 vi 에디터가 can't open file for writing이 계속 떴다.
+```vi
+server { # server 블록
+	listen 80;
+
+    server_name {domain} www.{domain};
+    
+    access_log /var/log/nginx/proxy/access.log;
+    error_log /var/log/nginx/proxy/error.log;
+
+    location / { # location 블록
+        include /etc/nginx/proxy_params;
+        proxy_pass http://{퍼블릭IP주소}:8080;	# reverse proxy의 기능
+    }
+}
+```
+- location 블록의 `proxy_pass`를 통해 8080번 포트를 통해 접속해야 볼 수 있는 화면(Spring Boot 프로젝트 화면)을 80번(HTTP) 포트에 접속했을 때 확인할 수 있도록 설정함
+- 즉, `Reverse proxy`의 기능을 하게 할 수 있음
+
+> Server 블록
+> 
+> Nginx는 이제 listen 지시문에 의해 포트번호 80으로 들어오는 요청들에 대해 server_name 값과 정확하게 일치하는 서버 블록을 찾으려고 시도할 것임
+> 
+> 참고: server_name을 추가할 때, 해시 버킷 메모리 문제가 발생할 수 있음. 이를 방지하기 위해 `/etc/nginx/nginx.conf` 파일에서 옵션을 조정해주겠음
+```bash
+sudo vi /etc/nginx/nginx.conf
+```
+<img src="https://user-images.githubusercontent.com/77138259/231065817-4cd59411-1a0f-4fb2-a5c9-73254a64d61f.png" alt="nginx.conf" />
+
+### 3) 새로 생성한 파일 활성화
+- 이제 `sites-available` 디렉토리로부터 `site-enabled` 디렉토리에 대한 링크를 생성해 파일을 활성화해보겠음
+```bash
+sudo ln -s /etc/nginx/sites-available/{domain} /etc/nginx/sites-enabled/
+```
+
+### 4) 기본 구성 파일 삭제
+- `sites-available` 디렉토리로부터 `site-enabled` 디렉토리에서 명령어 `ls -al`을 실행해보면 원래 nginx 서버를 연결하던 default 파일이 새로 생성한 파일과 함께 보임
+```bash
+ls -al /etc/nginx/sites-available
+ls -al /etc/nginx/sites-enabled
+```
+
+<img src="https://user-images.githubusercontent.com/77138259/231066540-5bae2535-898b-41e4-aece-e2bc8142a091.png" alt="nginx.conf" />
+- 이대로 연결할 경우 에러가 발생하기 때문에 default 파일을 삭제해주겠음
+```bash
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
+```
+
+### 5) Nginx 재시작
+- Nginx에 대해 구문 오류가 없는지 테스트하고, Spring Boot 프로젝트와 함께 재시작해보자
+```bash
+sudo nginx -t
+# nginx: [warn] could not build optimal proxy_headers_hash, you should increase either proxy_headers_hash_max_size: 512 or proxy_headers_hash_bucket_size: 64; ignoring proxy_headers_hash_bucket_size
+# nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+# nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+- 나의 경우 위와 같은 경고문이 출력되었음
+- 현재 nginx가 참고하고 있는 nginx.conf는 `/etc/nginx/nginx.conf`이므로 해당 경로의 파일을 수정해주자
+```bash
+sudo vi /etc/nginx/nginx.conf
+```
+```vi
+...
+http {
+	...
+	
+	##
+	# proxy 설정 추가
+	##
+
+	proxy_headers_hash_max_size 51200;
+	proxy_headers_hash_bucket_size 6400;
+}
+```
+- 위의 숫자는 원하는 숫자를 넣어도 상관 없음(나의 경우, 기존 숫자보다 100배씩 해줬음)
+- 다시 테스트를 해보면 정상적으로 뜨는 것을 확인할 수 있음
+```bash
+sudo nginx -t
+# nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+# nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+- nginx를 재부팅 함
+```bash
+sudo service nginx reload
+```
+
+## Nginx default 설정
+- 이것저것 귀찮으면 아래 대로 진행하면 됨
+```bash
+sudo vi /etc/nginx/sites-available/default
+```
+
+```vi
+...
+
+server {
+	...
+	location / {
+                proxy_pass http://localhost:8080;    # <- 위에 4줄 추가
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+  
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                # try_files $uri $uri/ =404;   # <- 주석처리
+        }
+	...
+}
+```
+
+- 참고로 파일 수정 전에 반드시 백업을 해두는 것이 좋음
+```bash
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup
+```
+- 이렇게 백업을 미리 해두면 설정 파일을 수정한 후에 오류가 발생할 경우, 백업 파일을 복원하여 이전 상태로 되돌릴 수 있음
+
+## Nginx 연결 오류
+- 실행중인 오류 목록을 보려면 항상 Nginx 오류 로그를 참조할 수 있음
+```bash
+sudo cat /var/log/nginx/error.log
+```
+
+### 방화벽 설정
+- 루트 또는 sudo 권한이 있는 사용자만 시스템 방화벽을 관리할 수 있음
+- Ubuntu 20.04에는 기본적으로 UFW가 시스템 내부에 설치되어 있음. 만약 설치되지 않은 경우 패키지를 설치해야 함
+```bash
+sudo apt update
+sudo apt install ufw
+```
+
+- UFW는 기본적으로 비활성화되어 있음. 다음 명령어로 UFW 서비스 상태를 확인할 수 있음
+```bash
+sudo ufw status verbose
+# Status: inactive <- 비활성화 되어있는 상태
+```
+
+
 
 <hr>
 ### ref
