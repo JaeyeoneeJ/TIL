@@ -24,7 +24,7 @@ sudo apt remove certbot
 sudo snap install --classic certbot
 
 # certbot 명령을 로컬에서 실행할 수 있도록 snap의 certbot 파일을 로컬의 cerbot과 링크(연결) 시켜준다. -s 옵션은 심볼릭링크를 하겠다는 것.
-ln -s /snap/bin/certbot /usr/bin/certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
 - 처음에 긴급갱신 및 보안 공지 시에 사용하기 위해 이메일을 입력하라고 뜨므로 본인 이메일 입력

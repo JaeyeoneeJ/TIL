@@ -123,6 +123,12 @@ show databases;
 DROP DATABASE database_name;
 ```
 
+### Database 사용
+```mysql
+use database_name;
+# Database changed
+```
+
 ### Table 생성
 ```mysql
 create table table_name (
@@ -142,9 +148,64 @@ USE database_name;
 DESC table_name;
 ```
 
+### Table 내 데이터 확인
+```mysql
+select * from user;
+```
+
 ### Table 이름 변경
 ```mysql
 RENAME TABLE old_table TO new_table;
 ```
 
+## time_zone 설정
+- mysql 서버에 로그인 함
+- 다음 쿼리를 실행해서 현재 시간대를 확인함
+```mysql
+SELECT @@global.time_zone;
+```
 
+- 시간대를 변경하려면 아래와 같이 입력함(아시아 서울)
+```mysql
+SET GLOBAL time_zone = 'Asia/Seoul';
+```
+
+- 변경된 시간대를 확인하기 위해 다시 쿼리를 실행
+```mysql
+SELECT @@global.time_zone;
+# +--------------------+
+# | @@global.time_zone |
+# +--------------------+
+# | Asia/Seoul         |
+# +--------------------+
+# 1 row in set (0.00 sec)
+```
+
+### ERROR 1298 (HY000): Unknown or incorrect time zone: 'Asia/Seoul' 처리
+- 이 오류는 MySQL 서버가 지정된 타임존 이름을 인식하지 못해서 발생할 수 있음
+- MySQL에서 사용할 수 있는 시간대 이름 목록은 시스템의 `zoneinfo` 데이터베이스에서 가져오기 때문에 해당 시스템에서 사용 가능한 시간대만 사용할 수 있음
+- `Asia/Seoul` 타임존이 인식되지 않는 경우에는 다음과 같이 해결할 수 있음
+
+1. 시스템에 `tzdata` 패키지가 설치되어 있는지 확인합니다. 만약 설치되어 있지 않다면 다음 명령어를 사용하여 설치
+```bash
+sudo apt-get install tzdata
+```
+
+2. `mysql_tzinfo_to_sql` 유틸리티를 사용하여 `zoneinfo` 데이터베이스를 업데이트
+```bash
+mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql -p
+# Enter password:           # <- mysql의 root 비밀번호 입력
+
+# Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+# Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+# Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+# Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+```
+- `mysql_tzinfo_to_sql` 명령어가 실행되면 MySQL 서버가 사용할 수 있는 `zoneinfo` 데이터베이스를 생성함
+
+3. 다시 시간대를 설정
+- mysql에 다시 로그인 후 아래 명령어 입력
+```mysql
+SET GLOBAL time_zone='Asia/Seoul';
+```
+- 이제 `Asia/Seoul` 타임존을 사용할 수 있음
