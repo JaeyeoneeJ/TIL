@@ -271,7 +271,19 @@ sudo ufw status verbose
 # Status: inactive <- 비활성화 되어있는 상태
 ```
 
+## Nginx 제거
+- nginx를 완전히 제거하려면 아래 명령어를 사용함
+```bash
+sudo apt-get purge nginx nginx-common
+```
 
+- 위 명령어는 nginx 패키지와 관련된 모든 설정 파일과 의존성 패키지도 함께 제거함
+- 만약, nginx 설정 파일이나 기타 관련 파일을 남겨두고 싶다면 `purge` 대신 `remove`를 사용하면 됨
+
+- 이후에는 `apt-get autoremove` 명령어를 사용하여 더 이상 필요하지 않은 의존성 패키지를 자동으로 제거할 수 있음
+```bash
+sudo apt-get autoremove
+```
 
 <hr>
 ### ref
