@@ -129,7 +129,7 @@ use database_name;
 # Database changed
 ```
 
-### Table 생성
+## Table 생성
 ```mysql
 create table table_name (
     id bigint auto_increment primary key not null,
@@ -150,12 +150,55 @@ DESC table_name;
 
 ### Table 내 데이터 확인
 ```mysql
-select * from user;
+select * from table_name;
 ```
+
+### Table에 칼럼 추가
+- table 내에 칼럼을 추가하려면 `ALTER TABLE` 문을 사용함
+- 아래는 `new_column`이라는 새로운 칼럼을 추가하는 예제임
+```mysql
+ALTER TABLE table_name ADD COLUMN new_column varchar(255) NOT NULL DEFAULT 'default_value';
+```
+- 위의 예제에서 `new_column`은 추가할 칼럼의 이름임
+- `varchar(255)`는 데이터 타입임
+- `NOT NULL`은 칼럼이 null 값을 허용하지 않음을 뜻함
+- `DEFAULT 'default_value'`는 새로운 레코드를 추가할 때 기본값으로 `default_value`를 사용함을 의미함. 위 문장에서 `DEFAULT` 절은 생략 가능함
+- 이렇게 하면 `videos` 테이블에 `new_column`이라는 칼럼이 추가됨
 
 ### Table 이름 변경
 ```mysql
 RENAME TABLE old_table TO new_table;
+```
+
+### Table에 데이터 추가
+- 만약에 아래와 같은 테이블이 있다고 가정하자
+```mysql
+desc videos;
+# +----------+--------------+------+-----+---------+----------------+
+# | Field    | Type         | Null | Key | Default | Extra          |
+# +----------+--------------+------+-----+---------+----------------+
+# | id       | bigint       | NO   | PRI | NULL    | auto_increment |
+# | title    | varchar(255) | NO   |     | NULL    |                |
+# | voice_kr | varchar(255) | NO   |     | NULL    |                |
+# | voice_en | varchar(255) | NO   |     | NULL    |                |
+# | bg       | varchar(255) | NO   |     | NULL    |                |
+# +----------+--------------+------+-----+---------+----------------+
+# 5 rows in set (0.01 sec)
+```
+
+- 여기에 데이터를 한 개 추가한다면 다음 쿼리문을 통해 추가할 수 있음
+```mysql
+INSERT INTO videos (title, voice_kr, voice_en, bg)
+VALUES ('더미 제목', '한국어 발음', '영어 발음', '배경 이미지');
+# Query OK, 1 row affected (0.00 sec)
+```
+- id 값은 auto_increment이며 Primary Key 이므로 값을 지정하지 않아도 유일한 값으로 자동 생성되기 때문에 인자로 넣지 않음
+- 만약에 여러 데이터를 한번에 추가하고 싶다면 아래와 같이 작성할 수 있음
+```mysql
+INSERT INTO videos (title, voice_kr, voice_en, bg) VALUES
+('Title 1', 'Korean Voice 1', 'English Voice 1', 'Background Music 1'),
+('Title 2', 'Korean Voice 2', 'English Voice 2', 'Background Music 2'),
+('Title 3', 'Korean Voice 3', 'English Voice 3', 'Background Music 3');
 ```
 
 ## time_zone 설정
