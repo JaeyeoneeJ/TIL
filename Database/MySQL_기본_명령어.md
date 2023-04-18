@@ -203,7 +203,36 @@ mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql -p
 ```
 - `mysql_tzinfo_to_sql` 명령어가 실행되면 MySQL 서버가 사용할 수 있는 `zoneinfo` 데이터베이스를 생성함
 
-3. 다시 시간대를 설정
+> **Warning 해석**
+> 
+> - 이러한 경고 메시지는 `mysql_tzinfo_to_sql` 명령어가 `/usr/share/zoneinfo` 디렉토리에서 시간대 정보를 가져오는 동안, 해당 디렉토리의 일부 파일들이 시간대 정보가 아니기 때문에 무시되었다는 것을 나타냄
+> 
+> - `iso3166.tab` 파일은 국가 코드와 국가 이름을 매핑하는 파일임. 이 파일은 시간대 정보가 아니기 때문에 무시해도 됨
+> 
+> - `leapseconds` 파일은 윤초 정보를 나타냄. MySQL 서버는 이 파일을 사용하지 않으므로 무시해도 됨
+> 
+> - `zone.tab` 파일은 시간대와 관련된 지역 정보를 포함하는 파일임. 이 파일의 정보는 `mysql_tzinfo_to_sql` 명령어가 이미 가져온 시간대 정보와 중복될 수 있으므로 무시해도 됨
+> 
+> - 따라서 이러한 경고 메시지는 시간대 정보에 영향을 미치지 않으므로 무시해도 됩니다.
+
+3. MySQL 서버에서 사용 가능한 시간대 목록 확인
+- 다음 명령을 실행하면 MySQL 서버에서 사용 가능한 모든 시간대의 목록이 표시됨
+```mysql
+select * from mysql.time_zone_name;
+# +----------------------------------+--------------+
+# | Name                             | Time_zone_id |
+# +----------------------------------+--------------+
+# | Africa/Abidjan                   |            1 |
+# | Africa/Accra                     |            2 |
+# | Africa/Addis_Ababa               |            3 |
+# | Africa/Algiers                   |            4 |
+# | Africa/Asmara                    |            5 |
+# | Africa/Asmera                    |            6 |
+# | Africa/Bamako                    |            7 |
+# ...
+```
+
+4. 다시 시간대를 설정
 - mysql에 다시 로그인 후 아래 명령어 입력
 ```mysql
 SET GLOBAL time_zone='Asia/Seoul';
