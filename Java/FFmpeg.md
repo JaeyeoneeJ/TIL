@@ -149,3 +149,77 @@ export PATH=$PATH:/usr/local/bin
 ```bash
 source /etc/profile
 ```
+
+## threads 설정
+- FFmpeg는 기본적으로 시스템에서 사용 가능한 모든 CPU 코어를 사용하도록 설계되어 있음. 그러나 FFmpeg는 `-threads` 옵션을 사용하여 사용할 CPU 코어 수를 제한할 수 있음
+- 따라서 사용 가능한 CPU 코어 수를 아래와 같은 방법으로 확인할 수 있음
+
+### 1) MacOS
+```bash
+sysctl -n hw.ncpu
+# 8
+```
+- 위의 경우, 코어 수가 8개이기 때문에 위와 같은 결과가 출력됨
+
+### 2) Linux (Ubuntu)
+```bash
+cat /proc/cpuinfo | grep "core id" | sort -u | wc -l
+# 2
+```
+- 코어가 2개이기 때문에 위와 같은 결과가 출력됨
+- 위 코드는 Linux 시스템에서 현재 시스템에 있는 물리 코어(physical core) 수를 출력하는 명령어임
+	- `cat /proc/cpuinfo` 명령어를 사용하여 현재 시스템의 CPU 정보를 출력함
+	- `grep "core id"` 명령어를 사용하여 출력된 정보 중 "core id" 라는 문자열을 포함하는 부분만을 추출함
+	- `sort -u` 명령어를 사용하여 중복된 값을 제거함
+	- `wc -l` 명령어를 사용하여 남은 라인 수를 세어 총 물리 코어 수를 출력함
+
+- 다른 방법으로는 `lscpu` 명령어를 사용하는 것임. 이 명령어를 입력하면 시스템의 프로세서에 대한 자세한 정보가 출력됨
+- 이 중에서 "CPU(s)" 항목 아래의 "Core(s) per socket" 또는 "Core(s) per socket:" 값이 코어 수를 나타냄
+```bash
+lscpu
+# Architecture:        x86_64
+# CPU op-mode(s):      32-bit, 64-bit
+# Byte Order:          Little Endian
+# CPU(s):              2
+# On-line CPU(s) list: 0,1
+# Thread(s) per core:  1
+# Core(s) per socket:  2
+# Socket(s):           1
+# NUMA node(s):        1
+# Vendor ID:           GenuineIntel
+# CPU family:          6
+# Model:               85
+# Model name:          Intel(R) Xeon(R) Gold 5220 CPU @ 2.20GHz
+# Stepping:            7
+# CPU MHz:             2194.739
+# BogoMIPS:            4389.84
+# Hypervisor vendor:   Xen
+# Virtualization type: full
+# L1d cache:           32K
+# L1i cache:           32K
+# L2 cache:            1024K
+# L3 cache:            25344K
+# NUMA node0 CPU(s):   0,1
+# Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush acpi mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti intel_ppin ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt clwb xsaveopt xsavec xgetbv1 xsaves pku ospke md_clear flush_l1d
+```
+
+### 3) ffmpeg -threads 설정
+- 만약 FFmpeg가 시스템에서 사용 가능한 모든 CPU 코어를 사용하도록 하고 싶다면 -`threads` 옵션을 명령줄에서 생략하면 됨
+- 우리의 EC2에서 사용 가능한 코어 수가 2개라고 가정해보자. 우리가 FFmpeg가 사용하는 코어 수를 절반인 1로 설정하고 싶다면 다음과 같은 명령어를 추가하여 조절할 수 있음
+```bash
+ffmpeg -threads 1 -i input.mp4 output.mp4
+```
+
+- Java에서 FFmpeg를 사용할 때, `-threads` 옵션을 설정하려면 `setExtraArgs()` 메소드를 사용하여 추가 인수를 전달할 수 있음
+```java
+FFmpegBuilder builder = new FFmpegBuilder()  
+        .setInput(inputFile.getAbsolutePath())  
+        .addOutput(outputFilePath)  
+        .setFormat("hls")  
+        .addExtraArgs("-threads", "1")  // 코어 수를 1개로 제한  
+        .addExtraArgs("-hls_time", "10")  
+        .addExtraArgs("-hls_list_size", "0")  
+        .addExtraArgs("-hls_segment_filename", outputDir + "/" + title + "_%d.ts")  
+        .done();
+```
+- 위 빌드를 통해 FFmpeg가 실행될 때, 코어 수가 1개로 제한됨
