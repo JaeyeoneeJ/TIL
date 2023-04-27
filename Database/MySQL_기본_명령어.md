@@ -153,6 +153,12 @@ DESC table_name;
 select * from table_name;
 ```
 
+### Table 생성문 확인
+- 현재 테이블에 존재하는 인덱스나 제약조건들을 확인해볼 수 있음
+```mysql
+show create table table_name;
+```
+
 ### Table에 칼럼 추가
 - table 내에 칼럼을 추가하려면 `ALTER TABLE` 문을 사용함
 - 아래는 `new_column`이라는 새로운 칼럼을 추가하는 예제임
