@@ -7,3 +7,4 @@
 - [MySQL 기본 명령어](./MySQL_기본_명령어.md)
 - [DBeaver 설치 및 사용법](DBeaver_설치_및_사용법.md)
 - [RDS 인스턴스 생성하기](./RDS_인스턴스_생성하기.md)
+- [MySQL 테이블 간 관계 맺기](./MySQL_테이블_간_관계_맺기.md)

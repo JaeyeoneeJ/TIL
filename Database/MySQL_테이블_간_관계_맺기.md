@@ -109,7 +109,7 @@ select * from convertVideos;
 ```
 
 - 값이 정상적으로 들어간 것을 알 수 있음
-- 또한 아래와 같이 연결되어 있는 테이블의 조회도 가능ㄴ함
+- 또한 아래와 같이 연결되어 있는 테이블의 조회도 가능함
 ```mysql
 select videos.*, convertVideos.media_type, convertVideos.url from convertVideos join videos on videos.title = convertVideos.title;
 # +----+-------------+--------------------------+----------+------------+---------------------+-------+-----------+------------+----------------------+
