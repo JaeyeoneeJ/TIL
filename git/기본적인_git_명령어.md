@@ -190,4 +190,61 @@ git push origin feature/info
 - 위 명령어에서 `origin`은 git에서 원격 저장소의 이름을 지정하는 기본적인 이름임
 - git은 `origin`이라는 이름으로 원격 저장소를 자동으로 생성하며, 이 이름을 사용하여 원격 저장소를 참조할 수 있음
 - 즉, 위 명령어는 `feature/info` 브랜치에서 변경된 내용을 `origin` 원격 저장소에 업로드하겠다는 의미임
-- 
+
+- 만약 아래와 같은 오류가 발생할 경우
+```bash
+git push origin feature/info
+# fatal: The current branch feature/info has no upstream branch.
+# To push the current branch and set the remote as upstream, use
+# 
+#     git push --set-upstream origin feature/info
+# 
+# To have this happen automatically for branches without a tracking
+# upstream, see 'push.autoSetupRemote' in 'git help config'.
+```
+
+- `feature/info` 브랜치가 원격 저장소의 어떤 브랜치와도 연결되어 있지 않아 발생하는 오류임
+- git은 브랜치를 생성하면 자동으로 해당 브랜치가 로컬 저장소에서만 존재하는  '로컬 브랜치'로 생성됨
+- 이 로컬 브랜치는 원격 저장소와 동기화되지 않기 때문에 원격 저장소와 연결해야 함
+- 해결 방법으로는 `--set-upstream` 옵션을 사용하여 현재 브랜치를 원격 저장소의 특정 브랜치와 연결하면 됨
+```bash
+git push --set-upstream origin feature/info
+```
+- 정상적으로 작동되었다면 이후부터는 `git push origin feature/info`을 사용하면 됨
+
+### 7) git merge
+- 만일 내가 `feature/info`에서 작업하고 있다가 해당 내용을 `main` 브랜치에 병합해야 한다고 가정해보자
+- 먼저 push할 커밋 내역이 남아있는지 확인함
+```bash
+git push
+# Everything up-to-date
+```
+
+- 위와 같이 뜬다면 커밋 내역이 모두 원격 저장소에 업로드되어 있는 상황임
+- 현재 내 로컬에서 커밋하지 않은 내역이 있을 수도 있으므로 `git stash` 명령어로 로컬에서 작업한 내역을 저장하고 최근 커밋으로 돌아감
+```bash
+git stash
+# Saved working directory and index state WIP on main: 55691ce {최근 커밋 메세지}
+```
+- 로컬 작업 내용은 stash에 가상으로 저장되고, `{최근 커밋 메세지}`라고 적은 55691ce 로 작업 내용이 돌아감
+
+- 이제 합칠 브랜치인 `main` 으로 이동
+```bash
+git switch main
+```
+
+- `feature/info` 브랜치의 최신 변경 내용을 main 브랜치로 병합함
+```bash
+git merge feature/info
+```
+
+- 병합 결과를 바로 원격 저장소에 push할 수도 있지만, 로컬 작업내용이 남아있기 때문에 다시 작업 내용을 불러옴
+```bash
+git stash apply
+```
+
+- 변경된 내용을 다시 커밋하고 원격 저장소에 push함
+```bash
+git commit -am "feature/info -> main merge 완료"
+git push     # <- 현재 브랜치를 기준으로 push함
+```
