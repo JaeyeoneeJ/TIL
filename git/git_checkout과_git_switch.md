@@ -81,5 +81,16 @@ git switch --detach f3a5b52caca9e77123501a195000ebc19341daec
 - 위 명령어를 실행하면 현재 체크아웃 된 브랜치 대신에 해당 커밋으로 HEAD가 분리됨
 - 이후에 새로운 브랜치를 생성해서 해당 브랜치에서 작업할 수 있음
 
-- 만일 특정 커밋 내역에서 새로운 브랜치를 만들고 싶다면 다음과 같이 입력
-- 
+```bash
+git branch new-branch
+
+git log
+# commit f3a5b52caca9e77123501a195000ebc19341daec (new-branch)
+# Author: local-user <local-user@example.com>
+# Date:   Thu Apr 27 18:31:51 2023 +0900
+# 
+#     이게 예전 커밋
+# 
+# ...
+```
+- 해당 커밋 시점으로 브랜치가 생성된 것을 알 수 있음
