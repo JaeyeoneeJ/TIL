@@ -99,7 +99,7 @@ git status
 
 - 위 예시에서는 main 브랜치에서 작업중이며, READMD.md 파일이 수정되었음
 
-### 5) 커밋 및 푸시
+### 5) git commit
 - `git commit`은 git 저장소에 변경 사항을 커밋하는데 사용되며, 다양한 옵션을 제공함
 - 일반적으로 `git commit -m` 옵션을 사용하여 짧은 커밋 메세지를 작성하는 편이며, 그 외에도 다양한 옵션이 있음
 
@@ -121,3 +121,73 @@ git commit -am "커밋 메세지"
 ```
 
 - 이렇게 입력하면 변경된 모든 파일을 자동으로 스테이징하기 때문에 `git add` 명령어를 생략할 수 있음
+- git log를 찍어보면 아래와 같이 뜸
+```bash
+git log
+# commit d5a265e91986cf4a18f57f4121124f9f705ca366 (HEAD -> main)
+# Author: local-user <local-user@example.com>
+# Date:   Fri Apr 28 12:56:34 2023 +0900
+# 
+#     커밋 메세지
+# 
+# commit d5a265e91986cf4a18f57f4121124f9f705ca366 (origin/main, origin/HEAD)
+# Author: local-user <local-user@example.com>
+# Date:   Fri Apr 28 10:11:13 2023 +0900
+# 
+#     이게 최근 커밋
+# 
+# commit f3a5b52caca9e77123501a195000ebc19341daec
+# Author: local-user <local-user@example.com>
+# Date:   Thu Apr 27 18:31:51 2023 +0900
+# 
+#     이게 예전 커밋
+# 
+# ...
+```
+
+- 만약 내가 커밋 메세지를 잘못 입력했을 때는 어떻게 해야할까?
+- `git commit --amend` 명령어를 사용하면 바로 직전 커밋을 수정할 수 있음
+```bash
+git commit --amend
+```
+- 위 명령어를 실행하면 최근 커밋 메세지를 수정할 수 있는 에디터 창이 열림. 나의 경우, vi 에디터였음
+- 맨 윗줄이 입력한 커밋 메세지였음. 내용 수정을 위해 `:i`를 입력하고 내용을 변경한 후, `:wq`로 저장 후 종료하였음
+- 다시 git log로 확인하면 아래와 같이 정상적으로 수정된 것을 확인할 수 있음
+```bash
+git log
+# commit d5a265e91986cf4a18f57f4121124f9f705ca366 (HEAD -> main)
+# Author: local-user <local-user@example.com>
+# Date:   Fri Apr 28 12:56:34 2023 +0900
+# 
+#     git commit --amend로 커밋 메세지 변경 테스트.  # <- 잘 수정되었다
+# 
+# commit d5a265e91986cf4a18f57f4121124f9f705ca366 (origin/main, origin/HEAD)
+# Author: local-user <local-user@example.com>
+# Date:   Fri Apr 28 10:11:13 2023 +0900
+# 
+#     이게 최근 커밋
+# 
+# commit f3a5b52caca9e77123501a195000ebc19341daec
+# Author: local-user <local-user@example.com>
+# Date:   Thu Apr 27 18:31:51 2023 +0900
+# 
+#     이게 예전 커밋
+# 
+# ...
+```
+
+- 혼자 작업할 때는 큰 문제가 없겠지만 만일 이미 push를 통해 원격 저장소에 커밋이 업로드 되어있고, 다른 개발자들이 저장소에서 해당 커밋을 사용하고 있다면 충돌이 발생할 수 있음
+- 이런 경우에는 수정한 커밋을 다시 push 하는 것이 아니라, 새로운 커밋을 생성하여 push하는 것이 좋음
+
+### 6) git push
+- commit까지 다 했다면 이제 나의 로컬 저장소에 변경된 git 리포지토리의 내용을 원격 저장소에 업로드하는 것만 남았음
+- 일반적으로는 `git push` 명령어를 사용하지만 초기 git 설정 시, 다른 사람들과 git을 통해 프로젝트를 처음 진행하다보면 권한 문제나 브랜치 문제로 여러가지 애를 먹을 때가 있음
+- 내가 작업하는 브랜치가 `feature/info` 라고 가정해보고 이 브런치에 수정된 내용을 원격 저장소에 push해보겠음
+```bash
+git push origin feature/info
+```
+
+- 위 명령어에서 `origin`은 git에서 원격 저장소의 이름을 지정하는 기본적인 이름임
+- git은 `origin`이라는 이름으로 원격 저장소를 자동으로 생성하며, 이 이름을 사용하여 원격 저장소를 참조할 수 있음
+- 즉, 위 명령어는 `feature/info` 브랜치에서 변경된 내용을 `origin` 원격 저장소에 업로드하겠다는 의미임
+- 
