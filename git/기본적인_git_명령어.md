@@ -248,3 +248,4 @@ git stash apply
 git commit -am "feature/info -> main merge 완료"
 git push     # <- 현재 브랜치를 기준으로 push함
 ```
+
