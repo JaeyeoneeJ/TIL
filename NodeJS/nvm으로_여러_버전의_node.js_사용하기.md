@@ -31,10 +31,22 @@ source $(brew --prefix nvm)/nvm.sh
 
 - 터미널을 닫았다가 다시 열면 셋팅이 완료됨
 
+### 2) WinOS
+- Wubdiws 운영체제용 NVM은 [해당 Github 페이지](https://github.com/coreybutler/nvm-windows)로 들어가 다운로드할 수 있음
+- 링크에 접속하면 README.md 내에 Download 버튼을 클릭하면 다운로드 페이지로 이동됨
+- Assets 항목에서 편한 설치파일을 설치(여기서는 nvm-setup.exe 파일을 다운로드 함)
+- 다운받은 설치 파일을 실행하면 NVM 설치가 시작됨
+- 만약, node.js가 이미 설치되어 있는 경우 현재 설치된 node.js를 nvm에서 버전 관리하기를 원하는지 물어보는 창이 나오므로 agreement 를 선택해주고 설치를 마무리 함
+
+### 3) 설치 확인
+- 터미널을 켜고 `nvm -v`을 입력하면 설치된 것을 알 수 있음
+- 만일 자주 사용하는 명령어 등을 확인하고 싶다면 `nvm`만을 입력하면 됨
+ 
+
 ## nvm 사용
 - 터미널에 nvm을 입력하면 다양한 옵션을 확인할 수 있음
 
-### 1) node.js 버전 설치 및 사용
+### 1) node.js 버전 설치
 ```bash
 nvm install 버전
 ```
@@ -44,6 +56,7 @@ nvm install 버전
 nvm install 14.16.1
 ```
 
+### 2) node.js 버전 사용
 - 설치된 버전(예를 들어 14.16.1)의 node.js를 사용하려면 아래 명령어를 입력
 ```bash
 nvm use 14.16.1
