@@ -1,2 +1,3 @@
 - [모든 개발자가 알아야 할 7가지 JavaScript 디자인 패턴](./모든_개발자가_알아야_할_7가지_JavaScript_디자인_패턴.md)
 - [간단하게 알아보는 React 디자인 패턴](./간단하게_알아보는_React_디자인_패턴.md)
+- [Styled-components를 활용한 Atomic Design Pattern](./Styled-components를_활용한_Atomic_Design_Pattern.md)
