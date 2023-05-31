@@ -1,1 +1,2 @@
 - [VSCode_단축키](./VSCode_단축키.md)
+- [VSCode 기본 터미널 설정 변경](./VSCode_기본_터미널_설정_변경.md)
