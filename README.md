@@ -2,6 +2,9 @@
 # CS
 ![[CS/__CS]]
 
+# Design Pattern
+![[DesignPattern/__DesignPattern]]
+
 # git
 ![[git/__git.md]]
 
