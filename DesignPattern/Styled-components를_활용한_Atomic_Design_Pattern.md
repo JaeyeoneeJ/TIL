@@ -3,6 +3,7 @@
 
 > [Styled-components에 대해 알아보기](../react/styled-components.md)
 
+
 ## Styled-components ~ Atomic Design
 
 > [Atomic Design Pattern에 대해 알아보기](./간단하게_알아보는_React_디자인_패턴.md##3.Atomic)
@@ -43,3 +44,9 @@
 8. 개발자 경험 개선
 - styled-components는 CSS를 JavaScript로 작성하는 형태이기 때문에 JavaScript의 풍부한 문법과 기능을 활용할 수 있음. 이는 개발자에게 더욱 편리한 개발 경험을 제공하고, CSS 작성 시 발생할 수 있는 오류를 줄여줌
 - 또한, styled-components는 개발자 도구와의 통합이 용이하며, 컴포넌트 단위로 스타일을 확인하고 디버깅할 수 있음. 이는 개발 생산성을 향상시키고 디자인 시스템을 구축하는 데 도움을 줌
+
+
+## styled-components는 디버깅이 어렵다는데
+
+
+## styled-components - Atomic Design Pattern 적용 예시
