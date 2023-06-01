@@ -47,6 +47,56 @@
 
 
 ## styled-components는 디버깅이 어렵다는데
+- styled-components는 스타일을 동적으로 생성하기 위해 임의의 클래스 이름을 생성함. 이로 인해 외부에서 코드를 읽거나 디버깅할 때 일부 어려움을 겼을 수 있음. 그러나 styled-components는 디버깅을 용이하게 하기 위해 몇 가지 도구와 기능을 제공함
+
+1. 개발자 도구에서 component 확인
+- 크롬 개발자 도구를 열고 extension으로 react devtools를 설치하면 react 프로젝트일 경우 component 탭이 생성됨. 이 컴포넌트 탭에서 tree 구조로 해당 컴포넌트에 동적으로 생성된 클래스 이름을 확인하고 해당 스타일을 식별할 수 있음
+- 만약 displayName 속성을 부여했다면 displayName에 부여한 값이 있을 것임. 이를 통해 개발자 도구에서 컴포넌트의 이름을 식별하기 쉽게 할 수 있음
+```jsx
+const StyledButton = styled.button`
+  /* 스타일 정의 */
+`
+
+StyledButton.displayName = "스타일한 버튼"
+```
+
+2. CSS 클래스 추적
+- styled-components에서 CSS 클래스 추적 기능을 활성화하려면 `babel-plugin-styled-components`와 함께 Babel 구성을 설정해야 함
+```bash
+npm install --save-dev babel-plugin-styled-components
+```
+- 설치가 완료된 후 Babel 구성 파일인 `.babelrc` 파일에 `styled-components` 플러그인을 추가함 (없으면 생성)
+- 프로젝트를 다시 빌드하거나 개발 서버를 재시작 함
+- 이제 개발자 도구에서 해당 컴포넌트 요소를 검사하면 클래스 이름 옆에 styled-components의 소스 코드 위치가 표시됨
+
+> **CRA 환경에서 CSS 클래스 추적하기**
+- CRA 환경에서는 babel 설정을 변경하기 위해 별도의 플러그인을 설치하여 조작하여야 함 
+- 다음 패키지를 설치함
+```bash
+npm install react-app-rewired customize-cra
+```
+- `react-app-rewired`는 eject를 꺼내지 않고 babel 설정을 변경하기 위함
+- `customize-cra`는 `config-overrides.js` 설정을 편하기 변경하기 위함
+
+- `package.json`의 스크립트 중 start, test, build에 있는 react-script를 'react-app-rewired'로 변경해 줌
+
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  ...
+},
+```
+
+- babelrc 파일을 사용하기 위해 `config-overrides.js`에 설정을 재정의 함
+
+```javascript
+const { override, useBabelRc } = require('customize-cra');
+
+module.exports = override(useBabelRc());
+```
+- 프로젝트를 재시작하면 정상적으로 적용되는 것을 확인
 
 
 ## styled-components - Atomic Design Pattern 적용 예시

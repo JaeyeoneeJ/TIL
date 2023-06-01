@@ -6,8 +6,8 @@
 
 ## 2. CSS 전처리기 대신 styled-components
 
-> - CSS 전처리기와 styled-components의 특징은 아래 문서 참고
-> [CSS_전처리기와_styled-components](../CSS/CSS_전처리기와_styled-components.md)
+> CSS 전처리기와 styled-components의 특징은 아래 문서 참고
+> [CSS 전처리기와 styled-components](../CSS/CSS_전처리기와_styled-components.md)
 
 - styled-components를 사용하면 CSS 전처리기를 사용하는 것 보다 다음과 같은 몇 가지 강점이 있음
 
