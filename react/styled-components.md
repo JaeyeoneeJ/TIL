@@ -5,6 +5,10 @@
 - styled-components는 React뿐만 아니라 React Native 및 Vue.js, Next.js와 같은 다른 프레임워크와도 함께 사용할 수 있음. 컴포넌트 기반의 스타일링을 사용하고 싶을 때 styled-components는 강력한 선택지 중 하나임
 
 ## 2. CSS 전처리기 대신 styled-components
+
+> - CSS 전처리기와 styled-components의 특징은 아래 문서 참고
+> [CSS_전처리기와_styled-components](../CSS/CSS_전처리기와_styled-components.md)
+
 - styled-components를 사용하면 CSS 전처리기를 사용하는 것 보다 다음과 같은 몇 가지 강점이 있음
 
 1. 컴포넌트 기반 접근: 컴포넌트 단위로 스타일을 작성 및 적용하므로 코드의 재사용성과 유지보수성을 높임
