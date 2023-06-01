@@ -102,7 +102,10 @@ yarn add typescript @types/react @types/styled-components
 - 이제 TypeScript와 styled-components를 함께 사용할 준비가 되었음
 - TypeScript는 정적 타입 검사를 수행하므로 코드에서 타입 관련 오류를 사전에 확인할 수 있게 됨
 
-
+## 5. styled-components는 react에서만 사용할 수 있을까?
+- styled-components는 React를 위해 설계된 CSS-in-JS 라이브러리이지만, React에 국한되지 않고 다른 프레임워크나 라이브러리와 함께 사용할 수도 있음. styled-components는 React 생태계에서 가장 널리 사용되고 호환성이 뛰어나기 때문에 주로 React와 함께 사용됨. React의 기능인 JSX를 사용하여 스타일드 컴포넌트를 작성하고 React 컴포넌트와 결합하는 것이 일반적인 사용 방법임
+- 그러나 styled-components는 "styled" 함수를 사용하여 스타일드 컴포넌트를 생성하므로, React 외의 다른 JavaScript 프레임워크나 라이브러리와도 함께 사용할 수 있음. 예를 들어, Vue.js와 함께 styled-components를 사용하는 방법도 있음. 이 경우 Vue.js의 컴포넌트를 정의하고, styled-components를 사용하여 컴포넌트의 스타일을 적용할 수 있음
+- 하지만 주의할 점은 styled-components의 목표는 React 컴포넌트의 스타일링을 간소화하는 것이므로, 다른 프레임워크나 라이브러리와 함께 사용할 때는 일부 기능이나 편의성이 제한될 수 있음. 따라서 styled-components를 사용할 때는 주로 React와 함께 사용하는 것이 가장 일반적이고 좋은 방법임
 
 
 <hr>
