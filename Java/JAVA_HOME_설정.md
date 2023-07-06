@@ -61,7 +61,7 @@ javac -version
 - java 버전이 바뀌어 잘 적용된 것을 확인할 수 있음(원래 1.8.0_361 => 1.8.0_292)
 
 
-## 2. linux ubuntu(18.04) 설정
+## 2. linux ubuntu 설정
 - java 설치 확인
 ```bash
 java -version
