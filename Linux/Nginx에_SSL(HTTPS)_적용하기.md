@@ -3,13 +3,13 @@
 ## Certbot 설치하기
 - Certbot은 Let's Encrypt 인증서를 자동으로 발급 및 갱신을 해주는 봇 프로그램임
 
-### 1) snapd를 이용하여 certbot 설치
+### 1) snap를 이용하여 certbot 설치
 - 아래 명령으로도 certbot을 설치할 수 있으나, Ubuntu 최신 버전(v20)에서는 동작하지 않았음
 ```bash
 sudo wget https://dl.eff.org/certbot-auto
 ```
 
-- 따라서 snapd를 이용해 설치해줘야 함
+- 따라서 snap를 이용해 설치해줘야 함
 ```bash
 # snap을 이용하여 core 설치 -> snap을 최신 버전으로 유지하기 위해 설치
 sudo snap install core
@@ -27,6 +27,10 @@ sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
+- ssl 발급을 위해 아래 명령어를 입력함. 여기서 example.com 은 실제 도메인으로 변경되어야 함
+```bash
+sudo certbot certonly --standalone -d example.com -d www.example.com
+```
 - 처음에 긴급갱신 및 보안 공지 시에 사용하기 위해 이메일을 입력하라고 뜨므로 본인 이메일 입력
 - 약관 동의 Y
 - 광고성 메일 수신 N
