@@ -82,6 +82,37 @@ touch-action: unset;
 
 ## Formal definition
 
+|   |   |
+|---|---|
+|[Initial value](https://developer.mozilla.org/en-US/docs/Web/CSS/initial_value)|`auto`|
+|Applies to|대체되지 않은 인라인 요소, 테이블 행, 행 그룹, 테이블 열 및 열 그룹을 제외한 모든 요소|
+|[Inherited](https://developer.mozilla.org/en-US/docs/Web/CSS/Inheritance)|no|
+|[Computed value](https://developer.mozilla.org/en-US/docs/Web/CSS/computed_value)|as specified|
+|Animation type|Not animatable|
+
+### Formal syntax
+```css
+touch-action: auto | none | [[ pan-x | pan-left | pan-right ]  || [ pan-y | pan-up | pan-down ] || pinch-zoom ] | manipulation
+```
+
+
+## Example
+
+### Disabling all gestures
+- 가장 일반적인 사용법은 지도 또는 게임 표면과 같은 자체 드래그 및 확대/축소 동작을 제공하는 요소(및 스크롤할 수 없는 하위 항목)에서 모든 제스처를 비활성화하는 것임
+
+```html
+<div id="map"></div>
+```
+
+```css
+#map {
+  height: 150vh;
+  width: 70vw;
+  background: linear-gradient(blue, green);
+  touch-action: none;
+}
+```
 
 
 
