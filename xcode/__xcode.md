@@ -1,2 +1,0 @@
-- [CocoaPods 설치](./CocoaPods_설치.md)
-- [Project build](./Project_build.md)

@@ -44,5 +44,5 @@
 # DevTools
 ![[__DevTools]]
 
-# XCode
-![[__xcode]]
+# Mac
+![[__mac]]
