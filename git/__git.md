@@ -2,3 +2,4 @@
 - [git 설치 및 기본 설정](git_설치_및_기본_설정.md)
 - [기본적인 git 명령어](./기본적인_git_명령어.md)
 - [git checkout과 git switch](./git_checkout과_git_switch.md)
+- [특정 브랜치만 clone 하기](./특정_브랜치만_clone_하기.md)
