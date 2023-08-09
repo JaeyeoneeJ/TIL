@@ -258,3 +258,27 @@ git commit -am "feature/info -> main merge 완료"
 git push     # <- 현재 브랜치를 기준으로 push함
 ```
 
+### 8) git pull
+- `git pull` 명령어를 사용하면 현재 브랜치의 내용을 받아옴
+```bash
+git pull
+# git repository에 있는 전체 브랜치를 업데이트 함
+
+git pull {branch_name}
+# git pull 시 특정 브랜치만 업데이트 함
+
+git pull origin main
+# git pull 시 원격 저장소(origin)의 main 정보를 불러옴
+```
+
+- 만일 다른 사람과 같은 브랜치를 보고 함께 작업하고 있다면 merge conflict가 날 수 있음
+- 이 경우, 병합 등을 통해 해결하면 되지만 원격 저장소에 있는 정보가 가장 최신의 정보여서 원격 저장소의 정보로 초기화하고 싶다면 다음 명령어를 입력
+```bash
+git reset --hard origin/main
+git pull origin main
+```
+- `git reset`을 통해 head가 최신 commit을 가리키게 함
+- 여기서 `--hard` 옵션은 강제로 head를 옮기는 것이므로 사용 시 신중할 필요가 있음
+- `git pull` 명령어를 통해 가져온 정보를 로컬에 저장함
+
+- 이후 내가 작업한 내용을 `git stash apply` 등으로 반영하여 작업하면 되겠음
