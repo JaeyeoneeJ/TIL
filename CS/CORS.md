@@ -9,6 +9,18 @@
 - 교차 출처 리소스 공유 표준은 웹 브라우저에서 해당 정보를 읽는 것이 허용된 출처를 서버에서 설명할 수 있는 새로운 HTTP 헤더를 추가함으로써 동작한다.
 - 예를 들어 서버 데이터를 수정하는 HTTP 요청 메서드(GET 제외)가 발생하면 브라우저는 요청을 서버에 보내기 전, Options 메서드로 프리플라이트하여 지원하는 메서드를 요청하고 서버의 허가가 떨어지면 실제 요청을 보내도록 요구한다.
 
+## mac Chrome Browser CORS
+- 허용
+```bash
+open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security
+```
 
+- 원복
+```bash
+open -a "Google Chrome" --args --profile-directory=Default --enable-web-security
+```
+
+
+<hr>
 ## ref.
 https://developer.mozilla.org/ko/docs/Web/HTTP/CORS
