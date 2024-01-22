@@ -1,4 +1,6 @@
 - 해당 테스트는 [WebAssembly란](./WebAssembly란.md) 문서를 실제로 인앱에서 구현해보고 테스트해보기 위한 자료입니다.
+- 이 글은 Alexander Leon이 작성한 [Getting started with React + WebAssembly](https://alexanderleon.medium.com/getting-started-with-react-webassembly-b9ff83e6203f) 글을 번역하여 실제 React App에서 적용해본 경험을 작성한 자료입니다.
+
 ## 1. 테스트 목표
 - 앞선 지식을 토대로 실제로 React 앱에서 WebAssembly를 적용할 수 있는지 테스트 해보자.
 - 이번 테스트에서 궁극적으로 목표하는 바는 다음과 같다.
@@ -169,3 +171,9 @@ export default App;
 ## 4. Web App 출력
 - 아래 그림과 같이 자바스크립트가 아닌 C 로 작성한 코드가 WebAssembly로 컴파일되어 앱에서 정상적으로 표시되는 것을 확인할 수 있다.
 <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/222e1a2f-33e1-406c-bc1a-ad3d47e69b36" alt="WebApp 결과" />
+
+
+
+<hr>
+## ref.
+- https://alexanderleon.medium.com/getting-started-with-react-webassembly-b9ff83e6203f
