@@ -1,4 +1,4 @@
-- 해당 테스트는 [WebAssembly란](./WebAssembly란.md) 문서를 실제로 인앱에서 구현해보고 테스트해보기 위한 자료입니다.
+- 해당 테스트는 [WebAssembly란](../JavaScript/WebAssembly란.md) 문서를 실제로 인앱에서 구현해보고 테스트해보기 위한 자료입니다.
 - 이 글은 Alexander Leon이 작성한 [Getting started with React + WebAssembly](https://alexanderleon.medium.com/getting-started-with-react-webassembly-b9ff83e6203f) 글을 번역하여 실제 React App에서 적용해본 경험을 작성한 자료입니다.
 
 ## 1. 테스트 목표
@@ -13,7 +13,7 @@
 - 테스트를 하기에 앞서 우선 간단한 React App과 WebAssembly로 컴파일할 수 있는 도구가 필요하다.
 - 이번 테스트에서는 Emscripten SDK를 활용하고자 한다.
 
-> [Emscripten SDK 설치 방법](./Emscripten_설치.md)
+> [Emscripten SDK 설치 방법](../JavaScript/Emscripten_설치.md)
 
 ## 2. React App 설치 및 빌드
 - 일반적으로 CRA(Create-React-App)를 사용하여 설치하고 있고, 최신 버전의 CRA는 wasm 형식의 파일을 지원한다.
@@ -177,3 +177,4 @@ export default App;
 <hr>
 ## ref.
 - https://alexanderleon.medium.com/getting-started-with-react-webassembly-b9ff83e6203f
+- https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm
