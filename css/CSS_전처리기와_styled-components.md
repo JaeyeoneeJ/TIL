@@ -1,6 +1,7 @@
 ## 1. CSS 전처리기(CSS preprocessor)
 - CSS 전처리기는 전처리기 고유의 문법을 통해 CSS를 생성하게 해주는 프로그램임
 - 대부분의 전처리기는 순수 CSS에 없는 기능을 가지고 있으며, 이 기능들 덕분에 CSS 구조가 더 읽기 쉬워지고, 유지보수 역시 용이해짐
+- 개발적인 측면에서 유지보수성과 동일한 스타일을 적용해야하는 대상을 보다 쉽게 관리할 수 있기 때문(너무 큰 CSS파일을 수정하기에 해당하는 위치를 찾아가기가 어렵기 때문)
 - 가장 널리 쓰이는 CSS 전처리기에는 Sass, LESS, Stylus, PostCSS 등이 있음
 
 > [MDN | CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor)
