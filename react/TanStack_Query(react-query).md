@@ -5,6 +5,9 @@
 - 하지만 Redux를 사용하여 비동기 데이터를 관리할 경우, React Component의 Lifecycle과 관계없이 Global State(전역 상태)에서 비동기 데이터가 관리되기 때문에 캐싱과 같은 최적화 작업을 쉽게 수행할 수 있고 복잡한 사용자 시나리오에 대한 대응이 보다 쉬워진다.
 
 ## 2. 비동기 데이터를 관리하는 측면에서  Redux 사용 시 불편한 점
+
+> 아래 내용은 카카오페이에서 작성한 [카카오페이 프론트엔드 개발자들이 React Query를 선택한 이유](https://tech.kakaopay.com/post/react-query-1/#react-query%EB%A5%BC-%EC%93%B0%EA%B3%A0-%EC%9D%B4%EB%9F%B0-%EA%B2%8C-%ED%8E%B8%ED%95%B4%EC%A1%8C%EB%8B%A4) 글을 보고 저의 프로젝트의 상황 등을 적용하여 작성한 글이므로 원문은 위 링크를 참조하시기 바랍니다.
+
 - 위와 같은 환경에서 Redux를 사용하여 API 통신을 수행하고 비동기 데이터를 관리하며 얻은 다양한 장점이 존재했지만, 역시 불편한 점도 상당했다.
 - Redux에는 Redux Three Principles(리덕스 기본 원칙)이 존재한다. 이 기본 원칙을 충족하기 위해 Redux를 사용하는데에는 장황한 Boilerplate 코드가 요구된다.
 - 이러한 이슈를 해결하기 위해 redux-toolkit이 등장했고, 이후 boilerplate 코드가 많이 줄어들었음에도 불구하고 여전히 비동기로 데이터를 관리할 때에는 여전히 불편한 boilderplate 코드가 필요하고 여전히 반복되어 작성하고 있다.
