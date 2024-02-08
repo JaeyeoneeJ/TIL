@@ -6,7 +6,6 @@
 
 ## 2. 비동기 데이터를 관리하는 측면에서  Redux 사용 시 불편한 점
 - 위와 같은 환경에서 Redux를 사용하여 API 통신을 수행하고 비동기 데이터를 관리하며 얻은 다양한 장점이 존재했지만, 역시 불편한 점도 상당했다.
-- React 앱과 같은 컴포넌트 기반 스테이트(component-based state), React Hook, Redux와 같은 Global State Management Library(전역 상태관리 라이브러리) 등을 사용하여 비동기 데이터를 처리해 왔다. 이는 client state를 처리하는데 효과적이었으나 server state를 처리하는데 효과적이지 못하였다.
 - Redux에는 Redux Three Principles(리덕스 기본 원칙)이 존재한다. 이 기본 원칙을 충족하기 위해 Redux를 사용하는데에는 장황한 Boilerplate 코드가 요구된다.
 - 이러한 이슈를 해결하기 위해 redux-toolkit이 등장했고, 이후 boilerplate 코드가 많이 줄어들었음에도 불구하고 여전히 비동기로 데이터를 관리할 때에는 여전히 불편한 boilderplate 코드가 필요하고 여전히 반복되어 작성하고 있다.
 
@@ -177,8 +176,95 @@ export default commentsSlice.reducer;
 - 만일, API 상태를 관리하기 위한 규격화된 방식이 있다면 보다 효율적으로 협업하고 관리해나갈 수 있을 것이다.
 
 ## 2. React Query란
-- 
-- React Query v4 부터 TanStack Query로 라이브러리 명이 변경되었다. 
+- React 앱과 같은 컴포넌트 기반 스테이트(component-based state), React Hook, Redux와 같은 Global State Management Library(전역 상태관리 라이브러리) 등을 사용하여 비동기 데이터를 처리해 왔다. 위의 예시와 같이 Redux와 같은 대부분의 기존 상태관리 라이브러리는 client state 작업에는 적합하지만 비동기 또는 server state 작업에는 그다지 적합하지 않다. 이는 server state가 전혀 다르기 때문이다.
+
+- server state
+	- 내가 통제하거나 소유하지 않는 위치에 원격으로 지속됨
+	- 가져오기 및 업데이트를 위한 비동기 API가 필요함
+	- 공유 소유권을 암시하며 본인도 모르게 다른 사람이 변경할 수 있음
+	- 주의하지 않으면 애플리케이션이 "구식"이 될 수 있음
+
+- 애플리케이션에서 서버 상태의 특성을 파악하면 진행하면서 더 많은 문제가 발생하게 된다.
+	- 캐싱
+	- 동일한 데이터에 대한 여러 요청을 단일 요청으로 중복 제거
+	- 백그라운드에서 "오래된" 데이터 업데이트
+	- 데이터가 "오래된" 시기 알기
+	- 최대한 빠르게 데이터 업데이트 반영
+	- 페이지 매김 및 지연 로딩 데이터와 같은 성능 최적화
+	- 서버 상태의 메모리 및 가비지 수집 관리
+	- 구조적 공유를 통해 쿼리 결과 메모
+
+- React Query는 서버 상태 관리를 위한 최고의 라이브러리 중 하나이다. React Query를 사용하면 서버 상태의 까다로운 과제와 장애물을 극복하고 앱 데이터가 사용자를 제어하기 전에 제어할 수 있다.
+- React Query는 보다 기술적인 측면에서 다음과 같은 기능을 수행할 수 있다.
+	- 애플리케이에서 복잡하고 잘못 이해된 여러 줄의 코드를 제거하고 몇 줄의 React Query 로직으로 대체할 수 있도록 도와줌
+	- 새로운 서버 상태 데이터 소스 연결에 대한 걱정 없이 애플리케이션을 더욱 유지 관리하기 쉽게 만들고 새로운 기능을 쉽게 구축할 수 있음
+	- 애플리케이션이 그 어느 때보다 더 빠르고 반응성이 뛰어나다는 느낌을 주어 최종 사용자에게 직접적인 영향을 미침
+	- 잠재적으로 대역폭을 절약하고 메모리 성능을 높이는데 도움이 됨
+
+
+## 3. 설치
+### 1) v4 미만
+- React Query v2, v3은 React v16.8+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
+- 자세한 내용은 [React Query v3 가이드 문서](https://tanstack.com/query/v3/docs/framework/react/installation) 참조
+```bash
+npm i react-query
+# or
+yarn add react-query
+```
+
+### 2) v4
+- React Query v4 부터 TanStack Query로 라이브러리 명이 변경되었다. 이제 React만 지원하는 것이 아니라 `Solid, Vue, Svelte, Angular`도 지원하기 때문이다.
+- TanStack Query v4는 React v16.8+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
+```bash
+npm i @tanstack/react-query
+# or
+pnpm add @tanstack/react-query
+# or
+yarn add @tanstack/react-query
+```
+
+- TanStack Query v4는 다음 브라우저 구성과 호환된다.
+```bash
+Chrome >= 73
+Firefox >= 78
+Edge >= 79
+Safari >= 12.1
+iOS >= 12.2
+Opera >= 53
+```
+### 2) v5
+- TanStack Query v5는 React v18+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
+```bash
+npm i @tanstack/react-query
+# or
+pnpm add @tanstack/react-query
+# or
+yarn add @tanstack/react-query
+```
+
+TanStack Query v5는 다음 브라우저 구성과 호환된다.
+```bash
+Chrome >= 91
+Firefox >= 90
+Edge >= 91
+Safari >= 15
+iOS >= 15
+Opera >= 77
+```
+
+> 환경에 따라 폴리필을 추가해야 할 수도 있다.
+> 이전 브라우저를 지원하려면 라이브러리를 `node_modules`직접 트랜스파일해야 한다.
+
+- 코딩하는 동안 버그와 불일치를 잡는 데 도움이 되도록 ESLint 플러그인 쿼리를 사용하는 것이 좋다.
+```bash
+$ npm i -D @tanstack/eslint-plugin-query
+# or
+$ pnpm add -D @tanstack/eslint-plugin-query
+# or
+$ yarn add -D @tanstack/eslint-plugin-query
+```
+
+
 
 <hr>
 ## ref.
