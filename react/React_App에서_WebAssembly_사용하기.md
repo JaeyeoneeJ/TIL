@@ -44,7 +44,7 @@ npx create-react-app wasm-test
 
 EMSCRIPTEN_KEEPALIVE int add(int a, int b)
 {
-return a + b;
+	return a + b;
 }
 ```
 - 위 코드에서 특히 함수 시작부분에 있는 `EMSCRIPTEN_KEEPALIVE` 텍스트를 주목해보자.
