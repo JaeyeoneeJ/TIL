@@ -95,7 +95,34 @@ h3 {
 	}
 }
 ```
-- 이를 통해 보다 명시적으로 CSS 속성을 파악하고 스타일의 종속성을 관리하기 쉽다.
+
+- 만약 위 less 파일을 일반 css로 변환한다면 아래와 같을 것이다.
+```css
+#header .title {
+	font-family: @fontFamily;
+	font-size: @fontSize;
+	color: @color;
+	font-weight: @fontWeight;
+	text-align: center;
+}
+#header .subtitle {
+	font-family: @fontFamily;
+	font-size: @fontSize;
+	color: @color;
+	font-weight: @fontWeight;
+} 
+#header .subtitle p {
+	font-size: 12px;
+}
+#header .subtitle a {
+	text-decoration: none;
+}
+#header .subtitle a:hover {
+	border-bottom: 1px solid black;
+}
+```
+
+- 따라서 less를 사용할 경우, 이를 통해 보다 명시적으로 CSS 속성을 파악하고 스타일의 종속성을 관리하기 쉽다.
 
 ### 4) 주석
 - less 주석은 JavaScript와 같이 `//` 이다. 이는 컴파일 되지 않는다.
