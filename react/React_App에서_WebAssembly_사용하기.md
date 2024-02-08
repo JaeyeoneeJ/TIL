@@ -172,6 +172,8 @@ export default App;
 - 아래 그림과 같이 자바스크립트가 아닌 C 로 작성한 코드가 WebAssembly로 컴파일되어 앱에서 정상적으로 표시되는 것을 확인할 수 있다.
 <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/222e1a2f-33e1-406c-bc1a-ad3d47e69b36" alt="WebApp 결과" />
 
+## 5. JavaScript와 WebAssembly 런타임 속도 비교
+- JavaScript와 WebAssembly 런타임 속도 비교 과정은 [브라우저에서 일반 자바스크립트와 웹어셈블리 속도 비교](./브라우저에서_일반_자바스크립트와_웹어셈블리_속도_비교.md) 문서를 참조
 
 
 <hr>
