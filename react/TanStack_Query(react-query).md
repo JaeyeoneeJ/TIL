@@ -268,9 +268,309 @@ $ yarn add -D @tanstack/eslint-plugin-query
 ```
 
 
+## 4. React App에서 사용
+- React App에서 React Query를 사용한다면 3가지 핵심 개념을 알아두어야 한다.
+
+### 1) Query
+- Query는 고유 키에 연결된 비동기 데이터 소스에 대한 선언적 종속성이다. 서버에서 데이터를 가져오기 위해 Promise 기반 메서드(GET 및 POST 메서드 포함)와 함께 쿼리를 사용할 수 있다.
+- 만일 서버의 데이터를 수정하는 경우에는 Query 대신 Mutations 를 사용하는 것이 좋다.
+- Component 또는 custom hooks에서 쿼리를 구독하려면 최소한 아래 2개의 조건을 만족하여 `useQuery`를 사용하여 hook을 호출해야 한다.
+	- 쿼리의 고유 키
+	- Promise(Resolves the data, or Throws an error)를 반환하는 함수
+```jsx
+import { useQuery } from '@tanstack/react-query'
+
+function App() {
+  const info = useQuery({ queryKey: ['todos'], queryFn: fetchTodoList })
+}
+```
+- 작성한 고유 키(unique key)는 앱 전체에서 쿼리를 다시 가져오고, 캐싱하고, 고유하는데 내부적으로 사용된다.
+- `useQuery`에서 반환된 쿼리 결과에는 템플릿 작성 및 기타 데이터 사용에 필요한 쿼리에 대한 모든 정보가 포함되어 있다.
+
+
+## 5. 실 사용 예시
+### 1) api 준비
+- call할 api를 본인 상황에 맞게 준비하면 된다. 나의 경우, 여러 api를 추적하기 위해 공공데이터 기상청 Open-API를 사용하여 테스트했다.
+<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/4d4aedcb-5389-4006-85b1-e1a0fec7527a" alt="기상청 Open-api" />
+> [기상청 공공데이터 Open-API](https://data.kma.go.kr/api/selectApiDetail.do?pgmNo=42&openApiNo=421)
+
+- 위 링크를 클릭하여 Open-API 활용 신청을 하고 첨부문서를 통해 진행하면 된다.
+
+- React App에서 테스트하기 위해 CRA로 리액트 앱을 설치하고 필요한 라이브러리를 설치한다. 이번 예시에서는 `react-query`와 `axios`를 활용했다.
+
+> 상세한 예시는 [react-query 테스트용 repo](https://github.com/JaeyeoneeJ/react-query-test)를 참고
+
+### 2) app.js
+- 먼저 app.js를 `QueryClientProvider`로 감싼 후 `QueryClient`를 연결한다.
+- 간단하게 버튼을 만들어 각 버튼을 클릭할 때 마다 각기 다른 api를 호출할 준비를 한다. 
+```jsx
+// App.js
+
+import React, { useCallback, useState } from "react";
+import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { tabButtons } from "./utils/constants";
+import UltraSrcNcst from "./components/UltraSrcNcst";
+import UltraSrcFcst from "./components/UltraSrtFcst";
+import VilageFcst from "./components/VilageFcst";
+import All from "./components/All";
+
+function App() {
+  const queryClient = new QueryClient();
+  const [selectedTabIndex, setSelectedTabIndex] = useState("getUltraSrtNcst");
+
+  const renderComponent = useCallback(() => {
+    switch (selectedTabIndex) {
+      case "getUltraSrtNcst":
+        return <UltraSrcNcst />;
+      case "getUltraSrtFcst":
+        return <UltraSrcFcst />;
+      case "getVilageFcst":
+        return <VilageFcst />;
+      case "getAll":
+        return <All />;
+      default:
+        return <div>ERROR</div>;
+    }
+  }, [selectedTabIndex]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <h1 className={"title"}>기상청 OPEN API</h1>
+      <div>
+        {Object.keys(tabButtons).map((tabName, index) => (
+          <button
+            key={index}
+            className={"tabButton"}
+            onClick={() => setSelectedTabIndex(tabName)}
+          >
+            {tabButtons[tabName]}
+          </button>
+        ))}
+      </div>
+      {renderComponent()}
+    </QueryClientProvider>
+  );
+}
+
+export default App;
+```
+- 버튼 중에 "ALL" 버튼은 추후에 useQueries를 사용하여 api를 동시에 호출하고 관리하는 형태를 위해 만들었으니 우선 무시하고 진행한다.
+
+- 아래처럼 버튼이 생겨있을 것이다.
+<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/dd1c88de-747e-4023-893f-75b68a56c9fc" alt="app.js" />
+
+### 3) axios instance 생성
+- 단순한 테스트이기 때문에 axios instance를 굳이 만들 필요는 없지만 나의 경우에는 동일한 api를 호출하는데 URL을 중복으로 입력하는 것을 방지하고자 instance를 생성했다.
+```js
+// api/instance.js
+
+import axios from "axios";
+
+const apiKey = process.env.REACT_APP_OPEN_API_KEY;
+
+// Axios 인스턴스 생성
+export const weatherInstance = axios.create({
+  baseURL: process.env.REACT_APP_WEATHER_API_URL,
+  params: {
+    serviceKey: apiKey,
+  },
+});
+```
+
+- instance를 만드는 김에 동일하게 넣게 되는 serviceKey도 넣었다.
+
+### 4) api.js
+- 각 api를 호출하기 위해 별도로 api.js를 생성했다.
+```js
+// api/api.js
+
+import { getCurrentTime, getFormattedDate } from "../utils/utils";
+import { weatherInstance } from "./instance";
+
+export const getUltraSrtNcst = async () => {
+  const res = await weatherInstance.get(`/getUltraSrtNcst`, {
+    params: {
+      numOfRows: "10",
+      pageNo: "1",
+      dataType: "JSON",
+      base_date: getFormattedDate(),
+      base_time: getCurrentTime(),
+      nx: "55",
+      ny: "127",
+    },
+  });
+  
+  if (res.data?.response?.header?.resultCode === "00") {
+    return res.data?.response?.body?.items?.item;
+  } else {
+    return [];
+  }
+};
+
+export const getUltraSrtFcst = async () => {
+  const res = await weatherInstance.get(`/getUltraSrtFcst`, {
+    params: {
+      numOfRows: "60",
+      pageNo: "1",
+      dataType: "JSON",
+      base_date: getFormattedDate(),
+      base_time: "0600",
+      nx: "55",
+      ny: "127",
+    },
+  });
+
+  const sortRes = [...res.data?.response?.body?.items?.item]?.sort(
+    (a, b) => Number(a.fcstTime) - Number(b.fcstTime)
+  );
+
+  if (res.data?.response?.header?.resultCode === "00") {
+    return sortRes;
+  } else {
+    return [];
+  }
+};
+
+export const getVilageFcst = async () => {
+  const res = await weatherInstance.get(`/getVilageFcst`, {
+    params: {
+      numOfRows: "60",
+      pageNo: "1",
+      dataType: "JSON",
+      base_date: getFormattedDate(),
+      base_time: "0200",
+      nx: "55",
+      ny: "127",
+    },
+  });
+
+  const sortRes = [...res.data?.response?.body?.items?.item]?.sort(
+    (a, b) => Number(a.fcstTime) - Number(b.fcstTime)
+  );
+
+  if (res.data?.response?.header?.resultCode === "00") {
+    return sortRes;
+  } else {
+    return [];
+  }
+};
+```
+- `getFormattedDate()`, `getCurrentTime()`는 `Date()`함수로 현재 날짜와 시간을 api 요청 포멧에 맞게 변환하기 위한 함수이다.
+- 각 api의 resultCode가 "00"이 아닌 경우에는 정상적인 데이터가 오지 않으므로 예외처리하였다.
+- 중간에 `sort` 메서드를 사용한 부분은 일기예보가 1시간 단위로 많은 데이터를 가져오기 때문에 이를 1시간 단위로 구분할 수 있게 하기 위함이다.(기본 호출 시 category 기준으로 데이터가 쌓이기 때문)
+
+### 5) UltraSrcNcst.jsx
+- 여러 api 중 "초단기실황조회"만 예시로 보겠다. 아래는 컴포넌트의 원본 코드이다.
+```jsx
+// components/UltraSrcNcst.jsx
+
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getUltraSrtNcst } from "../api/api";
+import { category, getCategoryValue } from "../utils/constants";
+
+const UltraSrcNcst = () => {
+  const { data, isPending, error } = useQuery({
+    queryKey: ["ultraSrcNcst"],
+    queryFn: getUltraSrtNcst,
+  });
+
+  if (isPending) return "Loading...";
+  if (error) return "error: " + error.message;
+  return (
+    <div>
+      {data?.[0]?.baseDate ? (
+        <>
+          <h3>today: {data?.[0]?.baseDate}</h3>
+          {data.map((item, index) => (
+            <div key={index}>
+              - {category[item.category].title}:{" "}
+              {getCategoryValue(item.category, item.obsrValue)}
+            </div>
+          ))}
+        </>
+      ) : (
+        "NO DATA"
+      )}
+    </div>
+  );
+};
+
+export default UltraSrcNcst;
+```
+
+- 하나씩 살펴보자.
+```jsx
+const { data, isPending, error } = useQuery({
+  queryKey: ["ultraSrcNcst"],
+  queryFn: getUltraSrtNcst,
+});
+```
+- useQuery로 앞에서 작성한 api를 불러온다. 이때, queryKey는 고유한 값이어야 하며, queryFn은 확실히 데이터의 결과 값을 가지고 있는 비동기 함수여야 한다.
+- 구조 분해 할당으로 `data`, `isPending`, `error`를 가져온다.
+
+```jsx
+if (isPending) return "Loading...";
+if (error) return "error: " + error.message;
+return (
+  ...
+)
+```
+- 만일 `isPending`이 true일 경우, 비동기 데이터의 통신이 끝나지 않았으므로 앱에 "Loading..." 이라는 문구를 띄워준다.
+- 만일 api 호출 간 에러가 발생하는 경우(return 값이 없거나 api를 호출한 비동기 함수 내에서 에러가 발생하는 경우), 에러 메세지를 띄워준다.
+- 모두 정상이라면 `return ( ... )` 을 호출한다. 내부 코드는 불러온 정보를 잘 보여주기 위한 내용이므로 설명하지 않겠다.
+
+<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/1243ca2c-899a-4b5c-8c4d-ecbc6498a304" alt="UltraSrcNcst.js" />
+- 위와 같은 결과가 나타난다.
+
+### 7) useQueries 사용
+- 만일 한번에 여러 api를 동시 호출하고 모든 api가 있어야 다음 동작을 할 수 있는 경우에는 위의 `useQuery` 사용이 마치 보일러플레이트 처럼 쓸데없이 길고 복잡하다고 느낄 수 있을 것이다.
+- react-query 라이브러리는 이런 경우를 대비하여 `useQueries`를 제공한다.
+
+```jsx
+// components/All.jsx
+
+import React from "react";
+import { useQueries } from "@tanstack/react-query";
+import { getUltraSrtFcst, getUltraSrtNcst, getVilageFcst } from "../api/api";
+
+const All = () => {
+  const results = useQueries({
+    queries: [
+      { queryKey: ["ultraSrcFcst"], queryFn: getUltraSrtFcst },
+      { queryKey: ["ultraSrcNcst"], queryFn: getUltraSrtNcst },
+      { queryKey: ["VilageFcst"], queryFn: getVilageFcst },
+    ],
+    combine: (results) => {
+      return {
+        data: results.map((result) => result.data),
+        pending: results.some((result) => result.isPending),
+      };
+    },
+  });
+
+  console.log("results", results);
+  if (results.pending) {
+    return <div>Not yet...</div>;
+  } else {
+    return <div>All Data</div>;
+  }
+};
+
+export default All;
+
+```
+
+- 나의 경우에는 3개의 api를 동시에 호출하고, api 결과가 모두 도착해야 pending을 false로 만들었다.
+<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/bb0654f0-898e-4298-a21b-40e77f56e544" alt="console.log" />
+- 위처럼 3개의 데이터가 모두 도착해야 `pending: false`가 되는 것을 알 수 있다.
+
+- 위처럼 사용해도 되지만 나의 경우에는 같은 api를 특정 id만 바꿔 호출한 것이 아닌, 각기 다른 api를 호출한 케이스로 data가 Array타입이면 어떤 api를 호출한 값이 몇 번째 배열에 들어있는지 헷갈리는 경우도 종종 발생한다.
+- 따라서 위의 값을 보다 식별 가능하도록 수정해보자.
+
+
 
 <hr>
 ## ref.
-- https://www.npmjs.com/package/react-query
-- https://tanstack.com/query/latest
-- https://tech.kakaopay.com/post/react-query-1/#react-query%EB%A5%BC-%EC%93%B0%EA%B3%A0-%EC%9D%B4%EB%9F%B0-%EA%B2%8C-%ED%8E%B8%ED%95%B4%EC%A1%8C%EB%8B%A4
+- https://tanstack.com/query/v5/docs
