@@ -286,8 +286,110 @@ function App() {
 ```
 - 작성한 고유 키(unique key)는 앱 전체에서 쿼리를 다시 가져오고, 캐싱하고, 고유하는데 내부적으로 사용된다.
 - `useQuery`에서 반환된 쿼리 결과에는 템플릿 작성 및 기타 데이터 사용에 필요한 쿼리에 대한 모든 정보가 포함되어 있다.
+- `result`에는 생산성을 높이기 위해 알아야 할 몇가지 매우 중요한 상태가 포함되어 있다.
+- 쿼리는 특정 순간에 다음 상태 중 하나에만 있을 수 있다.
+	- `isPending` or `status === 'pending'`: 쿼리에 아직 데이터가 없음
+	- `isError` or `status === 'error'`: 쿼리에 오류 발생
+	- `isSuccess` or `status === 'success'`: 쿼리가 성공했고 데이터를 사용할 수 있음
+- 이러한 status 관련 외에도 쿼리 상태에 따라 더 많은 정보를 사용할 수 있다.
+	- `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
+	- `data`: 쿼리가 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
+	- `isFetching`: 어떤 상태에서든 쿼리가 언제든지 가져오는 경우(백그라운드에서 다시 가져오기 포함) `isFetching`은 `true`임
 
+- 따라서 일반적으로 아래와 같이 사용될 것이다.
+```jsx
+function Todos() {
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ['todos'],
+    queryFn: fetchTodoList,
+  })
 
+  if (isPending) {
+    return <span>Loading...</span>
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>
+  }
+
+  // We can assume by this point that `isSuccess === true`
+  return (
+    <ul>
+      {data.map((todo) => (
+        <li key={todo.id}>{todo.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+### 2) Mutation
+- 만약 새로운 할일을 추가하는 api를 호출한다고 가정해보자.
+```jsx
+function App() {
+  const mutation = useMutation({
+    mutationFn: (newTodo) => {
+      return axios.post('/todos', newTodo)
+    },
+  })
+
+  return (
+    <div>
+      {mutation.isPending ? (
+        'Adding todo...'
+      ) : (
+        <>
+          {mutation.isError ? (
+            <div>An error occurred: {mutation.error.message}</div>
+          ) : null}
+
+          {mutation.isSuccess ? <div>Todo added!</div> : null}
+
+          <button
+            onClick={() => {
+              mutation.mutate({ id: new Date(), title: 'Do Laundry' })
+            }}
+          >
+            Create Todo
+          </button>
+        </>
+      )}
+    </div>
+  )
+}
+```
+- mutation은 특정 순간에 다음 상태 중 하나에만 있을 수 있다.
+	- `isIdle` or `status === 'idle'`: mutation이 현재 유휴(idle) 상태이거나 fresh/reset 상태
+	- `isPending` or `status === 'pending'`: mutation이 현재 실행 중
+	- `isError` or `status === 'error'`: mutation에 오류 발생
+	- `isSuccess` or `status === 'success'`: mutation이 성공적이었고 mutation 데이터를 사용할 수 있음
+- 이러한 status 관련 외에도 mutation 상태에 따라 더 많은 정보를 사용할 수 있다.
+	- `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
+	- `data`: mutation이 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
+
+- 우리는 위 예제에서 단일 변수 또는 객체를 `mutate` 함수를 호출하여 mutationFn에 변수를 전달할 수 있다는 사실을 확인했다.
+```jsx
+<button
+	onClick={() => {
+		mutation.mutate({ id: new Date(), title: 'Do Laundry' })
+	}}
+>
+```
+
+> 데이터 변경 성공 이후 GET 요청
+- 만일 `onSuccess` 옵션에 Query Client의 `invalidateQueries`와 `setQueryData`를 함께 사용하면 mutation은 매우 강력한 도구가 된다.
+```jsx
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (newTodo) => axios.post('/todos', newTodo), {
+	    onSuccess: () => queryClient.invalidateQueries(['todos'])
+    }
+  );
+```
+- useMutation의 두 번째 인자에 `onSuccess`를 정의하여 데이터 변경에 성공하면 `queryClient`의 `invalidateQueries`를 실행하도록 했다.
+- `queryClient.invalidateQueries`는 인자로 queryKey를 받아 해당 key로 관리하는 API를 재호출한다.
+- 즉, `/todos`를 POST 하는데 성공한다면 자동으로 todos 목록 데이터를 최신화한다.
 ## 5. 실 사용 예시
 ### 1) api 준비
 - call할 api를 본인 상황에 맞게 준비하면 된다. 나의 경우, 여러 api를 추적하기 위해 공공데이터 기상청 Open-API를 사용하여 테스트했다.
@@ -656,3 +758,4 @@ const queries = [
 <hr>
 ## ref.
 - https://tanstack.com/query/v5/docs
+- https://www.chanstory.dev/blog/post/34
