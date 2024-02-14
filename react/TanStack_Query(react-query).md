@@ -499,8 +499,8 @@ const UltraSrcNcst = () => {
 
 export default UltraSrcNcst;
 ```
-
 - 하나씩 살펴보자.
+
 ```jsx
 const { data, isPending, error } = useQuery({
   queryKey: ["ultraSrcNcst"],
@@ -566,10 +566,92 @@ export default All;
 <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/bb0654f0-898e-4298-a21b-40e77f56e544" alt="console.log" />
 - 위처럼 3개의 데이터가 모두 도착해야 `pending: false`가 되는 것을 알 수 있다.
 
+### 8) useQueries에 key 값 부여
 - 위처럼 사용해도 되지만 나의 경우에는 같은 api를 특정 id만 바꿔 호출한 것이 아닌, 각기 다른 api를 호출한 케이스로 data가 Array타입이면 어떤 api를 호출한 값이 몇 번째 배열에 들어있는지 헷갈리는 경우도 종종 발생한다.
 - 따라서 위의 값을 보다 식별 가능하도록 수정해보자.
 
+- 우선 `useQueries` 훅에서는 결과 객체(`result`)에 `queryKey` 라는 속성이 존재하지 않는다.
+<img src="https://github.com/JaeyeoneeJ/react-query-test/assets/77138259/5bb7323e-1415-4189-9ec1-8606e1a5866f" alt="console.log" />
+- 따라서 일반적인 경우에는 배열로 받아오는 형태를 많이 사용하게 될 것이다.(동일 API를 호출하는데 params 중 id 값 정도만 달라 순서대로 식별이 가능한 경우 등)
+- 하지만 우리는 명확한 키 값을 가지고 식별하고자 하기 때문에 `queryKey`를 식별자로 두겠다.
 
+>여기서 한 가지 걱정이 드는 점은 배열을 불러올 때, api 데이터가 도착하는 순서대로 쌓일 수 도 있지 않을까라는 불안감이 들 수 있다.
+>하지만 위의 콘솔에서 배열이 도달한 것을 보면 총 3개의 데이터 중 2번 째, 3번 째, 1번 째 순으로 도착하는 것을 확인할 수 있다.
+>즉, 고유한 `queryKey`로 호출한 순간, 결과 값을 받을 메모리를 순차적으로 미리 할당했다는 결론이 나오므로 데이터가 꼬일 일은 없다.
+
+- 아래는 컴포넌트를 수정한 내용이다.
+```jsx
+// components/All.jsx
+
+import React from "react";
+import { useQueries } from "@tanstack/react-query";
+import { getUltraSrtFcst, getUltraSrtNcst, getVilageFcst } from "../api/api";
+
+const All = () => {
+  const queries = [
+    { queryKey: ["ultraSrcNcst"], queryFn: getUltraSrtNcst },
+    { queryKey: ["ultraSrcFcst"], queryFn: getUltraSrtFcst },
+    { queryKey: ["VilageFcst"], queryFn: getVilageFcst },
+  ];
+  const results = useQueries({
+    queries,
+    combine: (queryResults) => {
+      const combinedData = {};
+      queryResults.forEach((result, index) => {
+        const queryKey = queries[index].queryKey.join("_");
+        combinedData[queryKey] = result.data;
+      });
+      return {
+        data: combinedData,
+        pending: queryResults.some((result) => result.isPending),
+      };
+    },
+  });
+
+  console.log("results: ", results);
+
+  if (results.pending) {
+    return <div>Not yet...</div>;
+  } else {
+    return <div>All Data</div>;
+  }
+};
+
+export default All;
+```
+- 하나씩 살펴보자.
+
+```jsx
+const queries = [
+  { queryKey: ["ultraSrcNcst"], queryFn: getUltraSrtNcst },
+  { queryKey: ["ultraSrcFcst"], queryFn: getUltraSrtFcst },
+  { queryKey: ["VilageFcst"], queryFn: getVilageFcst },
+];
+```
+- 위에서 확인했듯이 `useQueries`의 결과 객체에는 `queryKey`라는 속성이 존재하지 않았다.
+- 따라서 외부에서 `queryKey` 값을 부여하기 위해 `queries`를 밖에서 생성하여 연결해주는 방식을 택했다.
+
+```jsx
+  const results = useQueries({
+    queries,
+    combine: (queryResults) => {
+      const combinedData = {};
+      queryResults.forEach((result, index) => {
+        const queryKey = queries[index].queryKey.join("_");
+        combinedData[queryKey] = result.data;
+      });
+      return {
+        data: combinedData,
+        pending: queryResults.some((result) => result.isPending),
+      };
+    },
+  });
+```
+- 위에서 선언한 `queries`를 연결해주고, 기존에 3개의 단순 array로 들어갔던 data에 `combinedData`라는 새로운 객체를 연결하고 `combinedData`에 키 값으로 `queries`의 `queryKey`를 연결해준다.
+
+<img src="https://github.com/JaeyeoneeJ/react-query-test/assets/77138259/8647ebfe-2578-4294-97e8-f23a781b793e" alt="console.log" />
+- 결과 값을 보면 도착한 순서대로 객체에 쌓이는 것을 확인할 수 있다.
+- 모든 결과가 도착하자 `pending: false`가 되었다.
 
 <hr>
 ## ref.
