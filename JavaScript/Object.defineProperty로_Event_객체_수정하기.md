@@ -5,7 +5,6 @@
 
 >물론 readOnly인 이벤트 객체를 직접 수정하는 것은 권장되지 않는 방법이긴 하다.
 
-
 - 일반적으로 이벤트 핸들링의 순서는 **이벤트 캡처링, 타겟팅, 이벤트 버블링** 순으로 진행된다.
 ```js
 const modifyEvent = () => {
@@ -74,6 +73,29 @@ if (typeof window === "object") {
 
 ...
 ```
- - 어떤 이벤트를 전역으로 받기 위해 `element`가 아닌 `document`로 이벤트리스너를 달았다.
+ - 어떤 이벤트를 전역으로 받기 위해 `element`가 아닌 `document`로 이벤트 리스너를 달았다.
  - 나의 경우, 구형 브라우저에서 `event.key` 를 지원하지 않는 경우가 종종 발생해서 위와 같이 작성해보았다.
  - 이렇게 하면 `modifyEvent` 함수는 다른 라이브러리에 이벤트 객체를 전달하고 실행하기 전에 **이벤트 캡처링** 단계에서 실행되고, 변경된 이벤트 객체를 라이브러리 등 이벤트 객체를 사용하고 있는 곳에 온전히 전달할 수 있게 된다.
+
+### 1) 예시 코드
+```js
+  if (!("key" in window.KeyboardEvent.prototype)) {
+    const getKeyOption = (event) => {
+      console.log(
+        "KeyDown Event / This browser does not have a 'key' value for KeyboardEvent"
+      );
+
+      if (event.keyCode >= 48 && event.keyCode <= 57) {
+        Object.defineProperty(event, "key", {
+          get: function () {
+            return this.keyCode - 48;
+          },
+        });
+      }
+    };
+
+    document.addEventListener("keydown", getKeyOption, true);
+  }
+```
+- 나의 경우에는 `<input>` 요소가 아닌 곳에서 숫자 키 입력이 필요하지만 `key`를 받지 못하여 `key` 옵션을 생성하여 가져오게 하는 코드를 작성해보았다.
+- 0-9까지의 `keyCode`는 48~59 로, 각 `keyCode`에서 48씩을 빼 `key` 라는 옵션에 추가하여 이벤트 객체를 반환했다.
