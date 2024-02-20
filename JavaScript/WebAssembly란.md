@@ -23,7 +23,7 @@
 
 
 ## 3. React App에서 WebAssembly 적용하기
-- React App에서 테스트하는 법은 [React App에서 WebAssembly 사용하기](React_App에서_WebAssembly_사용하기.md) 문서를 참조
+- React App에서 테스트하는 법은 [React App에서 WebAssembly 사용하기](../react/React_App에서_WebAssembly_사용하기.md) 문서를 참조
 
 
 
