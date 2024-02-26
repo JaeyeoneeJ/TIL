@@ -1,2 +1,3 @@
 - [CocoaPods 설치](CocoaPods_설치.md)
 - [Project build](Project_build.md)
+- [x86_64 터미널 실행](./x86_64_터미널_실행.md)
