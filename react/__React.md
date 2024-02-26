@@ -18,3 +18,4 @@
 - [브라우저에서 일반 자바스크립트와 웹어셈블리 속도 비교](./브라우저에서_일반_자바스크립트와_웹어셈블리_속도_비교.md)
 - [TanStack Query(react-query)](./TanStack_Query(react-query).md)
 - [EnterKey로 Click event가 동작하지 않을 때](./EnterKey로_Click_event가_동작하지_않을_때.md)
+- [React App에서 wasm 파일 로드하기](./React_App에서_wasm_파일_로드하기.md)
