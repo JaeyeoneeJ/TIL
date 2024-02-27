@@ -1,3 +1,5 @@
+> 아래 테스트 내용은 저의 github에 수록되어 있습니다. 테스트 앱의 확인이 필요한 경우, [wasm-test](https://github.com/JaeyeoneeJ/wasm-test)를 통해 프로젝트를 확인할 수 있습니다.
+
 - 해당 테스트는 [WebAssembly란](../JavaScript/WebAssembly란.md) 문서를 실제로 인앱에서 구현해보고 테스트해보기 위한 자료입니다.
 - 이 글은 Alexander Leon이 작성한 [Getting started with React + WebAssembly](https://alexanderleon.medium.com/getting-started-with-react-webassembly-b9ff83e6203f) 글을 번역하여 실제 React App에서 적용해본 경험을 작성한 자료입니다.
 
