@@ -105,7 +105,7 @@ EMSCRIPTEN_KEEPALIVE int* array(int size, int a, int b) {
 import React from "react";
 import WasmModule from "./components/WasmModule";
 
-const data = { size: 100000, timeset: 10, a: 2, b: 3 };
+const data = { size: 300000, timeset: 10, a: 2016, b: 50817 };
 
 function App() {
   return (
@@ -125,14 +125,27 @@ function App() {
 export default App;
 ```
 - 기존에 `App.js`에 지저분하게 있던 코드를 `WasmModule`이라는 컴포넌트에 옮겨주고, 해당 부분을 수정할 것이다.
-- 또한, JavaScript, mjs, wasm에 같은 인자가 들어갈 수 있도록 외부에서 `data`라는 prop을 생성해서 보내주기로 했다.
+- 또한, JavaScript, mjs, wasm에 같은 인자가 들어갈 수 있도록 외부에서 `data`라는 prop을 생성해서 보내주기로 했다. `data` 인자에는 size 값을 3배 정도 크게 했다.
 
 ## 5. WasmModule.jsx 작성
 - 아래는 원본 코드이다.
+- `WasmModule` 컴포넌트의 기본 props 값을 설정했다.
 ```jsx
+// src/components/WasmModule.jsx
 import React, { useEffect, useMemo, useState } from "react";
+import "./WasmModule.css";
 import wasmModuleFile from "../wasm/wasmModule.wasm";
 import createModule from "../wasm/wasmModule.mjs";
+
+const unitTime = " ms";
+const unitMultiples = " 배";
+const formatNum = (num) => {
+  let convertNum = num;
+  if (typeof convertNum !== "number") {
+    convertNum = Number(num);
+  }
+  return convertNum.toFixed(4);
+};
 
 const loadWasmModule = async () => {
   try {
@@ -275,23 +288,27 @@ const WasmModule = ({
         <tbody>
           <tr>
             <td>C to JS</td>
-            <td>{cToJsTime}</td>
+            <td>{formatNum(cToJsTime) + unitTime}</td>
           </tr>
           <tr>
             <td>C to WASM</td>
-            <td>{cToWasmTime}</td>
+            <td>{formatNum(cToWasmTime) + unitTime}</td>
           </tr>
           <tr>
             <td>JS</td>
-            <td>{jsTime}</td>
+            <td>{formatNum(jsTime) + unitTime}</td>
           </tr>
           <tr>
             <td>JS / C to JS</td>
-            <td>{jsTime / cToJsTime}</td>
+            <td>{formatNum(jsTime / cToJsTime) + unitMultiples}</td>
           </tr>
           <tr>
             <td>JS / C to WASM</td>
-            <td>{jsTime / cToWasmTime}</td>
+            <td>{formatNum(jsTime / cToWasmTime) + unitMultiples}</td>
+          </tr>
+          <tr>
+            <td>C to JS / C to WASM</td>
+            <td>{formatNum(cToJsTime / cToWasmTime) + unitMultiples}</td>
           </tr>
         </tbody>
       </table>
@@ -395,7 +412,168 @@ const WasmModule = ({ ... }) => {
 - `initializeMjs`: 이미 모듈 자바스크립트인 `createModule()`을 비동기로 가져와 `module`에 세팅한다. `arrayFunc`에도 array 함수를 명시적으로 선언하여 넣어준다.
 - 이렇게 하면 `WasmModule` 컴포넌트가 로드될 때, 초기 1번만 wasm 모듈을 초기화할 수 있다.
 
+### 3) return 값 설정
+```jsx
+const unitTime = " ms";
+const unitMultiples = " 배";
+const formatNum = (num) => {
+  let convertNum = num;
+  if (typeof convertNum !== "number") {
+    convertNum = Number(num);
+  }
+  return convertNum.toFixed(4);
+};
+...
 
+const WasmModule = ({ ... }) => {
+  ...
+
+  return (
+    <div>
+      <h3>JS / WASM Duration time</h3>
+      <table className={"table"}>
+        <thead>
+          <tr>
+            <th>TYPE</th>
+            <th>VALUE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>C to JS</td>
+            <td>{formatNum(cToJsTime) + unitTime}</td>
+          </tr>
+          <tr>
+            <td>C to WASM</td>
+            <td>{formatNum(cToWasmTime) + unitTime}</td>
+          </tr>
+          <tr>
+            <td>JS</td>
+            <td>{formatNum(jsTime) + unitTime}</td>
+          </tr>
+          <tr>
+            <td>JS / C to JS</td>
+            <td>{formatNum(jsTime / cToJsTime) + unitMultiples}</td>
+          </tr>
+          <tr>
+            <td>JS / C to WASM</td>
+            <td>{formatNum(jsTime / cToWasmTime) + unitMultiples}</td>
+          </tr>
+          <tr>
+            <td>C to JS / C to WASM</td>
+            <td>{formatNum(cToJsTime / cToWasmTime) + unitMultiples}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+```
+- 이전 테스트에서는 무엇이 시간이고 배수 인지 명시적으로 보이지 않아 unit을 추가했다. 또한 소수점이 너무 길어 최대 4자리까지 표현하도록 하였다.
+- return에는 table 형태로 표현하기 위해 위와 같이 작성했다.
+- 이번에는 순수 JavaScript 와 mjs, wasm 모듈의 차이를 보기 위해 위와 같이 표현했다.
+
+### 4) wasm 모듈 사용
+- 기존에 작성했던 `cTime`을 `cToJsTime`로 명칭을 변경하고, `cToJsTime`와 `jsTime`는 인자의 차이만 있을 뿐이므로 자세한 설명은 생략하겠다.
+```jsx
+...
+
+const WasmModule = ({ ... }) => {
+  ...
+
+  const cToJsTime = useMemo(() => {
+    ...
+  }, [arrayFunc, module, data, debug]);
+
+  const cToWasmTime = useMemo(() => {
+    if (wasmModule) {
+      const time = [];
+      const arrayFunc = wasmModule.array;
+
+      for (let i = 0; i < data.timeset; i++) {
+        const startTime = performance.now();
+
+        const resultPtr = arrayFunc(data.size, data.a, data.b);
+        // console.log("jjy resultPtr c", resultPtr);
+        const dataArray = new Int32Array(
+          wasmModule.memory.buffer,
+          resultPtr,
+          data.size
+        );
+        debug && console.log("jjy cToWasmTime dataArray", dataArray);
+        wasmModule.free(resultPtr);
+
+        const endTime = performance.now();
+        const duringTime = endTime - startTime;
+
+        time.push(duringTime);
+      }
+
+      if (time.length > 0) {
+        const sum = time.reduce((acc, value) => acc + value, 0);
+        const average = sum / time.length;
+        return average;
+      }
+    }
+  }, [wasmModule, data, debug]);
+
+  const jsTime = useMemo(() => {
+    ...
+  }, [data, debug]);
+
+  ...
+};
+
+export default WasmModule;
+```
+- `cToWasmTime`에서는 `wasmModule` 모듈이 있을 때, array 함수를 꺼내서 사용하도록 하였다.
+- `resultPtr`에서 실제 함수를 꺼내어 사용하면 기존 C에서 `malloc`으로 메모리를 선언한 파트가 존재하게 되므로 `wasmModule.free(resultPtr)`로 선언한 메모리를 제거하여 메모리 누수를 억제하였다.
+
+
+## 6. 런타임 차이 확인
+- 이번에는 이전보다 더 많은 연산을 처리하기 위해 100,000번에서 300,000번으로 연산 수치를 높였다.
+### 1) 리턴 값이 있는 경우
+- `console.log()`등 출력이나 리턴 값이 있는 경우에는 자바스크립트에서 그만큼 메모리를 할당하기 때문에 리턴 값이 없는 경우보다 더 느려지게 된다.
+- 리턴 값을 확인하기 위해 앞에 수정한 `App.js`에서 불러온 `WasmModule` 컴포넌트에 `debug` 옵션을 주었다.
+- 이렇게 하면, `debug` 옵션이 있을 때, `console.log()`를 공통적으로 확인할 수 있다.
+```jsx
+import React from "react";
+import WasmModule from "./components/WasmModule";
+
+const data = { ... };
+
+function App() {
+  return (
+    <div className="App">
+      ...
+      <WasmModule debug data={data} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+<img src="https://github.com/JaeyeoneeJ/wasm-test/assets/77138259/528bc967-ad3a-4519-97a1-cbbf7cc6c769" alt="리턴 값이 있는 경우" />
+- 연산 값을 높인 상태에서의 결과 값의 차이는 일반 자바스크립트에 비해 매우 높은 편이었다.
+- 기존 약 13배 정도의 차이가 있던 것에 비해 js 변환은 약 40배, wasm 변환은 약 52배의 차이가 발생했다.
+- 또한 js 변환과 wasm 변환을 비교했을 때, wasm 변환이 약 30%의 성능 향상된 것을 확인할 수 있었다.
+### 2) 리턴 값이 없는 경우
+- 리턴 값을 없애기 위해 앞에 수정한 `App.js`에서 불러온 `WasmModule` 컴포넌트에 `debug` 옵션을 없앴다.(`debug={false}`와 동일)
+<img src="https://github.com/JaeyeoneeJ/wasm-test/assets/77138259/bfe728cd-5457-41b5-b50b-27e15e832a97" alt="리턴 값이 없는 경우" />
+- 위 결과를 확인하면 js 변환과 wasm 변환은 리턴 값이 있을 때와 없을 때를 비교했을 때, 속도의 변화가 큰 차이가 없는 것을 확인할 수 있었다.
+- 하지만, 순수 JavaScript는 15.52 / 2.28 (ms) = 약 6.8배의 속도 차이가 나는 것을 알 수 있다.
+- 이는 일반적인 웹 환경에서 리턴 값을 도출해야 하는 경우가 많을 때, 순수 자바스크립트보다 wasm으로 변환한 모듈의 성능이 월등히 빠르다는 것을 의미한다.
+- 또한 기존 약 5배 정도의 차이가 있던 것에 비해 js 변환은 약 6.9배, wasm 변환은 약 11.4배의 차이가 발생했다. 이는 size 값을 3배 높였기 때문에 발생한 차이로 보인다.
+- 또한 js 변환과 wasm 변환을 비교했을 때, wasm 변환이 약 65%의 성능 향상된 것을 확인할 수 있었다.
+
+
+## 7. 결론
+- wasm 형태로 변환한 모듈이 빠르다는 것은 어느정도 예상하고 있었다. 하지만 mjs로 변환한 모듈이 빠른 이유는 무엇일까?
+- emsdk로 emcc 스크립트를 사용하였을 때, 우리는 mjs 파일로 output을 지정하며 여러 옵션을 주었다. 이 때, mjs 파일에는 wasm 모듈과 js 모듈이 동시에 생성되게 된다.
+- 즉, 우리는 브라우저가 알기 쉽게 mjs 모듈로 변환하여 wasm 모듈을 사용한 것이다.
+- 다만, 순수한 wasm 모듈만을 사용하는 wasm 형태 파일에 비해 약간의 성능 차이는 발생하는 것으로 보인다.
+- 따라서 프로젝트의 성향에 따라 순수한 wasm 모듈을 사용할지, 브라우저가 알기 쉽도록 mjs 또는 js 모듈을 사용할지는 개발자의 판단으로 선택하면 될 듯 하다.
 
 
 <hr>
