@@ -54,6 +54,57 @@ const App = () => (
 );
 ```
 
+### 1) lazy 적용 이전
+- route 단위 lazy를 적용하기 전에 `app.js`이다.
+```jsx
+// app.js
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Routes/Home";
+import Test1 from "./Routes/Test1";
+import Test2 from "./Routes/Test2";
+import Test3 from "./Routes/Test3";
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/test1" element={<Test1 />} />
+        <Route path="/test2" element={<Test2 />} />
+        <Route path="/test3" element={<Test3 />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+```
+
+- `npm run build`를 했을 때의 폴더 구조는 아래와 같다.
+```
+./build
+├── asset-manifest.json
+├── favicon.ico
+├── index.html
+├── logo192.png
+├── logo512.png
+├── manifest.json
+├── robots.txt
+└── static
+    └── js
+        ├── main.29132bd6.js
+        ├── main.29132bd6.js.LICENSE.txt
+        └── main.29132bd6.js.map
+```
+
+- 빌드된 파일을 실행해보기 위해 `npx http-server ./build`를 실행해보았다.
+<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/b4800389-50e1-49f5-a342-8752bdb843e0" alt="lazy 이전" />
+- main.js가 1개 있고, 161kB인 것을 알 수 있다.
+- 다른 라우터로 이동하더라도 처음에 불러온 main.js만을 사용하므로 추가 작업이 없다.
+
+### 2) lazy 적용 이후
+
 
 <hr>
 ## ref.
