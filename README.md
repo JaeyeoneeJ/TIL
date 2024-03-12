@@ -17,6 +17,8 @@
 # NextJS
 ![[__NextJS]]
 
+# Enact
+![[__Enact]]
 # CSS
 ![[__css]]
 
