@@ -1,10 +1,13 @@
+> 아래 테스트 내용은 저의 github에 수록되어 있습니다. 테스트 앱의 확인이 필요한 경우, [react-query-test](https://github.com/JaeyeoneeJ/react-query-test)를 통해 프로젝트를 확인할 수 있습니다.
+
 ## 1. 일반적인 React App에서 Redux로 비동기 데이터를 관리하는 법
+
 - 기본적으로 React 앱 개발 환경 설정 시 Redux를 사용하는 것은 상당히 일반화된 케이스이다.
 - 내가 진행하는 프로젝트 역시 React App을 베이스로 작업하고 일반적으로 서버와의 API 통신과 비동기 데이터 관리에 Redux를 주로 사용하는 편이다.
 - 비동기 데이터를 React Component의 State에 보관하게 될 경우 다수의 Component의 Lifecycle에 따라 비동기 데이터가 관리되므로 캐싱 등 최적화를 수행하기 어렵다. 그리고 다수의 Component에서 동일한 API를 호출하거나, 특정 API 응답이 다른 API에 영향을 미치는 경우(2개의 api 데이터를 불러와 1개의 데이터로 재구조화 하는 등) 등 복잡하지만 빈번하게 요구되는 사용자 시나리오에 대응하기에 꽤 어려움이 있었다.
 - 하지만 Redux를 사용하여 비동기 데이터를 관리할 경우, React Component의 Lifecycle과 관계없이 Global State(전역 상태)에서 비동기 데이터가 관리되기 때문에 캐싱과 같은 최적화 작업을 쉽게 수행할 수 있고 복잡한 사용자 시나리오에 대한 대응이 보다 쉬워진다.
 
-## 2. 비동기 데이터를 관리하는 측면에서  Redux 사용 시 불편한 점
+## 2. 비동기 데이터를 관리하는 측면에서 Redux 사용 시 불편한 점
 
 > 아래 내용은 카카오페이에서 작성한 [카카오페이 프론트엔드 개발자들이 React Query를 선택한 이유](https://tech.kakaopay.com/post/react-query-1/#react-query%EB%A5%BC-%EC%93%B0%EA%B3%A0-%EC%9D%B4%EB%9F%B0-%EA%B2%8C-%ED%8E%B8%ED%95%B4%EC%A1%8C%EB%8B%A4) 글을 보고 저의 프로젝트의 상황 등을 적용하여 작성한 글이므로 원문은 위 링크를 참조하시기 바랍니다.
 
@@ -30,7 +33,7 @@ const CommentsList = ({postId, cookie, setIsOn, isOn}) => {
     const {comments} = useSelector((state)=> state.comments)
     const realComments = comments.data
     const [postComment, onChangeCommentHandler, resetComment] = useInput();
-    
+
     const onSubmitAddComment = (e) => {
         e.preventDefault();
         const objectComment = {
@@ -169,7 +172,7 @@ export default commentsSlice.reducer;
 ```
 
 - 컴포넌트 구성에 필요한 일부 소스코드만 발췌하였는데도 React 앱의 기능에 비해 코드 분량이 상당하다.(현재는 단순히 get, update만 표시했는데도)
-- redux-toolkit을 사용했음에도 불구하고 장황한 boilerplate 코드가 남아있으며, 하나의 API 요청을 처리하기 위해 여러개의 Action과 Reducer가 필요하여 전체 코드가 눈에 잘 들어오지 않는 것 같다. 
+- redux-toolkit을 사용했음에도 불구하고 장황한 boilerplate 코드가 남아있으며, 하나의 API 요청을 처리하기 위해 여러개의 Action과 Reducer가 필요하여 전체 코드가 눈에 잘 들어오지 않는 것 같다.
 - 또한 비동기 Action을 처리하기 위해 createAsyncThunk와 extraReducers를 사용한 파트도 수행 역할에 비해 분량이 너무 장황하게 느껴진다.
 - 만일 API의 개수가 많아고 복잡한 처리를 요하는 경우가 생긴다면 위와 같은 코드의 분량이 많이 늘어날테고, 비동기 Action을 처리하기 위한 복잡성이 높아지게 될 우려가 있다.
 
@@ -179,36 +182,41 @@ export default commentsSlice.reducer;
 - 만일, API 상태를 관리하기 위한 규격화된 방식이 있다면 보다 효율적으로 협업하고 관리해나갈 수 있을 것이다.
 
 ## 2. React Query란
+
 - React 앱과 같은 컴포넌트 기반 스테이트(component-based state), React Hook, Redux와 같은 Global State Management Library(전역 상태관리 라이브러리) 등을 사용하여 비동기 데이터를 처리해 왔다. 위의 예시와 같이 Redux와 같은 대부분의 기존 상태관리 라이브러리는 client state 작업에는 적합하지만 비동기 또는 server state 작업에는 그다지 적합하지 않다. 이는 server state가 전혀 다르기 때문이다.
 
 - server state
-	- 내가 통제하거나 소유하지 않는 위치에 원격으로 지속됨
-	- 가져오기 및 업데이트를 위한 비동기 API가 필요함
-	- 공유 소유권을 암시하며 본인도 모르게 다른 사람이 변경할 수 있음
-	- 주의하지 않으면 애플리케이션이 "구식"이 될 수 있음
+
+  - 내가 통제하거나 소유하지 않는 위치에 원격으로 지속됨
+  - 가져오기 및 업데이트를 위한 비동기 API가 필요함
+  - 공유 소유권을 암시하며 본인도 모르게 다른 사람이 변경할 수 있음
+  - 주의하지 않으면 애플리케이션이 "구식"이 될 수 있음
 
 - 애플리케이션에서 서버 상태의 특성을 파악하면 진행하면서 더 많은 문제가 발생하게 된다.
-	- 캐싱
-	- 동일한 데이터에 대한 여러 요청을 단일 요청으로 중복 제거
-	- 백그라운드에서 "오래된" 데이터 업데이트
-	- 데이터가 "오래된" 시기 알기
-	- 최대한 빠르게 데이터 업데이트 반영
-	- 페이지 매김 및 지연 로딩 데이터와 같은 성능 최적화
-	- 서버 상태의 메모리 및 가비지 수집 관리
-	- 구조적 공유를 통해 쿼리 결과 메모
+
+  - 캐싱
+  - 동일한 데이터에 대한 여러 요청을 단일 요청으로 중복 제거
+  - 백그라운드에서 "오래된" 데이터 업데이트
+  - 데이터가 "오래된" 시기 알기
+  - 최대한 빠르게 데이터 업데이트 반영
+  - 페이지 매김 및 지연 로딩 데이터와 같은 성능 최적화
+  - 서버 상태의 메모리 및 가비지 수집 관리
+  - 구조적 공유를 통해 쿼리 결과 메모
 
 - React Query는 서버 상태 관리를 위한 최고의 라이브러리 중 하나이다. React Query를 사용하면 서버 상태의 까다로운 과제와 장애물을 극복하고 앱 데이터가 사용자를 제어하기 전에 제어할 수 있다.
 - React Query는 보다 기술적인 측면에서 다음과 같은 기능을 수행할 수 있다.
-	- 애플리케이에서 복잡하고 잘못 이해된 여러 줄의 코드를 제거하고 몇 줄의 React Query 로직으로 대체할 수 있도록 도와줌
-	- 새로운 서버 상태 데이터 소스 연결에 대한 걱정 없이 애플리케이션을 더욱 유지 관리하기 쉽게 만들고 새로운 기능을 쉽게 구축할 수 있음
-	- 애플리케이션이 그 어느 때보다 더 빠르고 반응성이 뛰어나다는 느낌을 주어 최종 사용자에게 직접적인 영향을 미침
-	- 잠재적으로 대역폭을 절약하고 메모리 성능을 높이는데 도움이 됨
-
+  - 애플리케이에서 복잡하고 잘못 이해된 여러 줄의 코드를 제거하고 몇 줄의 React Query 로직으로 대체할 수 있도록 도와줌
+  - 새로운 서버 상태 데이터 소스 연결에 대한 걱정 없이 애플리케이션을 더욱 유지 관리하기 쉽게 만들고 새로운 기능을 쉽게 구축할 수 있음
+  - 애플리케이션이 그 어느 때보다 더 빠르고 반응성이 뛰어나다는 느낌을 주어 최종 사용자에게 직접적인 영향을 미침
+  - 잠재적으로 대역폭을 절약하고 메모리 성능을 높이는데 도움이 됨
 
 ## 3. 설치
+
 ### 1) v4 미만
+
 - React Query v2, v3은 React v16.8+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
 - 자세한 내용은 [React Query v3 가이드 문서](https://tanstack.com/query/v3/docs/framework/react/installation) 참조
+
 ```bash
 npm i react-query
 # or
@@ -216,8 +224,10 @@ yarn add react-query
 ```
 
 ### 2) v4
+
 - React Query v4 부터 TanStack Query로 라이브러리 명이 변경되었다. 이제 React만 지원하는 것이 아니라 `Solid, Vue, Svelte, Angular`도 지원하기 때문이다.
 - TanStack Query v4는 React v16.8+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
+
 ```bash
 npm i @tanstack/react-query
 # or
@@ -227,6 +237,7 @@ yarn add @tanstack/react-query
 ```
 
 - TanStack Query v4는 다음 브라우저 구성과 호환된다.
+
 ```bash
 Chrome >= 73
 Firefox >= 78
@@ -235,8 +246,11 @@ Safari >= 12.1
 iOS >= 12.2
 Opera >= 53
 ```
+
 ### 2) v5
+
 - TanStack Query v5는 React v18+와 호환되며 ReactDOM 및 React Native와 함께 작동한다.
+
 ```bash
 npm i @tanstack/react-query
 # or
@@ -246,6 +260,7 @@ yarn add @tanstack/react-query
 ```
 
 TanStack Query v5는 다음 브라우저 구성과 호환된다.
+
 ```bash
 Chrome >= 91
 Firefox >= 90
@@ -259,6 +274,7 @@ Opera >= 77
 > 이전 브라우저를 지원하려면 라이브러리를 `node_modules`직접 트랜스파일해야 한다.
 
 - 코딩하는 동안 버그와 불일치를 잡는 데 도움이 되도록 ESLint 플러그인 쿼리를 사용하는 것이 좋다.
+
 ```bash
 $ npm i -D @tanstack/eslint-plugin-query
 # or
@@ -267,49 +283,54 @@ $ pnpm add -D @tanstack/eslint-plugin-query
 $ yarn add -D @tanstack/eslint-plugin-query
 ```
 
-
 ## 4. React App에서 사용
+
 - React App에서 React Query를 사용한다면 3가지 핵심 개념을 알아두어야 한다.
 
 ### 1) Query
+
 - Query는 고유 키에 연결된 비동기 데이터 소스에 대한 선언적 종속성이다. 서버에서 데이터를 가져오기 위해 Promise 기반 메서드(GET 및 POST 메서드 포함)와 함께 쿼리를 사용할 수 있다.
 - 만일 서버의 데이터를 수정하는 경우에는 Query 대신 Mutations 를 사용하는 것이 좋다.
 - Component 또는 custom hooks에서 쿼리를 구독하려면 최소한 아래 2개의 조건을 만족하여 `useQuery`를 사용하여 hook을 호출해야 한다.
-	- 쿼리의 고유 키
-	- Promise(Resolves the data, or Throws an error)를 반환하는 함수
+  - 쿼리의 고유 키
+  - Promise(Resolves the data, or Throws an error)를 반환하는 함수
+
 ```jsx
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
-  const info = useQuery({ queryKey: ['todos'], queryFn: fetchTodoList })
+  const info = useQuery({ queryKey: ["todos"], queryFn: fetchTodoList });
 }
 ```
+
 - 작성한 고유 키(unique key)는 앱 전체에서 쿼리를 다시 가져오고, 캐싱하고, 고유하는데 내부적으로 사용된다.
 - `useQuery`에서 반환된 쿼리 결과에는 템플릿 작성 및 기타 데이터 사용에 필요한 쿼리에 대한 모든 정보가 포함되어 있다.
 - `result`에는 생산성을 높이기 위해 알아야 할 몇가지 매우 중요한 상태가 포함되어 있다.
 - 쿼리는 특정 순간에 다음 상태 중 하나에만 있을 수 있다.
-	- `isPending` or `status === 'pending'`: 쿼리에 아직 데이터가 없음
-	- `isError` or `status === 'error'`: 쿼리에 오류 발생
-	- `isSuccess` or `status === 'success'`: 쿼리가 성공했고 데이터를 사용할 수 있음
+  - `isPending` or `status === 'pending'`: 쿼리에 아직 데이터가 없음
+  - `isError` or `status === 'error'`: 쿼리에 오류 발생
+  - `isSuccess` or `status === 'success'`: 쿼리가 성공했고 데이터를 사용할 수 있음
 - 이러한 status 관련 외에도 쿼리 상태에 따라 더 많은 정보를 사용할 수 있다.
-	- `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
-	- `data`: 쿼리가 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
-	- `isFetching`: 어떤 상태에서든 쿼리가 언제든지 가져오는 경우(백그라운드에서 다시 가져오기 포함) `isFetching`은 `true`임
+
+  - `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
+  - `data`: 쿼리가 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
+  - `isFetching`: 어떤 상태에서든 쿼리가 언제든지 가져오는 경우(백그라운드에서 다시 가져오기 포함) `isFetching`은 `true`임
 
 - 따라서 일반적으로 아래와 같이 사용될 것이다.
+
 ```jsx
 function Todos() {
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ['todos'],
+    queryKey: ["todos"],
     queryFn: fetchTodoList,
-  })
+  });
 
   if (isPending) {
-    return <span>Loading...</span>
+    return <span>Loading...</span>;
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>
+    return <span>Error: {error.message}</span>;
   }
 
   // We can assume by this point that `isSuccess === true`
@@ -319,24 +340,26 @@ function Todos() {
         <li key={todo.id}>{todo.title}</li>
       ))}
     </ul>
-  )
+  );
 }
 ```
 
 ### 2) Mutation
+
 - 만약 새로운 할일을 추가하는 api를 호출한다고 가정해보자.
+
 ```jsx
 function App() {
   const mutation = useMutation({
     mutationFn: (newTodo) => {
-      return axios.post('/todos', newTodo)
+      return axios.post("/todos", newTodo);
     },
-  })
+  });
 
   return (
     <div>
       {mutation.isPending ? (
-        'Adding todo...'
+        "Adding todo..."
       ) : (
         <>
           {mutation.isError ? (
@@ -347,7 +370,7 @@ function App() {
 
           <button
             onClick={() => {
-              mutation.mutate({ id: new Date(), title: 'Do Laundry' })
+              mutation.mutate({ id: new Date(), title: "Do Laundry" });
             }}
           >
             Create Todo
@@ -355,19 +378,22 @@ function App() {
         </>
       )}
     </div>
-  )
+  );
 }
 ```
+
 - mutation은 특정 순간에 다음 상태 중 하나에만 있을 수 있다.
-	- `isIdle` or `status === 'idle'`: mutation이 현재 유휴(idle) 상태이거나 fresh/reset 상태
-	- `isPending` or `status === 'pending'`: mutation이 현재 실행 중
-	- `isError` or `status === 'error'`: mutation에 오류 발생
-	- `isSuccess` or `status === 'success'`: mutation이 성공적이었고 mutation 데이터를 사용할 수 있음
+  - `isIdle` or `status === 'idle'`: mutation이 현재 유휴(idle) 상태이거나 fresh/reset 상태
+  - `isPending` or `status === 'pending'`: mutation이 현재 실행 중
+  - `isError` or `status === 'error'`: mutation에 오류 발생
+  - `isSuccess` or `status === 'success'`: mutation이 성공적이었고 mutation 데이터를 사용할 수 있음
 - 이러한 status 관련 외에도 mutation 상태에 따라 더 많은 정보를 사용할 수 있다.
-	- `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
-	- `data`: mutation이 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
+
+  - `error`: `error` 상태가 있는 경우, `error` 속성을 통해 오류를 확인할 수 있음
+  - `data`: mutation이 `isSuccess` 상태인 경우, `data` 속성을 통해 데이터를 사용할 수 있음
 
 - 우리는 위 예제에서 단일 변수 또는 객체를 `mutate` 함수를 호출하여 mutationFn에 변수를 전달할 수 있다는 사실을 확인했다.
+
 ```jsx
 <button
 	onClick={() => {
@@ -377,24 +403,29 @@ function App() {
 ```
 
 > 데이터 변경 성공 이후 GET 요청
-- 만일 `onSuccess` 옵션에 Query Client의 `invalidateQueries`와 `setQueryData`를 함께 사용하면 mutation은 매우 강력한 도구가 된다.
-```jsx
-  const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    (newTodo) => axios.post('/todos', newTodo), {
-	    onSuccess: () => queryClient.invalidateQueries(['todos'])
-    }
-  );
+- 만일 `onSuccess` 옵션에 Query Client의 `invalidateQueries`와 `setQueryData`를 함께 사용하면 mutation은 매우 강력한 도구가 된다.
+
+```jsx
+const queryClient = useQueryClient();
+
+const mutation = useMutation((newTodo) => axios.post("/todos", newTodo), {
+  onSuccess: () => queryClient.invalidateQueries(["todos"]),
+});
 ```
+
 - useMutation의 두 번째 인자에 `onSuccess`를 정의하여 데이터 변경에 성공하면 `queryClient`의 `invalidateQueries`를 실행하도록 했다.
 - `queryClient.invalidateQueries`는 인자로 queryKey를 받아 해당 key로 관리하는 API를 재호출한다.
 - 즉, `/todos`를 POST 하는데 성공한다면 자동으로 todos 목록 데이터를 최신화한다.
+
 ## 5. 실 사용 예시
+
 ### 1) api 준비
+
 - call할 api를 본인 상황에 맞게 준비하면 된다. 나의 경우, 여러 api를 추적하기 위해 공공데이터 기상청 Open-API를 사용하여 테스트했다.
-<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/4d4aedcb-5389-4006-85b1-e1a0fec7527a" alt="기상청 Open-api" />
-> [기상청 공공데이터 Open-API](https://data.kma.go.kr/api/selectApiDetail.do?pgmNo=42&openApiNo=421)
+  <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/4d4aedcb-5389-4006-85b1-e1a0fec7527a" alt="기상청 Open-api" />
+
+  > [기상청 공공데이터 Open-API](https://data.kma.go.kr/api/selectApiDetail.do?pgmNo=42&openApiNo=421)
 
 - 위 링크를 클릭하여 Open-API 활용 신청을 하고 첨부문서를 통해 진행하면 된다.
 
@@ -403,8 +434,10 @@ function App() {
 > 상세한 예시는 [react-query 테스트용 repo](https://github.com/JaeyeoneeJ/react-query-test)를 참고
 
 ### 2) app.js
+
 - 먼저 app.js를 `QueryClientProvider`로 감싼 후 `QueryClient`를 연결한다.
-- 간단하게 버튼을 만들어 각 버튼을 클릭할 때 마다 각기 다른 api를 호출할 준비를 한다. 
+- 간단하게 버튼을 만들어 각 버튼을 클릭할 때 마다 각기 다른 api를 호출할 준비를 한다.
+
 ```jsx
 // App.js
 
@@ -457,13 +490,16 @@ function App() {
 
 export default App;
 ```
+
 - 버튼 중에 "ALL" 버튼은 추후에 useQueries를 사용하여 api를 동시에 호출하고 관리하는 형태를 위해 만들었으니 우선 무시하고 진행한다.
 
 - 아래처럼 버튼이 생겨있을 것이다.
-<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/dd1c88de-747e-4023-893f-75b68a56c9fc" alt="app.js" />
+  <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/dd1c88de-747e-4023-893f-75b68a56c9fc" alt="app.js" />
 
 ### 3) axios instance 생성
+
 - 단순한 테스트이기 때문에 axios instance를 굳이 만들 필요는 없지만 나의 경우에는 동일한 api를 호출하는데 URL을 중복으로 입력하는 것을 방지하고자 instance를 생성했다.
+
 ```js
 // api/instance.js
 
@@ -483,7 +519,9 @@ export const weatherInstance = axios.create({
 - instance를 만드는 김에 동일하게 넣게 되는 serviceKey도 넣었다.
 
 ### 4) api.js
+
 - 각 api를 호출하기 위해 별도로 api.js를 생성했다.
+
 ```js
 // api/api.js
 
@@ -502,7 +540,7 @@ export const getUltraSrtNcst = async () => {
       ny: "127",
     },
   });
-  
+
   if (res.data?.response?.header?.resultCode === "00") {
     return res.data?.response?.body?.items?.item;
   } else {
@@ -558,12 +596,15 @@ export const getVilageFcst = async () => {
   }
 };
 ```
+
 - `getFormattedDate()`, `getCurrentTime()`는 `Date()`함수로 현재 날짜와 시간을 api 요청 포멧에 맞게 변환하기 위한 함수이다.
 - 각 api의 resultCode가 "00"이 아닌 경우에는 정상적인 데이터가 오지 않으므로 예외처리하였다.
 - 중간에 `sort` 메서드를 사용한 부분은 일기예보가 1시간 단위로 많은 데이터를 가져오기 때문에 이를 1시간 단위로 구분할 수 있게 하기 위함이다.(기본 호출 시 category 기준으로 데이터가 쌓이기 때문)
 
 ### 5) UltraSrcNcst.jsx
+
 - 여러 api 중 "초단기실황조회"만 예시로 보겠다. 아래는 컴포넌트의 원본 코드이다.
+
 ```jsx
 // components/UltraSrcNcst.jsx
 
@@ -601,6 +642,7 @@ const UltraSrcNcst = () => {
 
 export default UltraSrcNcst;
 ```
+
 - 하나씩 살펴보자.
 
 ```jsx
@@ -609,6 +651,7 @@ const { data, isPending, error } = useQuery({
   queryFn: getUltraSrtNcst,
 });
 ```
+
 - useQuery로 앞에서 작성한 api를 불러온다. 이때, queryKey는 고유한 값이어야 하며, queryFn은 확실히 데이터의 결과 값을 가지고 있는 비동기 함수여야 한다.
 - 구조 분해 할당으로 `data`, `isPending`, `error`를 가져온다.
 
@@ -619,6 +662,7 @@ return (
   ...
 )
 ```
+
 - 만일 `isPending`이 true일 경우, 비동기 데이터의 통신이 끝나지 않았으므로 앱에 "Loading..." 이라는 문구를 띄워준다.
 - 만일 api 호출 간 에러가 발생하는 경우(return 값이 없거나 api를 호출한 비동기 함수 내에서 에러가 발생하는 경우), 에러 메세지를 띄워준다.
 - 모두 정상이라면 `return ( ... )` 을 호출한다. 내부 코드는 불러온 정보를 잘 보여주기 위한 내용이므로 설명하지 않겠다.
@@ -627,6 +671,7 @@ return (
 - 위와 같은 결과가 나타난다.
 
 ### 7) useQueries 사용
+
 - 만일 한번에 여러 api를 동시 호출하고 모든 api가 있어야 다음 동작을 할 수 있는 경우에는 위의 `useQuery` 사용이 마치 보일러플레이트 처럼 쓸데없이 길고 복잡하다고 느낄 수 있을 것이다.
 - react-query 라이브러리는 이런 경우를 대비하여 `useQueries`를 제공한다.
 
@@ -661,27 +706,28 @@ const All = () => {
 };
 
 export default All;
-
 ```
 
 - 나의 경우에는 3개의 api를 동시에 호출하고, api 결과가 모두 도착해야 pending을 false로 만들었다.
-<img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/bb0654f0-898e-4298-a21b-40e77f56e544" alt="console.log" />
+  <img src="https://github.com/JaeyeoneeJ/TIL/assets/77138259/bb0654f0-898e-4298-a21b-40e77f56e544" alt="console.log" />
 - 위처럼 3개의 데이터가 모두 도착해야 `pending: false`가 되는 것을 알 수 있다.
 
 ### 8) useQueries에 key 값 부여
+
 - 위처럼 사용해도 되지만 나의 경우에는 같은 api를 특정 id만 바꿔 호출한 것이 아닌, 각기 다른 api를 호출한 케이스로 data가 Array타입이면 어떤 api를 호출한 값이 몇 번째 배열에 들어있는지 헷갈리는 경우도 종종 발생한다.
 - 따라서 위의 값을 보다 식별 가능하도록 수정해보자.
 
 - 우선 `useQueries` 훅에서는 결과 객체(`result`)에 `queryKey` 라는 속성이 존재하지 않는다.
-<img src="https://github.com/JaeyeoneeJ/react-query-test/assets/77138259/5bb7323e-1415-4189-9ec1-8606e1a5866f" alt="console.log" />
+  <img src="https://github.com/JaeyeoneeJ/react-query-test/assets/77138259/5bb7323e-1415-4189-9ec1-8606e1a5866f" alt="console.log" />
 - 따라서 일반적인 경우에는 배열로 받아오는 형태를 많이 사용하게 될 것이다.(동일 API를 호출하는데 params 중 id 값 정도만 달라 순서대로 식별이 가능한 경우 등)
 - 하지만 우리는 명확한 키 값을 가지고 식별하고자 하기 때문에 `queryKey`를 식별자로 두겠다.
 
->여기서 한 가지 걱정이 드는 점은 배열을 불러올 때, api 데이터가 도착하는 순서대로 쌓일 수 도 있지 않을까라는 불안감이 들 수 있다.
->하지만 위의 콘솔에서 배열이 도달한 것을 보면 총 3개의 데이터 중 2번 째, 3번 째, 1번 째 순으로 도착하는 것을 확인할 수 있다.
->즉, 고유한 `queryKey`로 호출한 순간, 결과 값을 받을 메모리를 순차적으로 미리 할당했다는 결론이 나오므로 데이터가 꼬일 일은 없다.
+> 여기서 한 가지 걱정이 드는 점은 배열을 불러올 때, api 데이터가 도착하는 순서대로 쌓일 수 도 있지 않을까라는 불안감이 들 수 있다.
+> 하지만 위의 콘솔에서 배열이 도달한 것을 보면 총 3개의 데이터 중 2번 째, 3번 째, 1번 째 순으로 도착하는 것을 확인할 수 있다.
+> 즉, 고유한 `queryKey`로 호출한 순간, 결과 값을 받을 메모리를 순차적으로 미리 할당했다는 결론이 나오므로 데이터가 꼬일 일은 없다.
 
 - 아래는 컴포넌트를 수정한 내용이다.
+
 ```jsx
 // components/All.jsx
 
@@ -721,6 +767,7 @@ const All = () => {
 
 export default All;
 ```
+
 - 하나씩 살펴보자.
 
 ```jsx
@@ -730,25 +777,27 @@ const queries = [
   { queryKey: ["VilageFcst"], queryFn: getVilageFcst },
 ];
 ```
+
 - 위에서 확인했듯이 `useQueries`의 결과 객체에는 `queryKey`라는 속성이 존재하지 않았다.
 - 따라서 외부에서 `queryKey` 값을 부여하기 위해 `queries`를 밖에서 생성하여 연결해주는 방식을 택했다.
 
 ```jsx
-  const results = useQueries({
-    queries,
-    combine: (queryResults) => {
-      const combinedData = {};
-      queryResults.forEach((result, index) => {
-        const queryKey = queries[index].queryKey.join("_");
-        combinedData[queryKey] = result.data;
-      });
-      return {
-        data: combinedData,
-        pending: queryResults.some((result) => result.isPending),
-      };
-    },
-  });
+const results = useQueries({
+  queries,
+  combine: (queryResults) => {
+    const combinedData = {};
+    queryResults.forEach((result, index) => {
+      const queryKey = queries[index].queryKey.join("_");
+      combinedData[queryKey] = result.data;
+    });
+    return {
+      data: combinedData,
+      pending: queryResults.some((result) => result.isPending),
+    };
+  },
+});
 ```
+
 - 위에서 선언한 `queries`를 연결해주고, 기존에 3개의 단순 array로 들어갔던 data에 `combinedData`라는 새로운 객체를 연결하고 `combinedData`에 키 값으로 `queries`의 `queryKey`를 연결해준다.
 
 <img src="https://github.com/JaeyeoneeJ/react-query-test/assets/77138259/8647ebfe-2578-4294-97e8-f23a781b793e" alt="console.log" />
