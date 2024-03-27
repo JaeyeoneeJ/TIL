@@ -9,11 +9,14 @@ enact create -t webostv [<directory>]
 # webpack override
 npm install customize-cra react-app-rewired --save-dev
 
+# less 설치
+npm install less --save-dev
+
 # less 확장자 로드
-npm install customize-cra-less-loader --save-dev
+npm install less-loader customize-cra-less-loader --save-dev
 
 # less 내 px => rem 변환
-npm install postcss-preset-env postcss-pxtorem --save-dev
+npm install postcss-loader postcss-preset-env postcss-pxtorem --save-dev
 ```
 
 ### 3) 프로젝트 루트에 public 폴더 생성
