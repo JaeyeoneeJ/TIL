@@ -91,3 +91,38 @@ module.exports = override(
 - `postcss-pxtorem` 플러그 인은 특정 CSS 속성 값(px)을 rem 단위로 변환해주는 플러그인으로, `rootValue`는 rem 단위를 계산하는 기준이 되는 값임
 - `rootValue: 24`로 설정시 이 플러그인은 모든 px 값을 24의 배수로 변환함
   (width: 48px => width: 2rem)
+
+### 6) iLibPlugin 추가
+- Enact의 `@enact/i18n` 패키지가 올바르게 작동하려면 특별한 [Webpack plugin](https://github.com/enactjs/dev-utils/tree/master/plugins/ILibPlugin)이 필요함
+- Enact를 사용하여 국제화(i18n) 기능을 이용하려면 Webpack config에 플러그인을 추가해야 함
+```js
+// config-overrides.js
+...
+const { ILibPlugin } = require("@enact/dev-utils");
+
+const addILibPlugin = (config) => {
+  config.plugins.push(
+    new ILibPlugin({
+      publicPath: "/",
+    })
+  );
+  return config;
+};
+
+...
+
+module.exports = override(
+  ... ,
+  addILibPlugin
+);
+
+```
+
+> `new ILibPlugin()`로 빈 인자를 넣을 경우,
+> 'The "path" argument must be of type string. Received undefined' 에러가 발생함
+> 
+> 이는 `node_modules/@enact/dev-utils//plugins/ILibPlugin/index.js` 에 `resolveBundle()`의 인자인 `publicPath`가 undefined이기 때문에 발생한 문제였음
+> 
+> 따라서 publicPath를 '/'로 설정해주면 build 시 `@enact`와 `ilib` 패키지를 `node_modules` 폴더에 담아 반환하므로, 루트 경로를 제대로 읽을 수 있어 해결 가능함
+
+
