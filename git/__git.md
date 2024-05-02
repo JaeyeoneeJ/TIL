@@ -3,3 +3,4 @@
 - [기본적인 git 명령어](./기본적인_git_명령어.md)
 - [git checkout과 git switch](./git_checkout과_git_switch.md)
 - [특정 브랜치만 clone 하기](./특정_브랜치만_clone_하기.md)
+- [git history까지 모두 복사하여 새로운 repo에 포함하기](./git_history까지_모두_복사하여_새로운_repo에_포함하기.md)
