@@ -8,3 +8,4 @@
 - [HTTP, HTTPS](./HTTP,_HTTPS.md)
 - [REST API](./REST_API.md)
 - [TCP 3-way Handshake, 4-way Handshake](./TCP_3-way_Handshake,_4-way_Handshake.md)
+- [Localhost에서 https 연동하는 방법](./Localhost에서_https_연동하는_방법.md)
