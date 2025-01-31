@@ -37,8 +37,10 @@ sudo certbot certonly --standalone -d example.com -d www.example.com
 - SSL 발급 받고자 하는 도메인 입력
 - 아래 메세지가 뜨면 정상적으로 발급된 것임
 <img src="https://user-images.githubusercontent.com/77138259/231111451-92c73519-f258-415a-875a-831dd40be8f1.png" alt="ssl 발급" />
+
 - 위 두줄이 각각 공개키와 비밀키 경로이므로 기억해두자
 - 아래 네모 칸이 https가 설정된 도메인임
+
 ```bash
 sudo vi /etc/nginx/sites-available/default
 ```
@@ -49,8 +51,8 @@ sudo vi /etc/nginx/sites-available/default
 
 ### 갱신
 - certbot을 이용하여 ssl인증서를 발급할 경우 3개월 마다 갱신을 해줘야 함
-	- 무료이기 때문에 안전하게 서비스를 이용하려면 갱신해야 함
-	- 아래 명령을 통해 갱신해줄 수 있음
+- 무료이기 때문에 안전하게 서비스를 이용하려면 갱신해야 함
+- 아래 명령을 통해 갱신해줄 수 있음
 ```bash
 certbot renew
 ```
