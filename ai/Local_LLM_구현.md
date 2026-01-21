@@ -323,6 +323,25 @@ const callAI = async prompt => { // prompt: 요청사항
 };
 ```
 
+### 3) prompt
+```ts
+const handleSummarize = () => {
+	callAI('다음 문서를 3-5문장으로 요약해주세요. 핵심 내용만 간결하게 정리해주세요.');
+};
+
+const handleGrammarCheck = () => {
+	callAI('다음 문서의 문법과 맞춤법을 검토하고, 문제가 있는 부분을 지적해주세요. 수정 제안도 함께 제공해주세요.');
+};
+
+const handleTranslate = () => {
+	callAI('다음 한글 문서를 자연스러운 영어로 번역해주세요.');
+};
+
+const handleImprove = () => {
+	callAI('다음 문서의 문체를 개선하고 더 명확하고 전문적으로 다듬어주세요. 개선된 버전을 제공해주세요.');
+};
+```
+
 # 결과
 - 로컬 환경에서 AI 모델 구동 가능
 - 프론트에서 단순히 `prompt` + `text` 전달로 AI 기능 사용 가능
