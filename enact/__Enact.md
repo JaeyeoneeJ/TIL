@@ -2,3 +2,4 @@
 - [webOS_CLI 설정](./webOS_CLI_설정.md)
 - [enact TV install](./enact_TV_install.md)
 - [Enact를 CRA 환경으로 전환](./Enact를_CRA_환경으로_전환.md)
+- [GPU 가속화](./GPU_가속화.md)

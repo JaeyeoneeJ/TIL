@@ -2,14 +2,12 @@
 - node: v16.17.0
   (위 환경에서 설치했습니다.)
 
-
 ## 2. Enact Client
 - enact 명령어를 사용하기 위해 아래 설치 필수
 ```bash
 npm install -g @enact/cli@6.0.4
 # node v16.17.0 이상 권장
 ```
-
 
 ## 3. ares setting
 ### 1) CLI 파일 다운로드
@@ -29,6 +27,7 @@ echo %LG_WEBOS_TV_SDK_HOME%
 2. `webOS_TV_SDK` 폴더 안에 위에서 받은 CLI 파일의 압축을 푼다.
 3. linux or macOS의 경우
 - `/etc/profile`에 다음을 추가한다. `YOUR_PATH`를 `webOS_TV_SDK` 경로로 바꾼다.
+
 ```bash
 # Setting the LG_WEBOS_TV_SDK_HOME variable to the parent directory of CLI
 export LG_WEBOS_TV_SDK_HOME="/YOUR_PATH/webOS_TV_SDK"
