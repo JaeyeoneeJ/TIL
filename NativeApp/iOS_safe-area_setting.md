@@ -1,5 +1,5 @@
-# Full View 사용하기
-## 1. WebApp Setting
+# 1. Full View 사용하기
+## 1) WebApp Setting
 ```html
 <meta
   name='viewport'
@@ -25,8 +25,8 @@ body {
 }
 ```
 
-## 2. iOS Native App Setting
-### 1) MainViewController.swift
+## 2) iOS Native App Setting
+### 2-1) MainViewController.swift
 ```swift
 // App/App/MainViewController.swift
 
@@ -57,7 +57,7 @@ class MainViewController: CAPBridgeViewController {
   }
 ```
 
-### 2) SceneDelegate.swift
+### 2-2) SceneDelegate.swift
 ```swift
 // App/App/SceneDelegate.swift
 
@@ -83,7 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 ```
 
-### 3) Info.plist
+### 2-3) Info.plist
 - `UIApplicationSceneManifest`가 있어야 iOS가 SceneDelegate를 Scene에 연결함
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -113,13 +113,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 </plist>
 ```
 
-## 3. 적용 결과
+## 3) 적용 결과
 
 | **iOS 미적용**                                                                                                                                                                                                                                                                                                                                                                                                                              | **iOS: .automatic + CSS**                                                                                                                                                                                                                                                                                                                                                                                                                                      | **iOS: .never + CSS**                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img width="250" alt="Image" src="https://github-production-user-asset-6210df.s3.amazonaws.com/77138259/544085986-66e10930-fadd-4920-b26f-05226d99d8ec.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260203%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260203T021602Z&X-Amz-Expires=300&X-Amz-Signature=81963e6946a70f0d9051a52542b126ace0337e2ebafd274ba4b968a289722d35&X-Amz-SignedHeaders=host" /> | <img width="250" alt="CSS 적용, iOS .automatic 인 경우" src="https://github-production-user-asset-6210df.s3.amazonaws.com/77138259/544085660-df3a4fa3-4d49-4b80-979f-83a5dcd9500a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260203%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260203T021435Z&X-Amz-Expires=300&X-Amz-Signature=ccd1d4f3577eeda9ff712c1155d69071ed42e0307d877cd9581decc71607e03d&X-Amz-SignedHeaders=host" /> | <img width="250" alt="css 적용, iOS .never인 경우" src="https://github-production-user-asset-6210df.s3.amazonaws.com/77138259/544084724-faa076f0-1a9d-42c8-92b6-572c1f396ad1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260203%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260203T021247Z&X-Amz-Expires=300&X-Amz-Signature=b3bca0521c7770c1fbfbb3716eefead0ab370ca6d34426da5e59bf7f18afc55e&X-Amz-SignedHeaders=host" /> |
 
-# 번외: safe-area 없는 네모 영역만 사용하기
+# # 번외: safe-area 없는 네모 영역만 사용하기
 ```swift
 import UIKit
 import Capacitor

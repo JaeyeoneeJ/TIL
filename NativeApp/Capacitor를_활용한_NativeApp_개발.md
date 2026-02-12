@@ -1,21 +1,21 @@
-# 개요
+# 0. 개요
 
-## 1. Capacitor와 Expo 차이
+## 1) Capacitor와 Expo 차이
 - `Capacitor`는 `WebApp`을 `Native App` 으로 감싸주는 도구로 생성된 결과물이 `WebView(WKWebView)`임    
 - `Expo`는 `React Native` 개발을 편하게 도와주는 플랫폼으로 생성된 결과물이 `Native UI`이므로 `WebView`가 아님    
 - 따라서 `WebView` 개발 시 `Capacitor`를 사용하는 것을 적극 권장    
 
-## 2. Capacitor 사용 기준
+## 2) Capacitor 사용 기준
 - 기존 `WebApp`이 있고 웹 코드를 거의 대부분 재사용하게 되는 경우 → 빠른 `Native App`화 가능    
 - Web 기능이 주력인 경우(Native의 기능을 거의 사용하지 않거나 커스텀하지 않는 경우)    
 
-## 3. 앱 활용 방안
+## 3) 앱 활용 방안
 - Cordova 또는 Capacitor와 같은 Native 변환 Framework를 사용할 경우 iOS/AOS 결과물을 모두 출력할 수 있음    
 - 단, 개발환경 세팅 및 iOS safe-area 처리 등 세부 설정은 각 Native 단에서 일부 커스텀 필요
 
-# 환경설정 및 설치
+# 1. 환경설정 및 설치
 
-## 1. Shell App 생성
+## 1) Shell App 생성
 ```bash
 # Vite를 이용한 껍데기 앱 생성(CRA도 무방)
 npm create vite@latest shell-app
@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-## 2. Capacitor 설치
+## 2) Capacitor 설치
 ```bash
 npm install @capacitor/core @capacitor/cli
 npx cap init
@@ -36,13 +36,13 @@ npx cap init
 # Web asset directory: dist (CRA인 경우 build)
 ```
 
-## 3. 테스트용 네이티브 기능 추가(Alert)
+## 3) 테스트용 네이티브 기능 추가(Alert)
 ```bash
 npm install @capacitor/dialog
 npx cap sync # 싱크 맞춤
 ```
 
-## 4. 웹 코드 수정
+## 4) 웹 코드 수정
 ```jsx
 // src/App.jsx
 
@@ -79,20 +79,20 @@ function App() {
 export default App;
 ```
 
-## 5. 웹 빌드 → 앱 반영
+## 5) 웹 빌드 → 앱 반영
 ```bash
 npm run build
 npx cap sync
 ```
 
-## 6. 플랫폼 추가
+## 6) 플랫폼 추가
 ```bash
 npx cap add ios
 npx cap add android
 # root 폴더 내 ios, android 폴더 생성 확인
 ```
 
-## 7. 실행
+## 7) 실행
 ```bash
 # ios, xcode 실행
 npx cap open ios
@@ -101,9 +101,9 @@ npx cap open ios
 npx cap open android
 ```
 
-# 개발환경 세팅
+# 2. 개발환경 세팅
 
-## 1. 라이브 리로드(앱에서 실시간 Vite 화면 반영)
+## 1) 라이브 리로드(앱에서 실시간 Vite 화면 반영)
 ```JSON
 // capacitor.config.json
 {
@@ -123,8 +123,8 @@ npm run dev
 npx cap run ios -l --external
 ```
 
-## 2. AOS `ERR_CLEARTEXT_NOT_PERMITTED` 에러 우회
-### 1) WebApp 세팅
+## 2) AOS `ERR_CLEARTEXT_NOT_PERMITTED` 에러 우회
+### 2-1) WebApp 세팅
 ```bash
 npm run dev # localhost만 뜸
 #  VITE v7.3.1  ready in 131 ms
@@ -155,7 +155,7 @@ npm run dev -- --host # localhost도 뜸
 }
 ```
 
-### 2) AOS Setting
+### 2-2) AOS Setting
 - `network_security_config.xml` 생성(**경로 중요**)    
 ```xml
 <!--android/app/src/main/res/xml/network_security_config.xml-->
@@ -197,5 +197,5 @@ npm run dev -- --host # localhost도 뜸
 </manifest>
 ```
 
-## 3. iOS `safe area` 세팅
+## 3) iOS `safe area` 세팅
 [iOS safe-area setting](./iOS_safe-area_setting.md) 참고
